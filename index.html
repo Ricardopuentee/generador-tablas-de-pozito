@@ -286,15 +286,16 @@
     }
 
     .larguitas-crossed-v-line-0 { left: 0; }
-    .larguitas-crossed-v-line-1 { left: 11.111%; }
-    .larguitas-crossed-v-line-2 { left: 22.222%; }
-    .larguitas-crossed-v-line-3 { left: 33.333%; }
-    .larguitas-crossed-v-line-4 { left: 44.444%; }
-    .larguitas-crossed-v-line-5 { left: 55.555%; }
-    .larguitas-crossed-v-line-6 { left: 66.666%; }
-    .larguitas-crossed-v-line-7 { left: 77.777%; }
-    .larguitas-crossed-v-line-8 { left: 88.888%; }
-    .larguitas-crossed-v-line-9 { right: 0; left: auto; }
+    .larguitas-crossed-v-line-1 { left: 10%; }
+    .larguitas-crossed-v-line-2 { left: 20%; }
+    .larguitas-crossed-v-line-3 { left: 30%; }
+    .larguitas-crossed-v-line-4 { left: 40%; }
+    .larguitas-crossed-v-line-5 { left: 50%; }
+    .larguitas-crossed-v-line-6 { left: 60%; }
+    .larguitas-crossed-v-line-7 { left: 70%; }
+    .larguitas-crossed-v-line-8 { left: 80%; }
+    .larguitas-crossed-v-line-9 { left: 90%; }
+    .larguitas-crossed-v-line-10 { right: 0; left: auto; }
 
     .larguitas-crossed-h-line {
       position: absolute;
@@ -521,6 +522,10 @@
       gap: 32px 40px;
     }
 
+    .print-sheet {
+      display: none;
+    }
+
     .table-wrapper {
       break-inside: avoid;
       page-break-inside: avoid;
@@ -548,12 +553,18 @@
     }
 
     @media print {
+      @page {
+        size: 279mm 432mm;
+        margin: 0;
+      }
+
       * {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
       body {
+        margin: 0;
         padding: 0;
       }
 
@@ -563,6 +574,91 @@
 
       .game6-actions {
         display: none;
+      }
+
+      .game6-view {
+        margin-top: 0;
+      }
+
+      .game6-header {
+        margin-bottom: 0;
+      }
+
+      .table-number {
+        display: none;
+      }
+
+      #game6-view .tables-grid {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        gap: 0.2cm;
+        justify-content: start;
+        align-content: start;
+      }
+
+      #game6-view[data-layout-type="six-by-five"] .table-wrapper,
+      #game6-view[data-layout-type="tercias-below"] .table-wrapper {
+        width: 14.8cm;
+        height: 14.8cm;
+        overflow: hidden;
+      }
+
+      #game6-view[data-layout-type="six-by-five"] .table-wrapper .layout {
+        transform-origin: top left;
+        transform: scaleX(1.3455) scaleY(1.1213);
+      }
+
+      #game6-view[data-layout-type="tercias-below"] .table-wrapper .layout {
+        transform-origin: top left;
+        transform: scaleX(1.48) scaleY(1.2334);
+      }
+
+      #game6-view.print-sheet-active .game6-header,
+      #game6-view.print-sheet-active .tables-grid {
+        display: none;
+      }
+
+      #game6-view.print-sheet-active {
+        margin: 0;
+        padding: 0;
+        width: 278mm;
+        height: 432mm;
+        overflow: hidden;
+      }
+
+      #game6-view.print-sheet-active .print-sheet {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 278mm;
+        height: 432mm;
+        margin: 0;
+        padding: 5mm 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      #game6-view.print-sheet-active .print-sheet-cell {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 278mm;
+        height: 70.333mm;
+        padding-top: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        min-width: 0;
+        min-height: 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      #game6-view.print-sheet-active .print-sheet-cell .horizontal-layout,
+      #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-layout {
+        transform-origin: top left;
+        transform: translateY(1.6mm) scaleX(1.069) scaleY(1.392);
       }
     }
   </style>
@@ -1092,6 +1188,7 @@
         <div class="larguitas-crossed-v-line larguitas-crossed-v-line-7"></div>
         <div class="larguitas-crossed-v-line larguitas-crossed-v-line-8"></div>
         <div class="larguitas-crossed-v-line larguitas-crossed-v-line-9"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-10"></div>
         <div class="larguitas-crossed-h-line larguitas-crossed-h-line-0"></div>
         <div class="larguitas-crossed-h-line larguitas-crossed-h-line-1"></div>
         <div class="larguitas-crossed-h-line larguitas-crossed-h-line-2"></div>
@@ -1221,6 +1318,7 @@
       </div>
     </div>
     <div class="tables-grid" id="game6-grid"></div>
+    <div class="print-sheet" id="game6-print-sheet"></div>
   </section>
 
   <script>
@@ -1672,6 +1770,19 @@
         </div>`;
     }
 
+    function populateLayoutClone(layoutClone, assignment) {
+      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-larguitas-crossed-id]");
+      boxes.forEach((box) => {
+        const id = box.getAttribute("data-id")
+          || box.getAttribute("data-horizontal-id")
+          || box.getAttribute("data-six-by-five-id")
+          || box.getAttribute("data-tercias-below-id")
+          || box.getAttribute("data-larguitas-crossed-id");
+        const src = assignment[id];
+        box.innerHTML = src ? `<img src="${src}" alt="Carta ${id}">` : id;
+      });
+    }
+
     function renderGameOf6(assignments, layoutType) {
       const layoutMap = {
         square: document.getElementById("table-layout"),
@@ -1683,24 +1794,19 @@
       const sourceLayout = layoutMap[layoutType] || layoutMap.square;
       const game6View = document.getElementById("game6-view");
       const game6Grid = document.getElementById("game6-grid");
+      const game6PrintSheet = document.getElementById("game6-print-sheet");
       const tableStage = document.getElementById("table-stage");
+      const usePrintSheet = layoutType === "horizontal" || layoutType === "larguitas-crossed";
 
+      game6View.dataset.layoutType = layoutType;
+      game6View.classList.toggle("print-sheet-active", usePrintSheet);
       game6Grid.innerHTML = "";
+      game6PrintSheet.innerHTML = "";
 
       assignments.forEach((assignment, index) => {
         const layoutClone = sourceLayout.cloneNode(true);
         layoutClone.removeAttribute("id");
-
-        const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-larguitas-crossed-id]");
-        boxes.forEach((box) => {
-          const id = box.getAttribute("data-id")
-            || box.getAttribute("data-horizontal-id")
-            || box.getAttribute("data-six-by-five-id")
-            || box.getAttribute("data-tercias-below-id")
-            || box.getAttribute("data-larguitas-crossed-id");
-          const src = assignment[id];
-          box.innerHTML = src ? `<img src="${src}" alt="Carta ${id}">` : id;
-        });
+        populateLayoutClone(layoutClone, assignment);
 
         const wrapper = document.createElement("div");
         wrapper.className = "table-wrapper";
@@ -1710,6 +1816,17 @@
         wrapper.appendChild(numberLabel);
         wrapper.appendChild(layoutClone);
         game6Grid.appendChild(wrapper);
+
+        if (usePrintSheet) {
+          const printLayoutClone = sourceLayout.cloneNode(true);
+          printLayoutClone.removeAttribute("id");
+          populateLayoutClone(printLayoutClone, assignment);
+
+          const printCell = document.createElement("div");
+          printCell.className = "print-sheet-cell";
+          printCell.appendChild(printLayoutClone);
+          game6PrintSheet.appendChild(printCell);
+        }
       });
 
       tableStage.hidden = true;
@@ -1722,9 +1839,12 @@
 
     function showMainTableView(shouldScroll = true) {
       const game6View = document.getElementById("game6-view");
+      const game6PrintSheet = document.getElementById("game6-print-sheet");
       const tableStage = document.getElementById("table-stage");
 
       game6View.hidden = true;
+      game6View.classList.remove("print-sheet-active");
+      game6PrintSheet.innerHTML = "";
       tableStage.hidden = false;
       updateTableScale();
 
