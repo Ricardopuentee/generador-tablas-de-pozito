@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de loteria</title>
+  <style>
+    :root {
+      --line-color: #d62828;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 16px;
+    }
+
+    .table-stage {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .table-scale {
+      width: max-content;
+      transform-origin: top left;
+      transform: scale(var(--table-scale, 1));
+    }
+
+    .layout {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+      position: relative;
+      width: max-content;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .generate-button {
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .generate-button:hover {
+      background: #333;
+    }
+
+    .print-button {
+      border: 1px solid #111;
+      background: #fff;
+      color: #111;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .print-button:hover {
+      background: #f3f3f3;
+    }
+
+    .game6-button {
+      border: 1px solid #1d3557;
+      background: #1d3557;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .game6-button:hover {
+      background: #2a4a70;
+    }
+
+    .layout-select {
+      border: 1px solid #111;
+      background: #fff;
+      color: #111;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .horizontal-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .box {
+      width: 1.3cm;
+      text-align: center;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .tall {
+      height: 2cm;
+    }
+
+    .small {
+      height: 1cm;
+    }
+
+    .horizontal-box {
+      width: 1.30cm;
+      height: 1.59cm;
+      border: none;
+    }
+
+    .horizontal-small-box {
+      width: 1.30cm;
+      height: 0.79cm;
+      border: none;
+    }
+
+    .six-by-five-box {
+      width: 1.1cm;
+      height: 2.2cm;
+      border: none;
+    }
+
+    .six-by-five-small {
+      width: 1.1cm;
+      height: 1.1cm;
+      border: none;
+    }
+
+    .tercias-abajo-box {
+      width: 1cm;
+      height: 2cm;
+      border: none;
+    }
+
+    .tercias-abajo-small {
+      width: 1cm;
+      height: 1cm;
+      border: none;
+    }
+
+    .tercias-below-layout {
+      position: relative;
+    }
+
+    .tercias-below-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-left: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .tercias-below-v-line-0 { left: 0; }
+    .tercias-below-v-line-1 { left: 20%; }
+    .tercias-below-v-line-2 { left: 40%; }
+    .tercias-below-v-line-3 { left: 60%; }
+    .tercias-below-v-line-4 { left: 80%; }
+    .tercias-below-v-line-5 { right: 0; left: auto; }
+
+    .tercias-below-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .tercias-below-h-line-0 { top: 0; }
+    .tercias-below-h-line-1 { top: 16.666%; }
+    .tercias-below-h-line-2 { top: 33.333%; }
+    .tercias-below-h-line-3 { top: 50%; }
+    .tercias-below-h-line-4 { top: 66.666%; }
+    .tercias-below-h-line-5 { top: 83.333%; }
+    .tercias-below-h-line-6 { bottom: 0; }
+
+    .larguitas-crossed-box {
+      width: 1.30cm;
+      height: 1.59cm;
+      border: none;
+    }
+
+    .larguitas-crossed-small {
+      width: 1.30cm;
+      height: 0.79cm;
+      border: none;
+    }
+
+    .larguitas-crossed-layout {
+      position: relative;
+    }
+
+    .larguitas-crossed-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-left: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .larguitas-crossed-v-line-0 { left: 0; }
+    .larguitas-crossed-v-line-1 { left: 5%; }
+    .larguitas-crossed-v-line-2 { left: 10%; }
+    .larguitas-crossed-v-line-3 { left: 15%; }
+    .larguitas-crossed-v-line-4 { left: 20%; }
+    .larguitas-crossed-v-line-5 { left: 25%; }
+    .larguitas-crossed-v-line-6 { left: 30%; }
+    .larguitas-crossed-v-line-7 { left: 35%; }
+    .larguitas-crossed-v-line-8 { left: 40%; }
+    .larguitas-crossed-v-line-9 { left: 45%; }
+    .larguitas-crossed-v-line-10 { left: 50%; }
+    .larguitas-crossed-v-line-11 { left: 55%; }
+    .larguitas-crossed-v-line-12 { left: 60%; }
+    .larguitas-crossed-v-line-13 { left: 65%; }
+    .larguitas-crossed-v-line-14 { left: 70%; }
+    .larguitas-crossed-v-line-15 { left: 75%; }
+    .larguitas-crossed-v-line-16 { left: 80%; }
+    .larguitas-crossed-v-line-17 { left: 85%; }
+    .larguitas-crossed-v-line-18 { left: 90%; }
+    .larguitas-crossed-v-line-19 { left: 95%; }
+    .larguitas-crossed-v-line-20 { right: 0; left: auto; }
+
+    .larguitas-crossed-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .larguitas-crossed-h-line-0 { top: 0; }
+    .larguitas-crossed-h-line-1 { top: 33.333%; }
+    .larguitas-crossed-h-line-2 { top: 66.666%; }
+    .larguitas-crossed-h-line-3 { bottom: 0; }
+
+    .box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .linea-interna {
+      position: absolute;
+      left: 2px;
+      width: 586px;
+      height: 0;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      display: none;
+    }
+
+    .linea-1 {
+      top: 74px;
+    }
+
+    .linea-2 {
+      top: 149px;
+    }
+
+    .linea-3 {
+      top: 225px;
+    }
+
+    .linea-4 {
+      top: 301px;
+    }
+
+    .linea-sq-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .linea-sq-h-line-0 { top: 0; }
+    .linea-sq-h-line-1 { top: 16.666%; }
+    .linea-sq-h-line-2 { top: 33.333%; }
+    .linea-sq-h-line-3 { top: 50%; }
+    .linea-sq-h-line-4 { top: 66.666%; }
+    .linea-sq-h-line-5 { top: 83.333%; }
+    .linea-sq-h-line-6 { bottom: 0; }
+
+    .linea-sq-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-left: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .linea-sq-v-line-0 { left: 0; }
+    .linea-sq-v-line-1 { left: 20%; }
+    .linea-sq-v-line-2 { left: 40%; }
+    .linea-sq-v-line-3 { left: 60%; }
+    .linea-sq-v-line-4 { left: 80%; }
+    .linea-sq-v-line-5 { right: 0; left: auto; }
+
+    .table5x6-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .table5x6-h-line-0 { top: 0; }
+    .table5x6-h-line-1 { top: 20%; }
+    .table5x6-h-line-2 { top: 40%; }
+    .table5x6-h-line-3 { top: 60%; }
+    .table5x6-h-line-4 { top: 80%; }
+    .table5x6-h-line-5 { bottom: 0; }
+
+    .table5x6-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-left: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .table5x6-v-line-0 { left: 0; }
+    .table5x6-v-line-1 { left: 16.666%; }
+    .table5x6-v-line-2 { left: 33.333%; }
+    .table5x6-v-line-3 { left: 50%; }
+    .table5x6-v-line-4 { left: 66.666%; }
+    .table5x6-v-line-5 { left: 83.333%; }
+    .table5x6-v-line-6 { right: 0; left: auto; }
+
+    .horizontal-layout {
+      position: relative;
+      min-width: 1px;
+      min-height: 1px;
+    }
+
+    .horizontal-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+      display: none;
+    }
+
+    .horizontal-line-1 {
+      top: 2cm;
+    }
+
+    .horizontal-line-2 {
+      top: 4cm;
+    }
+
+    .horizontal-vertical-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-left: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .horizontal-vertical-line-0 { left: 0; }
+    .horizontal-vertical-line-1 { left: 10%; }
+    .horizontal-vertical-line-2 { left: 20%; }
+    .horizontal-vertical-line-3 { left: 30%; }
+    .horizontal-vertical-line-4 { left: 40%; }
+    .horizontal-vertical-line-5 { left: 50%; }
+    .horizontal-vertical-line-6 { left: 60%; }
+    .horizontal-vertical-line-7 { left: 70%; }
+    .horizontal-vertical-line-8 { left: 80%; }
+    .horizontal-vertical-line-9 { left: 90%; }
+    .horizontal-vertical-line-10 { right: 0; left: auto; }
+
+    .horizontal-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .horizontal-h-line-0 { top: 0; }
+    .horizontal-h-line-1 { top: 33.33%; }
+    .horizontal-h-line-2 { top: 66.66%; }
+    .horizontal-h-line-3 { bottom: 0; }
+
+    .game6-view {
+      margin-top: 24px;
+    }
+
+    .game6-header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .game6-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 0 4px;
+    }
+
+    .game6-subtitle {
+      font-size: 13px;
+      color: #555;
+      margin: 0;
+    }
+
+    .game6-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tables-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px 40px;
+    }
+
+    .table-wrapper {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .table-number {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #333;
+      letter-spacing: 0.5px;
+    }
+
+    .back-button {
+      border: 1px solid #666;
+      background: #fff;
+      color: #222;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background: #f3f3f3;
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      body {
+        padding: 0;
+      }
+
+      .controls {
+        display: none;
+      }
+
+      .game6-actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
+      <option value="traditional">Baraja Tradicional</option>
+      <option value="stylized">Baraja Estilizada</option>
+    </select>
+    <select id="layout-select" class="layout-select" aria-label="Seleccionar tipo de tabla">
+      <option value="square">Tabla cuadrada (5x6)</option>
+      <option value="horizontal">Tabla horizontal</option>
+      <option value="six-by-five">Tabla 6x5</option>
+      <option value="tercias-below">Tercias abajo</option>
+      <option value="larguitas-crossed">Larguitas cruzadas</option>
+    </select>
+    <select id="line-color-select" class="layout-select" aria-label="Seleccionar color de lineas">
+      <option value="#d62828">Lineas Rojas</option>
+      <option value="#111111">Lineas Negras</option>
+      <option value="#1d3557">Lineas Azules</option>
+      <option value="#2a9d8f">Lineas Verdes</option>
+      <option value="#6a4c93">Lineas Moradas</option>
+    </select>
+    <button type="button" class="generate-button" id="generate-table-button">Generar nueva tabla</button>
+    <button type="button" class="print-button" id="print-table-button">Imprimir tabla</button>
+    <button type="button" class="game6-button" id="game6-button">Generar juego de 6</button>
+  </div>
+
+  <div class="table-stage" id="table-stage">
+    <div class="table-scale" id="table-scale">
+      <div class="layout" aria-label="Primeras dos columnas" id="table-layout">
+        <div class="linea-interna linea-1"></div>
+        <div class="linea-interna linea-2"></div>
+        <div class="linea-interna linea-3"></div>
+        <div class="linea-interna linea-4"></div>
+        <div class="table5x6-h-line table5x6-h-line-0"></div>
+        <div class="table5x6-h-line table5x6-h-line-1"></div>
+        <div class="table5x6-h-line table5x6-h-line-2"></div>
+        <div class="table5x6-h-line table5x6-h-line-3"></div>
+        <div class="table5x6-h-line table5x6-h-line-4"></div>
+        <div class="table5x6-h-line table5x6-h-line-5"></div>
+        <div class="table5x6-v-line table5x6-v-line-0"></div>
+        <div class="table5x6-v-line table5x6-v-line-1"></div>
+        <div class="table5x6-v-line table5x6-v-line-2"></div>
+        <div class="table5x6-v-line table5x6-v-line-3"></div>
+        <div class="table5x6-v-line table5x6-v-line-4"></div>
+        <div class="table5x6-v-line table5x6-v-line-5"></div>
+        <div class="table5x6-v-line table5x6-v-line-6"></div>
+
+        <div class="column">
+          <div class="box tall" data-id="1">1</div>
+          <div class="box tall" data-id="2">2</div>
+          <div class="box tall" data-id="3">3</div>
+          <div class="box tall" data-id="4">4</div>
+          <div class="box tall" data-id="5">5</div>
+        </div>
+
+        <div class="column">
+          <div class="box small" data-id="31">31</div> <!-- tercia -->
+          <div class="box tall" data-id="43">43</div>
+          <div class="box tall" data-id="37">37</div><!-- tercia -->
+          <div class="box tall" data-id="31">31</div> <!-- tercia -->
+          <div class="box tall" data-id="44">44</div>
+          <div class="box small" data-id="37">37</div><!-- tercia -->
+        </div>
+
+        <div class="column">
+          <div class="box tall" data-id="6">6</div>
+          <div class="box tall" data-id="7">7</div>
+          <div class="box tall" data-id="8">8</div>
+          <div class="box tall" data-id="9">9</div>
+          <div class="box tall" data-id="10">10</div>
+        </div>
+
+        <div class="column">
+          <div class="box small" data-id="32">32</div> <!-- tercia -->
+          <div class="box tall" data-id="45">45</div>
+          <div class="box tall" data-id="38">38</div> <!-- tercia -->
+          <div class="box tall" data-id="32">32</div> <!-- tercia -->
+          <div class="box tall" data-id="46">46</div>
+          <div class="box small" data-id="38">38</div> <!-- tercia -->
+        </div>
+
+        <div class="column">
+          <div class="box tall" data-id="11">11</div>
+          <div class="box tall" data-id="12">12</div>
+          <div class="box tall" data-id="13">13</div>
+          <div class="box tall" data-id="14">14</div>
+          <div class="box tall" data-id="15">15</div>
+        </div>
+
+        <div class="column">
+          <div class="box small" data-id="33">33</div> <!-- tercia -->
+          <div class="box tall" data-id="47">47</div>
+          <div class="box tall" data-id="39">39</div><!-- tercia -->
+          <div class="box tall" data-id="33">33</div><!-- tercia -->
+          <div class="box tall" data-id="48">48</div>
+          <div class="box small" data-id="39">39</div><!-- tercia -->
+        </div>
+
+        <div class="column">
+          <div class="box tall" data-id="16">16</div>
+          <div class="box tall" data-id="17">17</div>
+          <div class="box tall" data-id="18">18</div>
+          <div class="box tall" data-id="19">19</div>
+          <div class="box tall" data-id="20">20</div>
+        </div>
+
+        <div class="column">
+          <div class="box small" data-id="34">34</div> <!-- tercia -->
+          <div class="box tall" data-id="49">49</div>
+          <div class="box tall" data-id="40">40</div> <!-- tercia -->
+          <div class="box tall" data-id="34">34</div> <!-- tercia -->
+          <div class="box tall" data-id="50">50</div>
+          <div class="box small" data-id="40">40</div> <!-- tercia -->
+        </div>
+
+        <div class="column">
+          <div class="box tall" data-id="21">21</div>
+          <div class="box tall" data-id="22">22</div>
+          <div class="box tall" data-id="23">23</div>
+          <div class="box tall" data-id="24">24</div>
+          <div class="box tall" data-id="25">25</div>
+        </div>
+
+        <div class="column">
+          <div class="box small" data-id="35">35</div> <!-- tercia -->
+          <div class="box tall" data-id="51">51</div>
+          <div class="box tall" data-id="41">41</div> <!-- tercia -->
+          <div class="box tall" data-id="35">35</div> <!-- tercia -->
+          <div class="box tall" data-id="52">52</div>
+          <div class="box small" data-id="41">41</div> <!-- tercia -->
+        </div>
+
+        <div class="column">
+          <div class="box tall" data-id="26">26</div>
+          <div class="box tall" data-id="27">27</div>
+          <div class="box tall" data-id="28">28</div>
+          <div class="box tall" data-id="29">29</div>
+          <div class="box tall" data-id="30">30</div>
+        </div>
+
+        <div class="column">
+          <div class="box small" data-id="36">36</div> <!-- tercia -->
+          <div class="box tall" data-id="53">53</div>
+          <div class="box tall" data-id="42">42</div> <!-- tercia -->
+          <div class="box tall" data-id="36">36</div> <!-- tercia -->
+          <div class="box tall" data-id="54">54</div>
+          <div class="box small" data-id="42">42</div> <!-- tercia -->
+        </div>
+      </div>
+
+      <div class="layout horizontal-layout" aria-label="Tabla horizontal" id="horizontal-layout" hidden>
+        <div class="horizontal-line horizontal-line-1"></div>
+        <div class="horizontal-line horizontal-line-2"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-0"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-1"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-2"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-3"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-4"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-5"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-6"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-7"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-8"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-9"></div>
+        <div class="horizontal-vertical-line horizontal-vertical-line-10"></div>
+        <div class="horizontal-h-line horizontal-h-line-0"></div>
+        <div class="horizontal-h-line horizontal-h-line-1"></div>
+        <div class="horizontal-h-line horizontal-h-line-2"></div>
+        <div class="horizontal-h-line horizontal-h-line-3"></div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="1">1</div> 
+          <div class="box horizontal-box" data-horizontal-id="2">2</div>
+          <div class="box horizontal-box" data-horizontal-id="3">3</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="31">31</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="43">43</div>
+          <div class="box horizontal-box" data-horizontal-id="31">31</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="41">41</div><!-- tercia -->
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="4">4</div>
+          <div class="box horizontal-box" data-horizontal-id="5">5</div>
+          <div class="box horizontal-box" data-horizontal-id="6">6</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="32">32</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="44">44</div>
+          <div class="box horizontal-box" data-horizontal-id="32">32</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="41">41</div><!-- tercia -->
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="7">7</div>
+          <div class="box horizontal-box" data-horizontal-id="8">8</div>
+          <div class="box horizontal-box" data-horizontal-id="9">9</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="33">33</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="45">45</div>
+          <div class="box horizontal-box" data-horizontal-id="33">33</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="41">41</div><!-- tercia -->
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="10">10</div>
+          <div class="box horizontal-box" data-horizontal-id="11">11</div>
+          <div class="box horizontal-box" data-horizontal-id="12">12</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="34">34</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="46">46</div>
+          <div class="box horizontal-box" data-horizontal-id="34">34</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="53">53</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="13">13</div>
+          <div class="box horizontal-box" data-horizontal-id="14">14</div>
+          <div class="box horizontal-box" data-horizontal-id="15">15</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="35">35</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="47">47</div>
+          <div class="box horizontal-box" data-horizontal-id="35">35</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="53">53</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="16">16</div>
+          <div class="box horizontal-box" data-horizontal-id="17">17</div>
+          <div class="box horizontal-box" data-horizontal-id="18">18</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="36">36</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="48">48</div>
+          <div class="box horizontal-box" data-horizontal-id="36">36</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="42">42</div><!-- tercia -->
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="19">19</div>
+          <div class="box horizontal-box" data-horizontal-id="20">20</div>
+          <div class="box horizontal-box" data-horizontal-id="21">21</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="37">37</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="49">49</div>
+          <div class="box horizontal-box" data-horizontal-id="37">37</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="42">42</div><!-- tercia -->
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="22">22</div>
+          <div class="box horizontal-box" data-horizontal-id="23">23</div>
+          <div class="box horizontal-box" data-horizontal-id="24">24</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="38">38</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="50">50</div>
+          <div class="box horizontal-box" data-horizontal-id="38">38</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="42">42</div><!-- tercia -->
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="25">25</div>
+          <div class="box horizontal-box" data-horizontal-id="26">26</div>
+          <div class="box horizontal-box" data-horizontal-id="27">27</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="39">39</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="51">51</div>
+          <div class="box horizontal-box" data-horizontal-id="39">39</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="54">54</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-box" data-horizontal-id="28">28</div>
+          <div class="box horizontal-box" data-horizontal-id="29">29</div>
+          <div class="box horizontal-box" data-horizontal-id="30">30</div>
+        </div>
+        <div class="horizontal-column">
+          <div class="box horizontal-small-box" data-horizontal-id="40">40</div><!-- tercia -->
+          <div class="box horizontal-box" data-horizontal-id="52">52</div>
+          <div class="box horizontal-box" data-horizontal-id="40">40</div><!-- tercia -->
+          <div class="box horizontal-small-box" data-horizontal-id="54">54</div>
+        </div>
+      </div>
+
+      <div class="layout" aria-label="Tabla cuadrada 6x5" id="six-by-five-layout" hidden>
+        <div class="linea-sq-h-line linea-sq-h-line-0"></div>
+        <div class="linea-sq-h-line linea-sq-h-line-1"></div>
+        <div class="linea-sq-h-line linea-sq-h-line-2"></div>
+        <div class="linea-sq-h-line linea-sq-h-line-3"></div>
+        <div class="linea-sq-h-line linea-sq-h-line-4"></div>
+        <div class="linea-sq-h-line linea-sq-h-line-5"></div>
+        <div class="linea-sq-h-line linea-sq-h-line-6"></div>
+        <div class="linea-sq-v-line linea-sq-v-line-0"></div>
+        <div class="linea-sq-v-line linea-sq-v-line-1"></div>
+        <div class="linea-sq-v-line linea-sq-v-line-2"></div>
+        <div class="linea-sq-v-line linea-sq-v-line-3"></div>
+        <div class="linea-sq-v-line linea-sq-v-line-4"></div>
+        <div class="linea-sq-v-line linea-sq-v-line-5"></div>
+        <!-- Bloque 1 -->
+        <div class="column">
+          <div class="box six-by-five-box" data-six-by-five-id="1">1</div>
+          <div class="box six-by-five-box" data-six-by-five-id="2">2</div>
+          <div class="box six-by-five-box" data-six-by-five-id="3">3</div>
+          <div class="box six-by-five-box" data-six-by-five-id="4">4</div>
+          <div class="box six-by-five-box" data-six-by-five-id="5">5</div>
+          <div class="box six-by-five-box" data-six-by-five-id="6">6</div>
+        </div>
+        <div class="column">
+          <div class="box six-by-five-small" data-six-by-five-id="31">31</div>
+          <div class="box six-by-five-box" data-six-by-five-id="32">32</div>
+          <div class="box six-by-five-box" data-six-by-five-id="33">33</div>
+          <div class="box six-by-five-small" data-six-by-five-id="34">34</div>
+          <div class="box six-by-five-small" data-six-by-five-id="35">35</div>
+          <div class="box six-by-five-box" data-six-by-five-id="36">36</div>
+          <div class="box six-by-five-box" data-six-by-five-id="37">37</div>
+          <div class="box six-by-five-small" data-six-by-five-id="38">38</div>
+        </div>
+
+        <!-- Bloque 2 -->
+        <div class="column">
+          <div class="box six-by-five-box" data-six-by-five-id="7">7</div>
+          <div class="box six-by-five-box" data-six-by-five-id="8">8</div>
+          <div class="box six-by-five-box" data-six-by-five-id="9">9</div>
+          <div class="box six-by-five-box" data-six-by-five-id="10">10</div>
+          <div class="box six-by-five-box" data-six-by-five-id="11">11</div>
+          <div class="box six-by-five-box" data-six-by-five-id="12">12</div>
+        </div>
+        <div class="column">
+          <div class="box six-by-five-small" data-six-by-five-id="33">33</div>
+          <div class="box six-by-five-box" data-six-by-five-id="31">31</div>
+          <div class="box six-by-five-box" data-six-by-five-id="34">34</div>
+          <div class="box six-by-five-small" data-six-by-five-id="32">32</div>
+          <div class="box six-by-five-small" data-six-by-five-id="37">37</div>
+          <div class="box six-by-five-box" data-six-by-five-id="35">35</div>
+          <div class="box six-by-five-box" data-six-by-five-id="38">38</div>
+          <div class="box six-by-five-small" data-six-by-five-id="36">36</div>
+        </div>
+
+        <!-- Bloque 3 -->
+        <div class="column">
+          <div class="box six-by-five-box" data-six-by-five-id="13">13</div>
+          <div class="box six-by-five-box" data-six-by-five-id="14">14</div>
+          <div class="box six-by-five-box" data-six-by-five-id="15">15</div>
+          <div class="box six-by-five-box" data-six-by-five-id="16">16</div>
+          <div class="box six-by-five-box" data-six-by-five-id="17">17</div>
+          <div class="box six-by-five-box" data-six-by-five-id="18">18</div>
+        </div>
+        <div class="column">
+          <div class="box six-by-five-small" data-six-by-five-id="39">39</div>
+          <div class="box six-by-five-box" data-six-by-five-id="40">40</div>
+          <div class="box six-by-five-box" data-six-by-five-id="41">41</div>
+          <div class="box six-by-five-small" data-six-by-five-id="42">42</div>
+          <div class="box six-by-five-small" data-six-by-five-id="41">41</div>
+          <div class="box six-by-five-box" data-six-by-five-id="39">39</div>
+          <div class="box six-by-five-box" data-six-by-five-id="42">42</div>
+          <div class="box six-by-five-small" data-six-by-five-id="40">40</div>
+        </div>
+
+        <!-- Bloque 4 -->
+        <div class="column">
+          <div class="box six-by-five-box" data-six-by-five-id="19">19</div>
+          <div class="box six-by-five-box" data-six-by-five-id="20">20</div>
+          <div class="box six-by-five-box" data-six-by-five-id="21">21</div>
+          <div class="box six-by-five-box" data-six-by-five-id="22">22</div>
+          <div class="box six-by-five-box" data-six-by-five-id="23">23</div>
+          <div class="box six-by-five-box" data-six-by-five-id="24">24</div>
+        </div>
+        <div class="column">
+          <div class="box six-by-five-small" data-six-by-five-id="43">43</div>
+          <div class="box six-by-five-box" data-six-by-five-id="44">44</div>
+          <div class="box six-by-five-box" data-six-by-five-id="45">45</div>
+          <div class="box six-by-five-small" data-six-by-five-id="43">43</div>
+          <div class="box six-by-five-small" data-six-by-five-id="54">54</div>
+          <div class="box six-by-five-box" data-six-by-five-id="51">51</div>
+          <div class="box six-by-five-box" data-six-by-five-id="46">46</div>
+          <div class="box six-by-five-small" data-six-by-five-id="54">54</div>
+        </div>
+
+        <!-- Bloque 5 -->
+        <div class="column">
+          <div class="box six-by-five-box" data-six-by-five-id="25">25</div>
+          <div class="box six-by-five-box" data-six-by-five-id="26">26</div>
+          <div class="box six-by-five-box" data-six-by-five-id="27">27</div>
+          <div class="box six-by-five-box" data-six-by-five-id="28">28</div>
+          <div class="box six-by-five-box" data-six-by-five-id="29">29</div>
+          <div class="box six-by-five-box" data-six-by-five-id="30">30</div>
+        </div>
+        <div class="column">
+          <div class="box six-by-five-small" data-six-by-five-id="47">47</div>
+          <div class="box six-by-five-box" data-six-by-five-id="48">48</div>
+          <div class="box six-by-five-box" data-six-by-five-id="49">49</div>
+          <div class="box six-by-five-small" data-six-by-five-id="47">47</div>
+          <div class="box six-by-five-small" data-six-by-five-id="50">50</div>
+          <div class="box six-by-five-box" data-six-by-five-id="52">52</div>
+          <div class="box six-by-five-box" data-six-by-five-id="53">53</div>
+          <div class="box six-by-five-small" data-six-by-five-id="50">50</div>
+        </div>
+      </div>
+
+      <div class="layout tercias-below-layout" aria-label="Tabla tercias abajo" id="tercias-below-layout" hidden>
+        <div class="tercias-below-v-line tercias-below-v-line-0"></div>
+        <div class="tercias-below-v-line tercias-below-v-line-1"></div>
+        <div class="tercias-below-v-line tercias-below-v-line-2"></div>
+        <div class="tercias-below-v-line tercias-below-v-line-3"></div>
+        <div class="tercias-below-v-line tercias-below-v-line-4"></div>
+        <div class="tercias-below-v-line tercias-below-v-line-5"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-0"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-1"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-2"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-3"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-4"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-5"></div>
+        <div class="tercias-below-h-line tercias-below-h-line-6"></div>
+        <div class="column">
+          <div class="box tercias-abajo-box" data-tercias-below-id="1">1</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="2">2</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="3">3</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="4">4</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="5">5</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="6">6</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-small" data-tercias-below-id="31">31</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="32">32</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="33">33</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="34">34</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="32">32</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="34">34</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="31">31</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="33">33</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-box" data-tercias-below-id="7">7</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="8">8</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="9">9</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="10">10</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="11">11</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="12">12</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-small" data-tercias-below-id="35">35</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="36">36</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="37">37</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="38">38</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="36">36</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="38">38</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="35">35</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="37">37</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-box" data-tercias-below-id="13">13</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="14">14</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="15">15</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="16">16</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="17">17</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="18">18</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-small" data-tercias-below-id="39">39</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="40">40</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="41">41</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="42">42</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="40">40</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="42">42</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="39">39</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="41">41</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-box" data-tercias-below-id="19">19</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="20">20</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="21">21</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="22">22</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="23">23</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="24">24</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-small" data-tercias-below-id="43">43</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="44">44</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="45">45</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="43">43</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="46">46</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="47">47</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="48">48</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="46">46</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-box" data-tercias-below-id="25">25</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="26">26</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="27">27</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="28">28</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="29">29</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="30">30</div>
+        </div>
+        <div class="column">
+          <div class="box tercias-abajo-small" data-tercias-below-id="49">49</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="50">50</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="51">51</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="49">49</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="52">52</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="53">53</div>
+          <div class="box tercias-abajo-box" data-tercias-below-id="54">54</div>
+          <div class="box tercias-abajo-small" data-tercias-below-id="52">52</div>
+        </div>
+      </div>
+
+      <div class="layout larguitas-crossed-layout" aria-label="Tabla larguitas cruzadas" id="larguitas-crossed-layout" hidden>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-0"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-1"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-2"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-3"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-4"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-5"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-6"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-7"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-8"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-9"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-10"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-11"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-12"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-13"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-14"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-15"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-16"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-17"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-18"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-19"></div>
+        <div class="larguitas-crossed-v-line larguitas-crossed-v-line-20"></div>
+        <div class="larguitas-crossed-h-line larguitas-crossed-h-line-0"></div>
+        <div class="larguitas-crossed-h-line larguitas-crossed-h-line-1"></div>
+        <div class="larguitas-crossed-h-line larguitas-crossed-h-line-2"></div>
+        <div class="larguitas-crossed-h-line larguitas-crossed-h-line-3"></div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="1">1</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="2">2</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="3">3</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="31">31</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="32">32</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="33">33</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="34">34</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="4">4</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="5">5</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="6">6</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="32">32</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="34">34</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="31">31</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="33">33</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="7">7</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="8">8</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="9">9</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="35">35</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="36">36</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="37">37</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="38">38</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="10">10</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="11">11</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="12">12</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="36">36</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="38">38</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="35">35</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="37">37</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="13">13</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="14">14</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="15">15</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="39">39</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="40">40</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="41">41</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="42">42</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="16">16</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="17">17</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="18">18</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="40">40</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="42">42</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="39">39</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="41">41</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="19">19</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="20">20</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="21">21</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="43">43</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="44">44</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="45">45</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="43">43</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="22">22</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="23">23</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="24">24</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="46">46</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="47">47</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="48">48</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="46">46</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="25">25</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="26">26</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="27">27</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="49">49</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="50">50</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="51">51</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="49">49</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="28">28</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="29">29</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="30">30</div>
+        </div>
+        <div class="column">
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="52">52</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="53">53</div>
+          <div class="box larguitas-crossed-box" data-larguitas-crossed-id="54">54</div>
+          <div class="box larguitas-crossed-small" data-larguitas-crossed-id="52">52</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="game6-view" id="game6-view" hidden>
+    <div class="game6-header">
+      <div>
+        <p class="game6-title">Juego de 6 Tablas</p>
+      </div>
+      <div class="game6-actions">
+        <button type="button" class="print-button" id="print-game6-button">Imprimir juego de 6</button>
+        <button type="button" class="back-button" id="back-from-game6-button">Volver a la tabla normal</button>
+      </div>
+    </div>
+    <div class="tables-grid" id="game6-grid"></div>
+  </section>
+
+  <script>
+    const deckImagePathsByDeck = {
+      traditional: Array.from({ length: 54 }, (_, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        return `Baraja de loteria optimizada/imagen-${number}.jpg`;
+      }),
+      stylized: Array.from({ length: 54 }, (_, index) => {
+        if (index === 0) {
+          return "Baraja estilizada/unnamed.jpg";
+        }
+
+        return `Baraja estilizada/unnamed-${index + 1}.jpg`;
+      })
+    };
+
+    const primaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const secondaryTargetGroups = [
+      [31, 43, 37, 44],
+      [32, 45, 38, 46],
+      [33, 47, 39, 48],
+      [34, 49, 40, 50],
+      [35, 51, 41, 52],
+      [36, 53, 42, 54]
+    ];
+    const horizontalPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const horizontalSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
+    const horizontalTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+    
+    // Tabla 6x5
+    const sixByFivePrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const sixByFiveSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
+    const sixByFiveTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+    const terciasBelowPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const terciasBelowSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
+    const terciasBelowTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+    const larguitasCrossedPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const larguitasCrossedSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
+    const larguitasCrossedTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+
+    function shuffle(array) {
+      const result = [...array];
+
+      for (let index = result.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [result[index], result[randomIndex]] = [result[randomIndex], result[index]];
+      }
+
+      return result;
+    }
+
+    function getSelectedDeckImagePaths() {
+      const selectedDeck = document.getElementById("deck-select").value;
+      return deckImagePathsByDeck[selectedDeck] || deckImagePathsByDeck.traditional;
+    }
+
+    function setImageByAttribute(attributeName, id, imagePath) {
+      const boxes = document.querySelectorAll(`[${attributeName}="${id}"]`);
+
+      boxes.forEach((box) => {
+        box.innerHTML = `<img src="${imagePath}" alt="Carta de loteria ${id}" loading="eager" decoding="async">`;
+      });
+    }
+
+    function setImageByDataId(id, imagePath) {
+      setImageByAttribute("data-id", id, imagePath);
+    }
+
+    function setImageByHorizontalId(id, imagePath) {
+      setImageByAttribute("data-horizontal-id", id, imagePath);
+    }
+
+    function setImageBySixByFiveId(id, imagePath) {
+      setImageByAttribute("data-six-by-five-id", id, imagePath);
+    }
+
+    function setImageByTerciasBelowId(id, imagePath) {
+      setImageByAttribute("data-tercias-below-id", id, imagePath);
+    }
+
+    function setImageByLarguitasCrossedId(id, imagePath) {
+      setImageByAttribute("data-larguitas-crossed-id", id, imagePath);
+    }
+
+    function createTableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const shuffledImages = shuffle(imagePaths);
+      const primaryImages = shuffledImages.slice(0, primaryTargetIds.length);
+      let remainingImages = shuffledImages.slice(primaryTargetIds.length);
+      const assignment = {};
+
+      primaryTargetIds.forEach((id, index) => {
+        assignment[id] = primaryImages[index];
+      });
+
+      secondaryTargetGroups.forEach((group) => {
+        const selectedImages = shuffle(remainingImages).slice(0, group.length);
+        const selectedImageSet = new Set(selectedImages);
+
+        group.forEach((id, index) => {
+          assignment[id] = selectedImages[index];
+        });
+
+        remainingImages = remainingImages.filter((imagePath) => !selectedImageSet.has(imagePath));
+      });
+
+      return assignment;
+    }
+
+    function applyAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByDataId(id, imagePath);
+      });
+    }
+
+    function createHorizontalTableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const shuffledImages = shuffle(imagePaths);
+      const assignment = {};
+
+      horizontalPrimaryTargetIds.forEach((id, index) => {
+        assignment[id] = shuffledImages[index];
+      });
+
+      const remainingAfterPrimary = shuffledImages.slice(horizontalPrimaryTargetIds.length);
+      const secondaryImages = shuffle(remainingAfterPrimary).slice(0, horizontalSecondaryTargetIds.length);
+
+      horizontalSecondaryTargetIds.forEach((id, index) => {
+        assignment[id] = secondaryImages[index];
+      });
+
+      const secondaryImageSet = new Set(secondaryImages);
+      const remainingAfterSecondary = remainingAfterPrimary.filter(
+        (imagePath) => !secondaryImageSet.has(imagePath)
+      );
+      const tertiaryImages = shuffle(remainingAfterSecondary);
+
+      horizontalTertiaryTargetIds.forEach((id, index) => {
+        assignment[id] = tertiaryImages[index];
+      });
+
+      return assignment;
+    }
+
+    function applyHorizontalAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByHorizontalId(id, imagePath);
+      });
+    }
+
+    function createSixByFiveTableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const shuffledImages = shuffle(imagePaths);
+      const assignment = {};
+
+      // Primarios 1-30: 30 cartas aleatorias
+      const primaryImages = shuffledImages.slice(0, 30);
+      sixByFivePrimaryTargetIds.forEach((id, index) => {
+        assignment[id] = primaryImages[index];
+      });
+
+      // Descartar las 30 que ya escogimos
+      let remaining = shuffledImages.slice(30);
+
+      // Secundarios 31-42: 12 de las 24 que sobraban
+      const secondaryImages = shuffle(remaining).slice(0, 12);
+      sixByFiveSecondaryTargetIds.forEach((id, index) => {
+        assignment[id] = secondaryImages[index];
+      });
+
+      // Descartar las 12 que acabamos de usar
+      const secondaryImageSet = new Set(secondaryImages);
+      remaining = remaining.filter((imagePath) => !secondaryImageSet.has(imagePath));
+
+      // Terciarios 43-54: las 12 que sobraron
+      const tertiaryImages = shuffle(remaining);
+      sixByFiveTertiaryTargetIds.forEach((id, index) => {
+        assignment[id] = tertiaryImages[index];
+      });
+
+      return assignment;
+    }
+
+    function applySixByFiveAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageBySixByFiveId(id, imagePath);
+      });
+    }
+
+    function createTerciasBelowTableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const shuffledImages = shuffle(imagePaths);
+      const assignment = {};
+
+      const primaryImages = shuffledImages.slice(0, 30);
+      terciasBelowPrimaryTargetIds.forEach((id, index) => {
+        assignment[id] = primaryImages[index];
+      });
+
+      let remaining = shuffledImages.slice(30);
+
+      const secondaryImages = shuffle(remaining).slice(0, 12);
+      terciasBelowSecondaryTargetIds.forEach((id, index) => {
+        assignment[id] = secondaryImages[index];
+      });
+
+      const secondaryImageSet = new Set(secondaryImages);
+      remaining = remaining.filter((imagePath) => !secondaryImageSet.has(imagePath));
+
+      const tertiaryImages = shuffle(remaining);
+      terciasBelowTertiaryTargetIds.forEach((id, index) => {
+        assignment[id] = tertiaryImages[index];
+      });
+
+      return assignment;
+    }
+
+    function applyTerciasBelowAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByTerciasBelowId(id, imagePath);
+      });
+    }
+
+    function createLarguitasCrossedTableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const shuffledImages = shuffle(imagePaths);
+      const assignment = {};
+
+      const primaryImages = shuffledImages.slice(0, 30);
+      larguitasCrossedPrimaryTargetIds.forEach((id, index) => {
+        assignment[id] = primaryImages[index];
+      });
+
+      let remaining = shuffledImages.slice(30);
+
+      const secondaryImages = shuffle(remaining).slice(0, 12);
+      larguitasCrossedSecondaryTargetIds.forEach((id, index) => {
+        assignment[id] = secondaryImages[index];
+      });
+
+      const secondaryImageSet = new Set(secondaryImages);
+      remaining = remaining.filter((imagePath) => !secondaryImageSet.has(imagePath));
+
+      const tertiaryImages = shuffle(remaining);
+      larguitasCrossedTertiaryTargetIds.forEach((id, index) => {
+        assignment[id] = tertiaryImages[index];
+      });
+
+      return assignment;
+    }
+
+    function applyLarguitasCrossedAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByLarguitasCrossedId(id, imagePath);
+      });
+    }
+
+    function generateNewTable() {
+      const selectedLayout = document.getElementById("layout-select").value;
+      showMainTableView(false);
+
+      if (selectedLayout === "horizontal") {
+        applyHorizontalAssignmentToDocument(createHorizontalTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      if (selectedLayout === "six-by-five") {
+        applySixByFiveAssignmentToDocument(createSixByFiveTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      if (selectedLayout === "tercias-below") {
+        applyTerciasBelowAssignmentToDocument(createTerciasBelowTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      if (selectedLayout === "larguitas-crossed") {
+        applyLarguitasCrossedAssignmentToDocument(createLarguitasCrossedTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      applyAssignmentToDocument(createTableAssignment());
+      updateTableScale();
+    }
+
+    function getActiveLayout() {
+      return document.querySelector(".table-scale > .layout:not([hidden])");
+    }
+
+    function applyLineColor(color) {
+      document.documentElement.style.setProperty("--line-color", color);
+    }
+
+    function setActiveLayout(layoutType) {
+      const tableLayout = document.getElementById("table-layout");
+      const horizontalLayout = document.getElementById("horizontal-layout");
+      const sixByFiveLayout = document.getElementById("six-by-five-layout");
+      const terciasBelowLayout = document.getElementById("tercias-below-layout");
+      const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
+      const generateButton = document.getElementById("generate-table-button");
+
+      const isSquare = layoutType === "square";
+      const isHorizontal = layoutType === "horizontal";
+      const isSixByFive = layoutType === "six-by-five";
+      const isTerciasBelow = layoutType === "tercias-below";
+      const isLarguitasCrossed = layoutType === "larguitas-crossed";
+
+      tableLayout.hidden = !isSquare;
+      horizontalLayout.hidden = !isHorizontal;
+      sixByFiveLayout.hidden = !isSixByFive;
+      terciasBelowLayout.hidden = !isTerciasBelow;
+      larguitasCrossedLayout.hidden = !isLarguitasCrossed;
+      generateButton.disabled = false;
+      generateButton.style.opacity = "1";
+      generateButton.style.cursor = "pointer";
+
+      updateTableScale();
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // JUEGO DE 6: genera 6 tablas donde las 54 imágenes aparecen
+    //             al menos una vez en los cuadritos de "tercia" (IDs 31-42)
+    // ─────────────────────────────────────────────────────────────────
+
+    // IDs de tercia (aparecen duplicados físicamente en la columna)
+    // Cada grupo secundario tiene la forma: [tercia1, medio1, tercia2, medio2]
+    // Los IDs tercia son: 31,37 / 32,38 / 33,39 / 34,40 / 35,41 / 36,42
+    const TERCIA_IDS = [31, 37, 32, 38, 33, 39, 34, 40, 35, 41, 36, 42]; // 12 por tabla
+    const NON_TERCIA_SECONDARY_IDS = [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54]; // 12 por tabla
+
+    /**
+     * Crea 6 asignaciones donde los IDs tercia de las 6 tablas
+     * colectivamente contienen las 54 imágenes (distribución cíclica).
+     * 6 tablas × 12 tercias = 72 slots → 54 únicas + 18 repetidas.
+     */
+    function createGameOf6Assignments() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const shuffled = shuffle([...imagePaths]); // 54 imágenes barajadas
+
+      // Distribución cíclica: tabla i toma índices [i*12 .. i*12+11] mod 54
+      // Así las 54 imágenes siempre están cubiertas en las 6 tablas.
+      const terciaGroups = Array.from({ length: 6 }, (_, tableIdx) => {
+        const group = Array.from({ length: 12 }, (_, j) => shuffled[(tableIdx * 12 + j) % 54]);
+        return shuffle(group); // barajar internamente
+      });
+
+      return terciaGroups.map((terciaImages) => {
+        const assignment = {};
+        const terciaSet = new Set(terciaImages);
+
+        // Asignar imágenes a IDs tercia (31,37,32,38,...,36,42)
+        TERCIA_IDS.forEach((id, i) => {
+          assignment[id] = terciaImages[i];
+        });
+
+        // Las 42 imágenes restantes (no usadas en tercia de esta tabla)
+        // Se usan para primarios (1-30) y secundarios no-tercia (43-54)
+        const nonTerciaImages = shuffle(imagePaths.filter((img) => !terciaSet.has(img)));
+        // nonTerciaImages.length = 54 - (unique count in terciaImages)
+        // Como terciaImages son 12 únicas (por diseño cíclico), = 42
+
+        1-30
+        for (let i = 0; i < 30; i++) {
+          assignment[i + 1] = nonTerciaImages[i];
+        }
+
+        // Secundarios no-tercia 43-54
+        NON_TERCIA_SECONDARY_IDS.forEach((id, i) => {
+          assignment[id] = nonTerciaImages[30 + i];
+        });
+
+        return assignment;
+      });
+    }
+
+    /** Genera el HTML de una sola tabla con imágenes ya incrustadas */
+    function buildSingleTableHTML(assignment, tableNumber, lineColor) {
+      function boxImg(id, cls) {
+        const src = assignment[id] || "";
+        return `<div class="box ${cls}" data-id="${id}">` +
+          (src ? `<img src="${src}" alt="Carta ${id}">` : id) +
+          `</div>`;
+      }
+
+      const primaryGroups = [
+        [1,2,3,4,5], [6,7,8,9,10], [11,12,13,14,15],
+        [16,17,18,19,20], [21,22,23,24,25], [26,27,28,29,30]
+      ];
+      const secondaryDefs = [
+        { t1:31, m1:43, t2:37, m2:44 },
+        { t1:32, m1:45, t2:38, m2:46 },
+        { t1:33, m1:47, t2:39, m2:48 },
+        { t1:34, m1:49, t2:40, m2:50 },
+        { t1:35, m1:51, t2:41, m2:52 },
+        { t1:36, m1:53, t2:42, m2:54 }
+      ];
+
+      let cols = "";
+      for (let i = 0; i < 6; i++) {
+        // Columna primaria (5 cuadritos grandes)
+        cols += `<div class="column">` +
+          primaryGroups[i].map((id) => boxImg(id, "tall")).join("") +
+          `</div>`;
+
+        // Columna secundaria (tercia1 small, medio1, tercia2, tercia1, medio2, tercia2 small)
+        const s = secondaryDefs[i];
+        cols += `<div class="column">` +
+          boxImg(s.t1, "small") +
+          boxImg(s.m1, "tall") +
+          boxImg(s.t2, "tall") +
+          boxImg(s.t1, "tall") +
+          boxImg(s.m2, "tall") +
+          boxImg(s.t2, "small") +
+          `</div>`;
+      }
+
+      return `
+        <div class="table-wrapper">
+          <div class="table-number">Tabla ${tableNumber}</div>
+          <div class="layout">
+            <div class="linea-interna linea-1"></div>
+            <div class="linea-interna linea-2"></div>
+            <div class="linea-interna linea-3"></div>
+            <div class="linea-interna linea-4"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-0"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-1"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-2"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-3"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-4"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-5"></div>
+            <div class="linea-sq-h-line linea-sq-h-line-6"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-0"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-1"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-2"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-3"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-4"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-5"></div>
+            <div class="linea-sq-v-line linea-sq-v-line-6"></div>
+            ${cols}
+          </div>
+        </div>`;
+    }
+
+    function renderGameOf6(assignments, layoutType) {
+      const layoutMap = {
+        square: document.getElementById("table-layout"),
+        horizontal: document.getElementById("horizontal-layout"),
+        "six-by-five": document.getElementById("six-by-five-layout"),
+        "tercias-below": document.getElementById("tercias-below-layout"),
+        "larguitas-crossed": document.getElementById("larguitas-crossed-layout")
+      };
+      const sourceLayout = layoutMap[layoutType] || layoutMap.square;
+      const game6View = document.getElementById("game6-view");
+      const game6Grid = document.getElementById("game6-grid");
+      const tableStage = document.getElementById("table-stage");
+
+      game6Grid.innerHTML = "";
+
+      assignments.forEach((assignment, index) => {
+        const layoutClone = sourceLayout.cloneNode(true);
+        layoutClone.removeAttribute("id");
+
+        const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-larguitas-crossed-id]");
+        boxes.forEach((box) => {
+          const id = box.getAttribute("data-id")
+            || box.getAttribute("data-horizontal-id")
+            || box.getAttribute("data-six-by-five-id")
+            || box.getAttribute("data-tercias-below-id")
+            || box.getAttribute("data-larguitas-crossed-id");
+          const src = assignment[id];
+          box.innerHTML = src ? `<img src="${src}" alt="Carta ${id}">` : id;
+        });
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "table-wrapper";
+        const numberLabel = document.createElement("div");
+        numberLabel.className = "table-number";
+        numberLabel.textContent = `Tabla ${index + 1}`;
+        wrapper.appendChild(numberLabel);
+        wrapper.appendChild(layoutClone);
+        game6Grid.appendChild(wrapper);
+      });
+
+      tableStage.hidden = true;
+      game6View.hidden = false;
+
+      if (typeof window.scrollTo === "function") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function showMainTableView(shouldScroll = true) {
+      const game6View = document.getElementById("game6-view");
+      const tableStage = document.getElementById("table-stage");
+
+      game6View.hidden = true;
+      tableStage.hidden = false;
+      updateTableScale();
+
+      if (shouldScroll && typeof window.scrollTo === "function") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function getSelectedLayoutType() {
+      return document.getElementById("layout-select").value;
+    }
+
+    function generateGameOf6() {
+      const selectedLayout = getSelectedLayoutType();
+      const assignments = createGameOf6Assignments();
+      renderGameOf6(assignments, selectedLayout);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+
+    function updateTableScale() {
+      const stage = document.getElementById("table-stage");
+      const scaleElement = document.getElementById("table-scale");
+      const layout = getActiveLayout();
+
+      scaleElement.style.setProperty("--table-scale", "1");
+
+      if (!layout) {
+        stage.style.height = "0px";
+        return;
+      }
+
+      const availableWidth = stage.clientWidth;
+      const tableWidth = layout.offsetWidth;
+      const scale = tableWidth > availableWidth ? availableWidth / tableWidth : 1;
+
+      scaleElement.style.setProperty("--table-scale", scale);
+      stage.style.height = `${layout.offsetHeight * scale}px`;
+    }
+
+    function initializeApp() {
+      const generateButton = document.getElementById("generate-table-button");
+      const printButton = document.getElementById("print-table-button");
+      const layoutSelect = document.getElementById("layout-select");
+      const deckSelect = document.getElementById("deck-select");
+      const lineColorSelect = document.getElementById("line-color-select");
+      const game6Button = document.getElementById("game6-button");
+      const printGame6Button = document.getElementById("print-game6-button");
+      const backFromGame6Button = document.getElementById("back-from-game6-button");
+
+      if (
+        !generateButton ||
+        !printButton ||
+        !layoutSelect ||
+        !deckSelect ||
+        !lineColorSelect ||
+        !game6Button ||
+        !printGame6Button ||
+        !backFromGame6Button
+      ) {
+        console.error("No se pudieron inicializar los controles de la tabla.");
+        return;
+      }
+
+      generateButton.addEventListener("click", generateNewTable);
+      printButton.addEventListener("click", () => window.print());
+      layoutSelect.addEventListener("change", (event) => {
+        setActiveLayout(event.target.value);
+        generateNewTable();
+      });
+      deckSelect.addEventListener("change", generateNewTable);
+      lineColorSelect.addEventListener("change", (event) => applyLineColor(event.target.value));
+      game6Button.addEventListener("click", generateGameOf6);
+      printGame6Button.addEventListener("click", () => window.print());
+      backFromGame6Button.addEventListener("click", showMainTableView);
+
+      setActiveLayout(layoutSelect.value);
+      applyLineColor(lineColorSelect.value);
+      generateNewTable();
+      window.addEventListener("load", updateTableScale);
+      window.addEventListener("resize", updateTableScale);
+      updateTableScale();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeApp, { once: true });
+    } else {
+      initializeApp();
+    }
+  </script>
+</body>
+</html>
