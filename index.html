@@ -51,6 +51,59 @@
       margin-bottom: 16px;
     }
 
+    .login-screen {
+      min-height: calc(100vh - 32px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      width: min(360px, 100%);
+      border: 1px solid #d9d9d9;
+      padding: 24px;
+      background: #fff;
+    }
+
+    .login-title {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .login-subtitle {
+      margin: 0 0 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .login-input {
+      width: 100%;
+      border: 1px solid #111;
+      padding: 12px 14px;
+      font-size: 16px;
+      background: #fff;
+      color: #111;
+    }
+
+    .login-error {
+      min-height: 20px;
+      margin: 0;
+      font-size: 14px;
+      color: #d62828;
+    }
+
+    .app-shell[hidden] {
+      display: none !important;
+    }
+
     .generate-button {
       border: 1px solid #111;
       background: #111;
@@ -526,32 +579,46 @@
   </style>
 </head>
 <body>
-  <div class="controls">
-    <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
-      <option value="traditional">Baraja Tradicional</option>
-    </select>
-    <select id="layout-select" class="layout-select" aria-label="Seleccionar tipo de tabla">
-      <option value="square">Tabla cuadrada (5x6)</option>
-      <option value="horizontal">Tabla horizontal</option>
-      <option value="six-by-five">Tabla 6x5</option>
-      <option value="tercias-below">Tercias abajo</option>
-      <option value="larguitas-crossed">Larguitas cruzadas</option>
-    </select>
-    <select id="line-color-select" class="layout-select" aria-label="Seleccionar color de lineas">
-      <option value="#d62828">Lineas Rojas</option>
-      <option value="#111111">Lineas Negras</option>
-      <option value="#ffffff">Lineas Blancas</option>
-      <option value="#1d3557">Lineas Azules</option>
-      <option value="#2a9d8f">Lineas Verdes</option>
-      <option value="#6a4c93">Lineas Moradas</option>
-    </select>
-    <button type="button" class="generate-button" id="generate-table-button">Generar nueva tabla</button>
-    <button type="button" class="print-button" id="print-table-button">Imprimir tabla</button>
-    <button type="button" class="game6-button" id="game6-button">Generar juego de 6</button>
-  </div>
+  <section class="login-screen" id="login-screen">
+    <div class="login-card">
+      <h1 class="login-title">Acceso</h1>
+      <p class="login-subtitle">Ingresa tu usuario y contrasena para entrar.</p>
+      <form class="login-form" id="login-form">
+        <input id="login-username" class="login-input" type="text" placeholder="Usuario" autocomplete="username" required>
+        <input id="login-password" class="login-input" type="password" placeholder="Contrasena" autocomplete="current-password" required>
+        <button type="submit" class="generate-button">Entrar</button>
+        <p class="login-error" id="login-error" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
 
-  <div class="table-stage" id="table-stage">
-    <div class="table-scale" id="table-scale">
+  <div class="app-shell" id="app-shell" hidden>
+    <div class="controls">
+      <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
+        <option value="traditional">Baraja Tradicional</option>
+      </select>
+      <select id="layout-select" class="layout-select" aria-label="Seleccionar tipo de tabla">
+        <option value="square">Tabla cuadrada (5x6)</option>
+        <option value="horizontal">Tabla horizontal</option>
+        <option value="six-by-five">Tabla 6x5</option>
+        <option value="tercias-below">Tercias abajo</option>
+        <option value="larguitas-crossed">Larguitas cruzadas</option>
+      </select>
+      <select id="line-color-select" class="layout-select" aria-label="Seleccionar color de lineas">
+        <option value="#d62828">Lineas Rojas</option>
+        <option value="#111111">Lineas Negras</option>
+        <option value="#ffffff">Lineas Blancas</option>
+        <option value="#1d3557">Lineas Azules</option>
+        <option value="#2a9d8f">Lineas Verdes</option>
+        <option value="#6a4c93">Lineas Moradas</option>
+      </select>
+      <button type="button" class="generate-button" id="generate-table-button">Generar nueva tabla</button>
+      <button type="button" class="print-button" id="print-table-button">Imprimir tabla</button>
+      <button type="button" class="game6-button" id="game6-button">Generar juego de 6</button>
+    </div>
+
+    <div class="table-stage" id="table-stage">
+      <div class="table-scale" id="table-scale">
       <div class="layout" aria-label="Primeras dos columnas" id="table-layout">
         <div class="linea-interna linea-1"></div>
         <div class="linea-interna linea-2"></div>
@@ -1179,6 +1246,9 @@
   </section>
 
   <script>
+    const LOGIN_USERNAME = "MARYVALDEZ";
+    const LOGIN_PASSWORD = "123";
+
     const deckImagePathsByDeck = {
       traditional: Array.from({ length: 54 }, (_, index) => {
         const number = String(index + 1).padStart(2, "0");
@@ -1761,10 +1831,52 @@
       updateTableScale();
     }
 
+    function initializeLogin() {
+      const loginScreen = document.getElementById("login-screen");
+      const appShell = document.getElementById("app-shell");
+      const loginForm = document.getElementById("login-form");
+      const usernameInput = document.getElementById("login-username");
+      const passwordInput = document.getElementById("login-password");
+      const errorMessage = document.getElementById("login-error");
+
+      if (
+        !loginScreen ||
+        !appShell ||
+        !loginForm ||
+        !usernameInput ||
+        !passwordInput ||
+        !errorMessage
+      ) {
+        console.error("No se pudo inicializar el acceso.");
+        return;
+      }
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        if (username === LOGIN_USERNAME && password === LOGIN_PASSWORD) {
+          errorMessage.textContent = "";
+          loginScreen.hidden = true;
+          appShell.hidden = false;
+          initializeApp();
+          return;
+        }
+
+        errorMessage.textContent = "Usuario o contrasena incorrectos.";
+        passwordInput.value = "";
+        passwordInput.focus();
+      });
+
+      usernameInput.focus();
+    }
+
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeApp, { once: true });
+      document.addEventListener("DOMContentLoaded", initializeLogin, { once: true });
     } else {
-      initializeApp();
+      initializeLogin();
     }
   </script>
 </body>
