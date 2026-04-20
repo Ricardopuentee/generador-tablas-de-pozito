@@ -2797,6 +2797,9 @@
       exportWrapper.style.padding = "0";
       exportWrapper.style.margin = "0";
       exportWrapper.style.background = "#ffffff";
+      exportWrapper.style.display = "inline-block";
+      exportWrapper.style.width = "max-content";
+      exportWrapper.style.overflow = "visible";
       exportWrapper.appendChild(layoutClone);
       document.body.appendChild(exportWrapper);
 
@@ -2810,9 +2813,16 @@
 
         await waitForImagesInElement(layoutClone);
 
+        const exportWidth = Math.ceil(Math.max(layoutClone.scrollWidth, layoutClone.offsetWidth, layoutClone.getBoundingClientRect().width));
+        const exportHeight = Math.ceil(Math.max(layoutClone.scrollHeight, layoutClone.offsetHeight, layoutClone.getBoundingClientRect().height));
+
         const canvas = await window.html2canvas(layoutClone, {
           backgroundColor: "#ffffff",
           scale: 3,
+          width: exportWidth,
+          height: exportHeight,
+          windowWidth: exportWidth,
+          windowHeight: exportHeight,
           useCORS: true,
           allowTaint: true
         });
