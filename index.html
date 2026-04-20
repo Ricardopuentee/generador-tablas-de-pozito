@@ -482,6 +482,30 @@ git <head>
       color: var(--text-secondary);
     }
 
+    .export-note {
+      padding: 12px 14px;
+      border: 1px solid rgba(26, 42, 74, 0.08);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.5;
+      box-shadow: 0 4px 14px rgba(17, 24, 39, 0.05);
+    }
+
+    .export-note p {
+      margin: 0;
+    }
+
+    .export-note strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .temporarily-hidden {
+      display: none !important;
+    }
+
     /* Table card */
     .table-card {
       display: grid;
@@ -1040,6 +1064,10 @@ git <head>
         text-align: left;
       }
 
+      .export-note {
+        font-size: 12px;
+      }
+
       .table-card {
         padding: 18px;
       }
@@ -1243,7 +1271,7 @@ git <head>
           </div>
         </details>
         <button type="button" class="generate-button" id="generate-table-button">Generar nueva tabla</button>
-        <button type="button" class="print-button" id="print-table-button">Imprimir tabla</button>
+        <button type="button" class="print-button temporarily-hidden" id="print-table-button" aria-hidden="true">Imprimir tabla</button>
         <button type="button" class="print-button" id="download-image-button">Descargar PNG</button>
       </div>
 
@@ -1259,6 +1287,9 @@ git <head>
           <p class="game6-launch-title">Modo Juego</p>
           <p class="game6-launch-text">Crea una serie lista para imprimir con seis tablas diferentes.</p>
         </div>
+      </div>
+      <div class="export-note" aria-label="Instrucciones para guardar PDF">
+        <p><strong>Para PDF:</strong> descarga el PNG, colócalo en una diapositiva de PowerPoint ajustándolo al tamaño completo y después usa <strong>Archivo &gt; Exportar</strong> o <strong>Guardar como PDF</strong>.</p>
       </div>
     </section>
 
@@ -1990,10 +2021,13 @@ git <head>
         <p class="game6-title">Juego de 6 Tablas</p>
       </div>
       <div class="game6-actions">
-        <button type="button" class="print-button" id="print-game6-button">Imprimir juego de 6</button>
+        <button type="button" class="print-button temporarily-hidden" id="print-game6-button" aria-hidden="true">Imprimir juego de 6</button>
         <button type="button" class="print-button" id="download-game6-image-button">Descargar juego de 6 PNG</button>
         <button type="button" class="back-button" id="back-from-game6-button">Volver a la tabla normal</button>
       </div>
+    </div>
+    <div class="export-note" aria-label="Instrucciones para guardar juego de 6 en PDF">
+      <p><strong>Para PDF:</strong> descarga la imagen del juego de 6, insértala en PowerPoint y expórtala como PDF cuando el acomodo se vea correcto.</p>
     </div>
     <div class="tables-grid" id="game6-grid"></div>
     <div class="print-sheet" id="game6-print-sheet"></div>
