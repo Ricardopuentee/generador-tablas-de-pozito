@@ -3,26 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabla de loteria</title>
+  <title>🎴 Tabla de loteria</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+    /* Base */
     :root {
       --line-color: #d62828;
+      --accent: #c0392b;
+      --accent-dark: #9f2f24;
+      --accent-soft: rgba(192, 57, 43, 0.12);
+      --navy: #1a2a4a;
+      --navy-soft: rgba(26, 42, 74, 0.12);
+      --surface: #ffffff;
+      --surface-muted: #f8f8f8;
+      --page-bg: #f4f4f6;
+      --text-primary: #171717;
+      --text-secondary: #5c6470;
+      --border-soft: rgba(23, 23, 23, 0.1);
+      --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 10px 30px rgba(17, 24, 39, 0.12);
+      --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.18);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      background: #fff;
-      font-family: Arial, Helvetica, sans-serif;
-      padding: 16px;
+      min-height: 100vh;
+      background-color: var(--page-bg);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='42' viewBox='0 0 42 42'%3E%3Cg fill='none' stroke='rgba(26,42,74,0.08)' stroke-width='1'%3E%3Cpath d='M21 0 42 21 21 42 0 21Z'/%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(circle at top, rgba(255,255,255,0.9), rgba(244,244,246,0.96));
+      color: var(--text-primary);
+      font-family: "Inter", sans-serif;
+      padding: 24px 16px 40px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(244,244,246,0) 35%);
+    }
+
+    button,
+    select,
+    summary,
+    input {
+      font-family: "Inter", sans-serif;
+      transition: all 0.2s ease;
+    }
+
+    button,
+    select,
+    summary {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    select:focus-visible,
+    summary:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .app-shell,
+    .game6-view {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .app-shell {
+      display: grid;
+      gap: 24px;
     }
 
     .table-stage {
       width: 100%;
-      overflow: hidden;
+      overflow: auto;
     }
 
     .table-scale {
@@ -43,12 +112,28 @@
       display: none !important;
     }
 
+    /* Toolbar */
+    .toolbar-shell {
+      display: grid;
+      gap: 16px;
+      align-items: start;
+    }
+
     .controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      padding: 16px 24px;
+      background: rgba(248, 248, 248, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .controls > * {
+      min-height: 48px;
     }
 
     .login-screen {
@@ -60,22 +145,27 @@
 
     .login-card {
       width: min(360px, 100%);
-      border: 1px solid #d9d9d9;
-      padding: 24px;
-      background: #fff;
+      border: 1px solid var(--border-soft);
+      border-radius: 22px;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow-medium);
+      backdrop-filter: blur(12px);
     }
 
     .login-title {
       margin: 0 0 8px;
-      font-size: 28px;
-      font-weight: 700;
-      color: #111;
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.04em;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-primary);
     }
 
     .login-subtitle {
       margin: 0 0 20px;
       font-size: 14px;
-      color: #555;
+      color: var(--text-secondary);
     }
 
     .login-form {
@@ -86,70 +176,350 @@
 
     .login-input {
       width: 100%;
-      border: 1px solid #111;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
       padding: 12px 14px;
       font-size: 16px;
       background: #fff;
-      color: #111;
+      color: var(--text-primary);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
     .login-error {
       min-height: 20px;
       margin: 0;
       font-size: 14px;
-      color: #d62828;
+      color: var(--accent);
     }
 
     .app-shell[hidden] {
       display: none !important;
     }
 
-    .generate-button {
-      border: 1px solid #111;
-      background: #111;
-      color: #fff;
-      padding: 10px 16px;
+    /* Buttons and selects */
+    .generate-button,
+    .print-button,
+    .game6-button,
+    .layout-select,
+    .back-button {
+      border-radius: 10px;
       font-size: 14px;
-      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .generate-button {
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, #d64e3c 0%, var(--accent) 100%);
+      color: #fff;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(192, 57, 43, 0.24);
     }
 
     .generate-button:hover {
-      background: #333;
+      transform: scale(1.03);
+      box-shadow: 0 14px 28px rgba(192, 57, 43, 0.28);
+      background: linear-gradient(135deg, #df5c48 0%, var(--accent-dark) 100%);
     }
 
     .print-button {
-      border: 1px solid #111;
-      background: #fff;
-      color: #111;
-      padding: 10px 16px;
-      font-size: 14px;
-      cursor: pointer;
+      border: 1px solid var(--accent);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--accent);
+      padding: 12px 16px;
+      box-shadow: 0 4px 14px rgba(192, 57, 43, 0.08);
     }
 
     .print-button:hover {
-      background: #f3f3f3;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(192, 57, 43, 0.18);
+      transform: translateY(-1px);
     }
 
     .game6-button {
-      border: 1px solid #1d3557;
-      background: #1d3557;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #15233e;
+      background: linear-gradient(145deg, #1a2a4a 0%, #22375f 100%);
       color: #fff;
-      padding: 10px 16px;
-      font-size: 14px;
-      cursor: pointer;
+      padding: 16px 18px;
+      box-shadow: 0 14px 28px rgba(26, 42, 74, 0.18);
     }
 
     .game6-button:hover {
-      background: #2a4a70;
+      transform: translateY(-2px);
+      box-shadow: 0 18px 30px rgba(26, 42, 74, 0.24);
+      background: linear-gradient(145deg, #21345b 0%, #2a4677 100%);
     }
 
     .layout-select {
-      border: 1px solid #111;
-      background: #fff;
-      color: #111;
-      padding: 10px 16px;
+      appearance: none;
+      border: 1px solid rgba(26, 42, 74, 0.12);
+      background-color: #fff;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%231a2a4a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,246,248,0.96));
+      background-repeat: no-repeat, repeat;
+      background-position: right 14px center, center;
+      background-size: 14px, 100%;
+      color: var(--text-primary);
+      padding: 10px 42px 10px 16px;
       font-size: 14px;
-      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(17, 24, 39, 0.06);
+    }
+
+    .layout-select:hover {
+      border-color: var(--accent);
+      box-shadow: 0 10px 24px rgba(192, 57, 43, 0.12);
+    }
+
+    /* Tercia chip */
+    .tercia-filter-menu {
+      position: relative;
+      border: none;
+      background: transparent;
+      padding: 0;
+      align-self: flex-start;
+    }
+
+    .tercia-filter-menu > summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      padding: 12px 16px;
+      border: 1px solid rgba(26, 42, 74, 0.14);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      user-select: none;
+      box-shadow: 0 6px 18px rgba(17, 24, 39, 0.08);
+    }
+
+    .tercia-filter-menu > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tercia-filter-menu > summary::before {
+      content: "▶";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      transform-origin: center;
+    }
+
+    .tercia-filter-menu > summary::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f7bb97 0%, var(--accent) 100%);
+      box-shadow: 0 0 0 4px rgba(192, 57, 43, 0.08);
+    }
+
+    .tercia-filter-menu[open] > summary {
+      border-color: var(--accent);
+      background: #fff7f5;
+      color: var(--accent-dark);
+    }
+
+    .tercia-filter-menu[open] > summary::before {
+      transform: rotate(90deg);
+    }
+
+    .tercia-filter-panel {
+      position: relative;
+      top: auto;
+      left: auto;
+      z-index: auto;
+      margin-top: 12px;
+      width: min(560px, 92vw);
+      max-height: 360px;
+      overflow: auto;
+      border: 1px solid rgba(26, 42, 74, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 22px 50px rgba(17, 24, 39, 0.16);
+      padding: 14px;
+      backdrop-filter: blur(14px);
+    }
+
+    .tercia-filter-help {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .tercia-filter-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tercia-filter-count {
+      font-size: 12px;
+      color: var(--navy);
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--navy-soft);
+    }
+
+    .tercia-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .tercia-filter-item {
+      border: 1px solid rgba(26, 42, 74, 0.12);
+      border-radius: 14px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: #fff;
+      box-shadow: 0 6px 16px rgba(17, 24, 39, 0.05);
+    }
+
+    .tercia-filter-item input {
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .tercia-filter-thumb {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      border: 1px solid rgba(26, 42, 74, 0.08);
+      border-radius: 10px;
+    }
+
+    .tercia-filter-label {
+      font-size: 11px;
+      line-height: 1.2;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    .game6-launch-panel {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: -4px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.94), rgba(246,248,251,0.98));
+      border: 1px solid rgba(26, 42, 74, 0.1);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .game6-button-copy {
+      display: grid;
+      gap: 2px;
+      text-align: left;
+    }
+
+    .game6-button-label {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .game6-button-note {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .game6-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 20px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .game6-launch-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .game6-launch-title {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.05em;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--navy);
+    }
+
+    .game6-launch-text {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Table card */
+    .table-card {
+      display: grid;
+      gap: 18px;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      box-shadow: var(--shadow-strong);
+      backdrop-filter: blur(12px);
+    }
+
+    .table-card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .table-card-title {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.06em;
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1;
+      color: var(--text-primary);
+    }
+
+    .table-card-subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .table-card-body {
+      overflow: auto;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #ffffff, #f8f8fb);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
     .column {
@@ -215,6 +585,63 @@
       width: 1cm;
       height: 1cm;
       border: none;
+    }
+
+    .tercias-cruzadas-layout {
+      position: relative;
+      background: #fff;
+    }
+
+    .tercias-cruzadas-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tercias-cruzadas-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-left: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .tercias-cruzadas-v-line-0 { left: 0; }
+    .tercias-cruzadas-v-line-1 { left: 20%; }
+    .tercias-cruzadas-v-line-2 { left: 40%; }
+    .tercias-cruzadas-v-line-3 { left: 60%; }
+    .tercias-cruzadas-v-line-4 { left: 80%; }
+    .tercias-cruzadas-v-line-5 { right: 0; left: auto; }
+
+    .tercias-cruzadas-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-top: 4px solid var(--line-color);
+      box-shadow: 0 0 0 1px #000;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .tercias-cruzadas-h-line-0 { top: 0; }
+    .tercias-cruzadas-h-line-1 { top: 16.666%; }
+    .tercias-cruzadas-h-line-2 { top: 33.333%; }
+    .tercias-cruzadas-h-line-3 { top: 50%; }
+    .tercias-cruzadas-h-line-4 { top: 66.666%; }
+    .tercias-cruzadas-h-line-5 { top: 83.333%; }
+    .tercias-cruzadas-h-line-6 { bottom: 0; }
+
+    .tercias-cruzadas-box {
+      width: 1.3cm;
+      height: 1.35cm;
+    }
+
+    .tercias-cruzadas-small {
+      width: 1.3cm;
+      height: 1.0125cm;
     }
 
     .tercias-below-layout {
@@ -487,6 +914,10 @@
 
     .game6-view {
       margin-top: 24px;
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow-medium);
     }
 
     .game6-header {
@@ -499,20 +930,22 @@
     }
 
     .game6-title {
-      font-size: 20px;
-      font-weight: bold;
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.05em;
+      font-size: 34px;
+      font-weight: 400;
       margin: 0 0 4px;
     }
 
     .game6-subtitle {
       font-size: 13px;
-      color: #555;
+      color: var(--text-secondary);
       margin: 0;
     }
 
     .game6-actions {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
@@ -533,23 +966,96 @@
 
     .table-number {
       font-size: 15px;
-      font-weight: bold;
+      font-weight: 700;
       margin-bottom: 6px;
-      color: #333;
+      color: var(--navy);
       letter-spacing: 0.5px;
     }
 
     .back-button {
-      border: 1px solid #666;
+      border: 1px solid rgba(26, 42, 74, 0.2);
       background: #fff;
-      color: #222;
-      padding: 10px 16px;
-      font-size: 14px;
-      cursor: pointer;
+      color: var(--navy);
+      padding: 12px 16px;
+      box-shadow: 0 4px 14px rgba(26, 42, 74, 0.08);
     }
 
     .back-button:hover {
-      background: #f3f3f3;
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(26, 42, 74, 0.18);
+      transform: translateY(-1px);
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      body {
+        padding: 16px 12px 28px;
+      }
+
+      .controls,
+      .game6-launch-panel,
+      .game6-header {
+        padding: 16px;
+      }
+
+      .controls,
+      .game6-launch-panel,
+      .game6-actions,
+      .table-card-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .controls > *,
+      .controls .layout-select,
+      .controls .generate-button,
+      .controls .print-button,
+      .tercia-filter-menu,
+      .game6-button,
+      .game6-actions > *,
+      .back-button {
+        width: 100%;
+      }
+
+      .tercia-filter-menu > summary {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .tercia-filter-panel {
+        position: static;
+        width: 100%;
+        margin-top: 12px;
+      }
+
+      .tercia-filter-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .game6-launch-copy {
+        text-align: left;
+      }
+
+      .table-card {
+        padding: 18px;
+      }
+
+      .table-card-title {
+        font-size: 34px;
+      }
+
+      .table-card-body,
+      .table-stage {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .tercia-filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media print {
@@ -694,32 +1200,69 @@
   </section>
 
   <div class="app-shell" id="app-shell" hidden>
-    <div class="controls">
-      <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
-        <option value="traditional">Baraja Tradicional</option>
-      </select>
-      <select id="layout-select" class="layout-select" aria-label="Seleccionar tipo de tabla">
-        <option value="square">Tabla cuadrada (5x6)</option>
-        <option value="horizontal">Tabla horizontal</option>
-        <option value="six-by-five">Tabla 6x5</option>
-        <option value="tercias-below">Tercias abajo</option>
-        <option value="larguitas-crossed">Larguitas cruzadas</option>
-      </select>
-      <select id="line-color-select" class="layout-select" aria-label="Seleccionar color de lineas">
-        <option value="#d62828">Lineas Rojas</option>
-        <option value="#111111">Lineas Negras</option>
-        <option value="#ffffff">Lineas Blancas</option>
-        <option value="#1d3557">Lineas Azules</option>
-        <option value="#2a9d8f">Lineas Verdes</option>
-        <option value="#6a4c93">Lineas Moradas</option>
-      </select>
-      <button type="button" class="generate-button" id="generate-table-button">Generar nueva tabla</button>
-      <button type="button" class="print-button" id="print-table-button">Imprimir tabla</button>
-      <button type="button" class="print-button" id="download-image-button">Descargar PNG</button>
-      <button type="button" class="game6-button" id="game6-button">Generar juego de 6</button>
-    </div>
+    <section class="toolbar-shell" aria-label="Controles principales">
+      <div class="controls">
+        <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
+          <option value="traditional">Baraja de loteria optimizada</option>
+          <option value="carpeta-sin-titulo">Carpeta sin titulo</option>
+        </select>
+        <select id="layout-select" class="layout-select" aria-label="Seleccionar tipo de tabla">
+          <option value="square">Tabla cuadrada (5x6)</option>
+          <option value="horizontal">Tabla horizontal</option>
+          <option value="six-by-five">Tabla 6x5</option>
+          <option value="tercias-below">Tercias abajo</option>
+          <option value="tercias-crossed">Tercias cruzadas</option>
+          <option value="larguitas-crossed">Larguitas cruzadas</option>
+        </select>
+        <select id="line-color-select" class="layout-select" aria-label="Seleccionar color de lineas">
+          <option value="#d62828">Lineas Rojas</option>
+          <option value="#111111">Lineas Negras</option>
+          <option value="#ffffff">Lineas Blancas</option>
+          <option value="#1d3557">Lineas Azules</option>
+          <option value="#2a9d8f">Lineas Verdes</option>
+          <option value="#6a4c93">Lineas Moradas</option>
+        </select>
+        <details class="tercia-filter-menu" id="tercia-filter-menu">
+          <summary id="tercia-filter-summary">Filtro de tercias (0/5)</summary>
+          <div class="tercia-filter-panel">
+            <p class="tercia-filter-help">Selecciona hasta 5 cartas: siempre saldran como tercias al generar 1 tabla o juego de 6.</p>
+            <div class="tercia-filter-actions">
+              <span class="tercia-filter-count" id="tercia-filter-count">0 / 5 seleccionadas</span>
+              <button type="button" class="print-button" id="clear-tercia-filter-button">Limpiar filtro</button>
+            </div>
+            <div class="tercia-filter-grid" id="tercia-filter-grid" aria-label="Seleccion de cartas tercia"></div>
+          </div>
+        </details>
+        <button type="button" class="generate-button" id="generate-table-button">Generar nueva tabla</button>
+        <button type="button" class="print-button" id="print-table-button">Imprimir tabla</button>
+        <button type="button" class="print-button" id="download-image-button">Descargar PNG</button>
+      </div>
 
-    <div class="table-stage" id="table-stage">
+      <div class="game6-launch-panel">
+        <button type="button" class="game6-button" id="game6-button" title="Genera 6 tablas unicas">
+          <span class="game6-icon" aria-hidden="true">🎲</span>
+          <span class="game6-button-copy">
+            <span class="game6-button-label">Generar juego de 6</span>
+            <span class="game6-button-note">genera 6 tablas unicas</span>
+          </span>
+        </button>
+        <div class="game6-launch-copy" aria-hidden="true">
+          <p class="game6-launch-title">Modo Juego</p>
+          <p class="game6-launch-text">Crea una serie lista para imprimir con seis tablas diferentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-card" aria-label="Vista principal de la tabla">
+      <div class="table-card-header">
+        <div>
+          <h2 class="table-card-title">Tu Tabla de Loteria</h2>
+          <p class="table-card-subtitle">Elige tu baraja, ajusta el formato y genera una combinacion nueva cuando quieras.</p>
+        </div>
+      </div>
+
+      <div class="table-card-body">
+        <div class="table-stage" id="table-stage">
       <div class="table-scale" id="table-scale">
       <div class="layout" aria-label="Primeras dos columnas" id="table-layout">
         <div class="linea-interna linea-1"></div>
@@ -1194,6 +1737,112 @@
         </div>
       </div>
 
+      <div class="layout tercias-cruzadas-layout" aria-label="Tabla tercias cruzadas" id="tercias-crossed-layout" hidden>
+        <div class="tercias-cruzadas-v-line tercias-cruzadas-v-line-0"></div>
+        <div class="tercias-cruzadas-v-line tercias-cruzadas-v-line-1"></div>
+        <div class="tercias-cruzadas-v-line tercias-cruzadas-v-line-2"></div>
+        <div class="tercias-cruzadas-v-line tercias-cruzadas-v-line-3"></div>
+        <div class="tercias-cruzadas-v-line tercias-cruzadas-v-line-4"></div>
+        <div class="tercias-cruzadas-v-line tercias-cruzadas-v-line-5"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-0"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-1"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-2"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-3"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-4"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-5"></div>
+        <div class="tercias-cruzadas-h-line tercias-cruzadas-h-line-6"></div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="1">1</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="2">2</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="3">3</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="4">4</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="5">5</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="6">6</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="31">31</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="32">32</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="33">33</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="34">34</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="35">35</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="36">36</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="37">37</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="38">38</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="7">7</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="8">8</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="9">9</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="10">10</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="11">11</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="12">12</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="33">33</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="31">31</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="32">32</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="38">38</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="37">37</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="35">35</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="38">38</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="36">36</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="13">13</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="14">14</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="15">15</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="16">16</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="17">17</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="18">18</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="39">39</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="40">40</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="41">41</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="42">42</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="41">41</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="39">39</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="42">42</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="40">40</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="19">19</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="20">20</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="21">21</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="22">22</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="23">23</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="24">24</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="43">43</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="44">44</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="45">45</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="43">43</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="46">46</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="47">47</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="48">48</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="46">46</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="25">25</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="26">26</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="27">27</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="28">28</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="29">29</div>
+          <div class="box tercias-cruzadas-box" data-tercias-crossed-id="30">30</div>
+        </div>
+        <div class="tercias-cruzadas-column">
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="49">49</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="50">50</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="51">51</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="49">49</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="52">52</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="53">53</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="54">54</div>
+          <div class="box tercias-cruzadas-small" data-tercias-crossed-id="52">52</div>
+        </div>
+      </div>
+
       <div class="layout larguitas-crossed-layout" aria-label="Tabla larguitas cruzadas" id="larguitas-crossed-layout" hidden>
         <div class="larguitas-crossed-v-line larguitas-crossed-v-line-0"></div>
         <div class="larguitas-crossed-v-line larguitas-crossed-v-line-1"></div>
@@ -1322,6 +1971,8 @@
         </div>
       </div>
     </div>
+      </div>
+    </section>
   </div>
 
   <section class="game6-view" id="game6-view" hidden>
@@ -1349,6 +2000,10 @@
         const number = String(index + 1).padStart(2, "0");
         return `Baraja de loteria optimizada/imagen-${number}.jpg`;
       }),
+      "carpeta-sin-titulo": [
+        ...Array.from({ length: 15 }, (_, index) => `cartas_recortadas/Imagen ${index + 1}.png`),
+        ...Array.from({ length: 39 }, (_, index) => `cartas_recortadas/${index + 16}.png`)
+      ],
       stylized: Array.from({ length: 54 }, (_, index) => {
         if (index === 0) {
           return "Baraja estilizada/unnamed.jpg";
@@ -1378,9 +2033,14 @@
     const terciasBelowPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
     const terciasBelowSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
     const terciasBelowTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+    const terciasCrossedPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
+    const terciasCrossedSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
+    const terciasCrossedTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
     const larguitasCrossedPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
     const larguitasCrossedSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
     const larguitasCrossedTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+    const TERCIA_FILTER_MAX = 5;
+    const forcedTerciaCardIds = new Set();
 
     function shuffle(array) {
       const result = [...array];
@@ -1422,30 +2082,172 @@
       setImageByAttribute("data-tercias-below-id", id, imagePath);
     }
 
+    function setImageByTerciasCrossedId(id, imagePath) {
+      setImageByAttribute("data-tercias-crossed-id", id, imagePath);
+    }
+
     function setImageByLarguitasCrossedId(id, imagePath) {
       setImageByAttribute("data-larguitas-crossed-id", id, imagePath);
     }
 
+    function getForcedTerciaCardIdList() {
+      return Array.from(forcedTerciaCardIds).sort((a, b) => a - b);
+    }
+
+    function getForcedTerciaImagePaths() {
+      const imagePaths = getSelectedDeckImagePaths();
+      return getForcedTerciaCardIdList()
+        .map((cardId) => imagePaths[cardId - 1])
+        .filter(Boolean);
+    }
+
+    function getForcedTerciaImagesInPool(imagePool) {
+      const poolSet = new Set(imagePool);
+      return getForcedTerciaImagePaths().filter((imagePath) => poolSet.has(imagePath));
+    }
+
+    function splitForcedAndOptionalImages(imagePaths) {
+      const forcedImages = getForcedTerciaImagesInPool(imagePaths);
+      const forcedSet = new Set(forcedImages);
+      const optionalImages = shuffle(imagePaths.filter((imagePath) => !forcedSet.has(imagePath)));
+      return { forcedImages, optionalImages };
+    }
+
+    function takeRandomImageFromPool(imagePool) {
+      if (!imagePool.length) {
+        return "";
+      }
+
+      const randomIndex = Math.floor(Math.random() * imagePool.length);
+      const [selected] = imagePool.splice(randomIndex, 1);
+      return selected;
+    }
+
+    function assignSecondaryIdsWithForced(assignment, secondaryIds, remainingOptionalImages, forcedImages) {
+      const forcedForSecondary = shuffle(forcedImages).slice(0, secondaryIds.length);
+
+      forcedForSecondary.forEach((imagePath, index) => {
+        assignment[secondaryIds[index]] = imagePath;
+      });
+
+      secondaryIds.forEach((id) => {
+        if (assignment[id]) {
+          return;
+        }
+
+        assignment[id] = takeRandomImageFromPool(remainingOptionalImages);
+      });
+    }
+
+    function updateTerciaFilterUi() {
+      const summary = document.getElementById("tercia-filter-summary");
+      const countText = document.getElementById("tercia-filter-count");
+      const count = forcedTerciaCardIds.size;
+
+      if (summary) {
+        summary.textContent = `Filtro de tercias (${count}/${TERCIA_FILTER_MAX})`;
+      }
+
+      if (countText) {
+        countText.textContent = `${count} / ${TERCIA_FILTER_MAX} seleccionadas`;
+      }
+    }
+
+    function renderTerciaFilterGrid() {
+      const grid = document.getElementById("tercia-filter-grid");
+      if (!grid) {
+        return;
+      }
+
+      const imagePaths = getSelectedDeckImagePaths();
+      grid.innerHTML = imagePaths.map((imagePath, index) => {
+        const cardId = index + 1;
+        const cardNumber = String(cardId).padStart(2, "0");
+        const checked = forcedTerciaCardIds.has(cardId) ? "checked" : "";
+
+        return `
+          <label class="tercia-filter-item">
+            <input type="checkbox" data-tercia-filter-id="${cardId}" ${checked}>
+            <img src="${imagePath}" alt="Carta ${cardNumber}" class="tercia-filter-thumb" loading="lazy" decoding="async">
+            <span class="tercia-filter-label">Carta ${cardNumber}</span>
+          </label>
+        `;
+      }).join("");
+
+      updateTerciaFilterUi();
+    }
+
+    function initializeTerciaFilterControls() {
+      const grid = document.getElementById("tercia-filter-grid");
+      const clearButton = document.getElementById("clear-tercia-filter-button");
+
+      if (!grid || !clearButton) {
+        return;
+      }
+
+      renderTerciaFilterGrid();
+
+      grid.addEventListener("change", (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement) || target.type !== "checkbox") {
+          return;
+        }
+
+        const cardId = Number(target.dataset.terciaFilterId);
+        if (!Number.isInteger(cardId) || cardId < 1 || cardId > 54) {
+          return;
+        }
+
+        if (target.checked) {
+          if (forcedTerciaCardIds.size >= TERCIA_FILTER_MAX) {
+            target.checked = false;
+            alert("Solo puedes seleccionar hasta 5 cartas como tercias obligatorias.");
+            return;
+          }
+
+          forcedTerciaCardIds.add(cardId);
+        } else {
+          forcedTerciaCardIds.delete(cardId);
+        }
+
+        updateTerciaFilterUi();
+      });
+
+      clearButton.addEventListener("click", () => {
+        forcedTerciaCardIds.clear();
+        renderTerciaFilterGrid();
+      });
+    }
+
     function createTableAssignment() {
       const imagePaths = getSelectedDeckImagePaths();
-      const shuffledImages = shuffle(imagePaths);
-      const primaryImages = shuffledImages.slice(0, primaryTargetIds.length);
-      let remainingImages = shuffledImages.slice(primaryTargetIds.length);
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
+      const primaryImages = optionalImages.slice(0, primaryTargetIds.length);
+      let remainingOptionalImages = optionalImages.slice(primaryTargetIds.length);
       const assignment = {};
 
       primaryTargetIds.forEach((id, index) => {
         assignment[id] = primaryImages[index];
       });
 
+      const forcedTerciaImages = forcedImages.slice(0, 12);
+      const forcedTerciaSet = new Set(forcedTerciaImages);
+      const terciaIdsInGroupOrder = secondaryTargetGroups.flatMap((group) => [group[0], group[2]]);
+
+      forcedTerciaImages.forEach((imagePath, index) => {
+        assignment[terciaIdsInGroupOrder[index]] = imagePath;
+      });
+
+      remainingOptionalImages = remainingOptionalImages.filter((imagePath) => !forcedTerciaSet.has(imagePath));
+
       secondaryTargetGroups.forEach((group) => {
-        const selectedImages = shuffle(remainingImages).slice(0, group.length);
-        const selectedImageSet = new Set(selectedImages);
+        group.forEach((id) => {
+          if (assignment[id]) {
+            return;
+          }
 
-        group.forEach((id, index) => {
-          assignment[id] = selectedImages[index];
+          assignment[id] = takeRandomImageFromPool(remainingOptionalImages);
         });
-
-        remainingImages = remainingImages.filter((imagePath) => !selectedImageSet.has(imagePath));
       });
 
       return assignment;
@@ -1459,25 +2261,16 @@
 
     function createHorizontalTableAssignment() {
       const imagePaths = getSelectedDeckImagePaths();
-      const shuffledImages = shuffle(imagePaths);
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
       const assignment = {};
 
       horizontalPrimaryTargetIds.forEach((id, index) => {
-        assignment[id] = shuffledImages[index];
+        assignment[id] = optionalImages[index];
       });
 
-      const remainingAfterPrimary = shuffledImages.slice(horizontalPrimaryTargetIds.length);
-      const secondaryImages = shuffle(remainingAfterPrimary).slice(0, horizontalSecondaryTargetIds.length);
-
-      horizontalSecondaryTargetIds.forEach((id, index) => {
-        assignment[id] = secondaryImages[index];
-      });
-
-      const secondaryImageSet = new Set(secondaryImages);
-      const remainingAfterSecondary = remainingAfterPrimary.filter(
-        (imagePath) => !secondaryImageSet.has(imagePath)
-      );
-      const tertiaryImages = shuffle(remainingAfterSecondary);
+      const remainingAfterPrimary = optionalImages.slice(horizontalPrimaryTargetIds.length);
+      assignSecondaryIdsWithForced(assignment, horizontalSecondaryTargetIds, remainingAfterPrimary, forcedImages);
+      const tertiaryImages = shuffle(remainingAfterPrimary);
 
       horizontalTertiaryTargetIds.forEach((id, index) => {
         assignment[id] = tertiaryImages[index];
@@ -1494,27 +2287,20 @@
 
     function createSixByFiveTableAssignment() {
       const imagePaths = getSelectedDeckImagePaths();
-      const shuffledImages = shuffle(imagePaths);
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
       const assignment = {};
 
       // Primarios 1-30: 30 cartas aleatorias
-      const primaryImages = shuffledImages.slice(0, 30);
+      const primaryImages = optionalImages.slice(0, 30);
       sixByFivePrimaryTargetIds.forEach((id, index) => {
         assignment[id] = primaryImages[index];
       });
 
       // Descartar las 30 que ya escogimos
-      let remaining = shuffledImages.slice(30);
+      let remaining = optionalImages.slice(30);
 
       // Secundarios 31-42: 12 de las 24 que sobraban
-      const secondaryImages = shuffle(remaining).slice(0, 12);
-      sixByFiveSecondaryTargetIds.forEach((id, index) => {
-        assignment[id] = secondaryImages[index];
-      });
-
-      // Descartar las 12 que acabamos de usar
-      const secondaryImageSet = new Set(secondaryImages);
-      remaining = remaining.filter((imagePath) => !secondaryImageSet.has(imagePath));
+      assignSecondaryIdsWithForced(assignment, sixByFiveSecondaryTargetIds, remaining, forcedImages);
 
       // Terciarios 43-54: las 12 que sobraron
       const tertiaryImages = shuffle(remaining);
@@ -1533,23 +2319,16 @@
 
     function createTerciasBelowTableAssignment() {
       const imagePaths = getSelectedDeckImagePaths();
-      const shuffledImages = shuffle(imagePaths);
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
       const assignment = {};
 
-      const primaryImages = shuffledImages.slice(0, 30);
+      const primaryImages = optionalImages.slice(0, 30);
       terciasBelowPrimaryTargetIds.forEach((id, index) => {
         assignment[id] = primaryImages[index];
       });
 
-      let remaining = shuffledImages.slice(30);
-
-      const secondaryImages = shuffle(remaining).slice(0, 12);
-      terciasBelowSecondaryTargetIds.forEach((id, index) => {
-        assignment[id] = secondaryImages[index];
-      });
-
-      const secondaryImageSet = new Set(secondaryImages);
-      remaining = remaining.filter((imagePath) => !secondaryImageSet.has(imagePath));
+      let remaining = optionalImages.slice(30);
+      assignSecondaryIdsWithForced(assignment, terciasBelowSecondaryTargetIds, remaining, forcedImages);
 
       const tertiaryImages = shuffle(remaining);
       terciasBelowTertiaryTargetIds.forEach((id, index) => {
@@ -1565,25 +2344,45 @@
       });
     }
 
-    function createLarguitasCrossedTableAssignment() {
+    function createTerciasCrossedTableAssignment() {
       const imagePaths = getSelectedDeckImagePaths();
-      const shuffledImages = shuffle(imagePaths);
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
       const assignment = {};
 
-      const primaryImages = shuffledImages.slice(0, 30);
+      const primaryImages = optionalImages.slice(0, 30);
+      terciasCrossedPrimaryTargetIds.forEach((id, index) => {
+        assignment[id] = primaryImages[index];
+      });
+
+      let remaining = optionalImages.slice(30);
+      assignSecondaryIdsWithForced(assignment, terciasCrossedSecondaryTargetIds, remaining, forcedImages);
+
+      const tertiaryImages = shuffle(remaining);
+      terciasCrossedTertiaryTargetIds.forEach((id, index) => {
+        assignment[id] = tertiaryImages[index];
+      });
+
+      return assignment;
+    }
+
+    function applyTerciasCrossedAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByTerciasCrossedId(id, imagePath);
+      });
+    }
+
+    function createLarguitasCrossedTableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
+      const assignment = {};
+
+      const primaryImages = optionalImages.slice(0, 30);
       larguitasCrossedPrimaryTargetIds.forEach((id, index) => {
         assignment[id] = primaryImages[index];
       });
 
-      let remaining = shuffledImages.slice(30);
-
-      const secondaryImages = shuffle(remaining).slice(0, 12);
-      larguitasCrossedSecondaryTargetIds.forEach((id, index) => {
-        assignment[id] = secondaryImages[index];
-      });
-
-      const secondaryImageSet = new Set(secondaryImages);
-      remaining = remaining.filter((imagePath) => !secondaryImageSet.has(imagePath));
+      let remaining = optionalImages.slice(30);
+      assignSecondaryIdsWithForced(assignment, larguitasCrossedSecondaryTargetIds, remaining, forcedImages);
 
       const tertiaryImages = shuffle(remaining);
       larguitasCrossedTertiaryTargetIds.forEach((id, index) => {
@@ -1621,6 +2420,12 @@
         return;
       }
 
+      if (selectedLayout === "tercias-crossed") {
+        applyTerciasCrossedAssignmentToDocument(createTerciasCrossedTableAssignment());
+        updateTableScale();
+        return;
+      }
+
       if (selectedLayout === "larguitas-crossed") {
         applyLarguitasCrossedAssignmentToDocument(createLarguitasCrossedTableAssignment());
         updateTableScale();
@@ -1644,6 +2449,7 @@
       const horizontalLayout = document.getElementById("horizontal-layout");
       const sixByFiveLayout = document.getElementById("six-by-five-layout");
       const terciasBelowLayout = document.getElementById("tercias-below-layout");
+      const terciasCrossedLayout = document.getElementById("tercias-crossed-layout");
       const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
       const generateButton = document.getElementById("generate-table-button");
 
@@ -1651,12 +2457,14 @@
       const isHorizontal = layoutType === "horizontal";
       const isSixByFive = layoutType === "six-by-five";
       const isTerciasBelow = layoutType === "tercias-below";
+      const isTerciasCrossed = layoutType === "tercias-crossed";
       const isLarguitasCrossed = layoutType === "larguitas-crossed";
 
       tableLayout.hidden = !isSquare;
       horizontalLayout.hidden = !isHorizontal;
       sixByFiveLayout.hidden = !isSixByFive;
       terciasBelowLayout.hidden = !isTerciasBelow;
+      terciasCrossedLayout.hidden = !isTerciasCrossed;
       larguitasCrossedLayout.hidden = !isLarguitasCrossed;
       generateButton.disabled = false;
       generateButton.style.opacity = "1";
@@ -1683,6 +2491,41 @@
      */
     function createGameOf6Assignments() {
       const imagePaths = getSelectedDeckImagePaths();
+      const forcedTerciaImages = getForcedTerciaImagesInPool(imagePaths).slice(0, TERCIA_FILTER_MAX);
+
+      if (forcedTerciaImages.length > 0) {
+        const forcedSet = new Set(forcedTerciaImages);
+        const nonForcedImages = shuffle(imagePaths.filter((imagePath) => !forcedSet.has(imagePath)));
+        const randomSlotsPerTable = TERCIA_IDS.length - forcedTerciaImages.length;
+        const terciaGroups = Array.from({ length: 6 }, (_, tableIdx) => {
+          const offset = (tableIdx * randomSlotsPerTable) % nonForcedImages.length;
+          const rotated = nonForcedImages.slice(offset).concat(nonForcedImages.slice(0, offset));
+          const randomImages = rotated.slice(0, randomSlotsPerTable);
+          return shuffle([...forcedTerciaImages, ...randomImages]);
+        });
+
+        return terciaGroups.map((terciaImages) => {
+          const assignment = {};
+          const terciaSet = new Set(terciaImages);
+
+          TERCIA_IDS.forEach((id, i) => {
+            assignment[id] = terciaImages[i];
+          });
+
+          const nonTerciaImages = shuffle(imagePaths.filter((img) => !terciaSet.has(img)));
+
+          for (let i = 0; i < 30; i++) {
+            assignment[i + 1] = nonTerciaImages[i];
+          }
+
+          NON_TERCIA_SECONDARY_IDS.forEach((id, i) => {
+            assignment[id] = nonTerciaImages[30 + i];
+          });
+
+          return assignment;
+        });
+      }
+
       const shuffled = shuffle([...imagePaths]); // 54 imágenes barajadas
 
       // Distribución cíclica: tabla i toma índices [i*12 .. i*12+11] mod 54
@@ -1790,12 +2633,13 @@
     }
 
     function populateLayoutClone(layoutClone, assignment) {
-      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-larguitas-crossed-id]");
+      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id]");
       boxes.forEach((box) => {
         const id = box.getAttribute("data-id")
           || box.getAttribute("data-horizontal-id")
           || box.getAttribute("data-six-by-five-id")
           || box.getAttribute("data-tercias-below-id")
+          || box.getAttribute("data-tercias-crossed-id")
           || box.getAttribute("data-larguitas-crossed-id");
         const src = assignment[id];
         box.innerHTML = src ? `<img src="${src}" alt="Carta ${id}">` : id;
@@ -1808,6 +2652,7 @@
         horizontal: document.getElementById("horizontal-layout"),
         "six-by-five": document.getElementById("six-by-five-layout"),
         "tercias-below": document.getElementById("tercias-below-layout"),
+        "tercias-crossed": document.getElementById("tercias-crossed-layout"),
         "larguitas-crossed": document.getElementById("larguitas-crossed-layout")
       };
       const sourceLayout = layoutMap[layoutType] || layoutMap.square;
@@ -2170,6 +3015,7 @@
       const layoutSelect = document.getElementById("layout-select");
       const deckSelect = document.getElementById("deck-select");
       const lineColorSelect = document.getElementById("line-color-select");
+      const terciaFilterMenu = document.getElementById("tercia-filter-menu");
       const game6Button = document.getElementById("game6-button");
       const printGame6Button = document.getElementById("print-game6-button");
       const downloadGame6ImageButton = document.getElementById("download-game6-image-button");
@@ -2182,6 +3028,7 @@
         !layoutSelect ||
         !deckSelect ||
         !lineColorSelect ||
+        !terciaFilterMenu ||
         !game6Button ||
         !printGame6Button ||
         !downloadGame6ImageButton ||
@@ -2198,12 +3045,16 @@
         setActiveLayout(event.target.value);
         generateNewTable();
       });
-      deckSelect.addEventListener("change", generateNewTable);
+      deckSelect.addEventListener("change", () => {
+        renderTerciaFilterGrid();
+        generateNewTable();
+      });
       lineColorSelect.addEventListener("change", (event) => applyLineColor(event.target.value));
       game6Button.addEventListener("click", generateGameOf6);
       printGame6Button.addEventListener("click", () => window.print());
       downloadGame6ImageButton.addEventListener("click", downloadGame6AsImage);
       backFromGame6Button.addEventListener("click", showMainTableView);
+      initializeTerciaFilterControls();
 
       setActiveLayout(layoutSelect.value);
       applyLineColor(lineColorSelect.value);
