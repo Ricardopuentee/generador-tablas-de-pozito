@@ -10,6 +10,9 @@
     /* Base */
     :root {
       --line-color: #d62828;
+      --game6-print-scale: 1;
+      --game6-print-offset-x: 0px;
+      --game6-print-offset-y: 0px;
       --accent: #c0392b;
       --accent-dark: #9f2f24;
       --accent-soft: rgba(192, 57, 43, 0.12);
@@ -1094,29 +1097,35 @@
         display: none;
       }
 
-      #game6-view .tables-grid {
+      #game6-view:not(.print-sheet-active) {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        width: 279mm;
+        height: 432mm;
+        max-width: none;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: none;
+        border: none;
+      }
+
+      #game6-view:not(.print-sheet-active) .game6-header {
+        display: none;
+      }
+
+      #game6-view:not(.print-sheet-active) .tables-grid {
+        position: absolute;
+        top: var(--game6-print-offset-y);
+        left: var(--game6-print-offset-x);
         display: grid;
         grid-template-columns: repeat(2, max-content);
         gap: 0.2cm;
         justify-content: start;
         align-content: start;
-      }
-
-      #game6-view[data-layout-type="six-by-five"] .table-wrapper,
-      #game6-view[data-layout-type="tercias-below"] .table-wrapper {
-        width: 14.8cm;
-        height: 14.8cm;
-        overflow: hidden;
-      }
-
-      #game6-view[data-layout-type="six-by-five"] .table-wrapper .layout {
+        width: max-content;
         transform-origin: top left;
-        transform: scaleX(1.3455) scaleY(1.1213);
-      }
-
-      #game6-view[data-layout-type="tercias-below"] .table-wrapper .layout {
-        transform-origin: top left;
-        transform: scaleX(1.48) scaleY(1.2334);
+        transform: scale(var(--game6-print-scale));
       }
 
       #game6-view.print-sheet-active .game6-header,
@@ -2727,6 +2736,73 @@
       renderGameOf6(assignments, selectedLayout);
     }
 
+    const GAME6_PRINT_PAGE_WIDTH_MM = 279;
+    const GAME6_PRINT_PAGE_HEIGHT_MM = 432;
+    const GAME6_PRINT_PADDING_MM = 6;
+    const MM_TO_PX = 96 / 25.4;
+    let previousGame6PrintStyles = null;
+
+    function prepareGame6SinglePagePrint() {
+      const game6View = document.getElementById("game6-view");
+      const game6Grid = document.getElementById("game6-grid");
+
+      if (!game6View || !game6Grid || game6View.hidden || game6View.classList.contains("print-sheet-active")) {
+        return;
+      }
+
+      if (!previousGame6PrintStyles) {
+        previousGame6PrintStyles = {
+          viewCssText: game6View.style.cssText,
+          gridCssText: game6Grid.style.cssText
+        };
+      }
+
+      game6View.style.setProperty("--game6-print-scale", "1");
+      game6View.style.setProperty("--game6-print-offset-x", "0px");
+      game6View.style.setProperty("--game6-print-offset-y", "0px");
+      game6View.style.width = "max-content";
+      game6View.style.maxWidth = "none";
+      game6View.style.height = "auto";
+      game6View.style.overflow = "visible";
+      game6View.style.margin = "0";
+      game6View.style.padding = "0";
+      game6View.style.background = "#ffffff";
+
+      game6Grid.style.position = "static";
+      game6Grid.style.display = "grid";
+      game6Grid.style.gridTemplateColumns = "repeat(2, max-content)";
+      game6Grid.style.gap = "0.2cm";
+      game6Grid.style.justifyContent = "start";
+      game6Grid.style.alignContent = "start";
+      game6Grid.style.width = "max-content";
+      game6Grid.style.transform = "none";
+
+      const naturalWidth = Math.ceil(Math.max(game6Grid.scrollWidth, game6Grid.offsetWidth, game6Grid.getBoundingClientRect().width));
+      const naturalHeight = Math.ceil(Math.max(game6Grid.scrollHeight, game6Grid.offsetHeight, game6Grid.getBoundingClientRect().height));
+      const availableWidth = (GAME6_PRINT_PAGE_WIDTH_MM - (GAME6_PRINT_PADDING_MM * 2)) * MM_TO_PX;
+      const availableHeight = (GAME6_PRINT_PAGE_HEIGHT_MM - (GAME6_PRINT_PADDING_MM * 2)) * MM_TO_PX;
+      const scale = Math.min(availableWidth / naturalWidth, availableHeight / naturalHeight, 1);
+      const offsetX = GAME6_PRINT_PADDING_MM * MM_TO_PX;
+      const offsetY = GAME6_PRINT_PADDING_MM * MM_TO_PX;
+
+      game6View.style.setProperty("--game6-print-scale", String(scale));
+      game6View.style.setProperty("--game6-print-offset-x", `${offsetX}px`);
+      game6View.style.setProperty("--game6-print-offset-y", `${offsetY}px`);
+    }
+
+    function restoreGame6SinglePagePrint() {
+      const game6View = document.getElementById("game6-view");
+      const game6Grid = document.getElementById("game6-grid");
+
+      if (!previousGame6PrintStyles || !game6View || !game6Grid) {
+        return;
+      }
+
+      game6View.style.cssText = previousGame6PrintStyles.viewCssText;
+      game6Grid.style.cssText = previousGame6PrintStyles.gridCssText;
+      previousGame6PrintStyles = null;
+    }
+
     // ─────────────────────────────────────────────────────────────────
 
     function updateTableScale() {
@@ -2775,6 +2851,7 @@
     async function downloadTableAsImage() {
       const downloadButton = document.getElementById("download-image-button");
       const activeLayout = getActiveLayout();
+      const EXPORT_PADDING = 12;
 
       if (!activeLayout) {
         alert("No hay una tabla visible para descargar.");
@@ -2800,6 +2877,7 @@
       exportWrapper.style.display = "inline-block";
       exportWrapper.style.width = "max-content";
       exportWrapper.style.overflow = "visible";
+      exportWrapper.style.boxSizing = "border-box";
       exportWrapper.appendChild(layoutClone);
       document.body.appendChild(exportWrapper);
 
@@ -2813,10 +2891,15 @@
 
         await waitForImagesInElement(layoutClone);
 
-        const exportWidth = Math.ceil(Math.max(layoutClone.scrollWidth, layoutClone.offsetWidth, layoutClone.getBoundingClientRect().width));
-        const exportHeight = Math.ceil(Math.max(layoutClone.scrollHeight, layoutClone.offsetHeight, layoutClone.getBoundingClientRect().height));
+        const layoutWidth = Math.ceil(Math.max(layoutClone.scrollWidth, layoutClone.offsetWidth, layoutClone.getBoundingClientRect().width));
+        const layoutHeight = Math.ceil(Math.max(layoutClone.scrollHeight, layoutClone.offsetHeight, layoutClone.getBoundingClientRect().height));
+        exportWrapper.style.padding = `${EXPORT_PADDING}px`;
+        exportWrapper.style.width = `${layoutWidth + (EXPORT_PADDING * 2)}px`;
 
-        const canvas = await window.html2canvas(layoutClone, {
+        const exportWidth = layoutWidth + (EXPORT_PADDING * 2);
+        const exportHeight = layoutHeight + (EXPORT_PADDING * 2);
+
+        const canvas = await window.html2canvas(exportWrapper, {
           backgroundColor: "#ffffff",
           scale: 3,
           width: exportWidth,
@@ -2924,6 +3007,12 @@
       grid.style.gap = "0.2cm";
       grid.style.justifyContent = "start";
       grid.style.alignContent = "start";
+      game6Clone.style.width = "max-content";
+      game6Clone.style.maxWidth = "none";
+      game6Clone.style.overflow = "visible";
+      game6Clone.style.padding = "0";
+      game6Clone.style.margin = "0";
+      game6Clone.style.background = "#ffffff";
 
       if (layoutType === "six-by-five" || layoutType === "tercias-below") {
         grid.querySelectorAll(".table-wrapper").forEach((wrapper) => {
@@ -2946,6 +3035,7 @@
     async function downloadGame6AsImage() {
       const game6View = document.getElementById("game6-view");
       const downloadButton = document.getElementById("download-game6-image-button");
+      const EXPORT_PADDING = 16;
 
       if (!game6View || game6View.hidden) {
         alert("Primero genera y abre el juego de 6 tablas.");
@@ -2967,6 +3057,10 @@
       exportWrapper.style.padding = "0";
       exportWrapper.style.margin = "0";
       exportWrapper.style.background = "#ffffff";
+      exportWrapper.style.display = "inline-block";
+      exportWrapper.style.width = "max-content";
+      exportWrapper.style.overflow = "visible";
+      exportWrapper.style.boxSizing = "border-box";
       exportWrapper.appendChild(game6Clone);
       document.body.appendChild(exportWrapper);
 
@@ -2981,9 +3075,21 @@
         applyPrintLikeStylesToGame6Clone(game6Clone);
         await waitForImagesInElement(game6Clone);
 
-        const canvas = await window.html2canvas(game6Clone, {
+        const cloneWidth = Math.ceil(Math.max(game6Clone.scrollWidth, game6Clone.offsetWidth, game6Clone.getBoundingClientRect().width));
+        const cloneHeight = Math.ceil(Math.max(game6Clone.scrollHeight, game6Clone.offsetHeight, game6Clone.getBoundingClientRect().height));
+        exportWrapper.style.padding = `${EXPORT_PADDING}px`;
+        exportWrapper.style.width = `${cloneWidth + (EXPORT_PADDING * 2)}px`;
+
+        const exportWidth = cloneWidth + (EXPORT_PADDING * 2);
+        const exportHeight = cloneHeight + (EXPORT_PADDING * 2);
+
+        const canvas = await window.html2canvas(exportWrapper, {
           backgroundColor: "#ffffff",
           scale: 2,
+          width: exportWidth,
+          height: exportHeight,
+          windowWidth: exportWidth,
+          windowHeight: exportHeight,
           useCORS: true,
           allowTaint: true
         });
@@ -3049,7 +3155,10 @@
       }
 
       generateButton.addEventListener("click", generateNewTable);
-      printButton.addEventListener("click", () => window.print());
+      printButton.addEventListener("click", () => {
+        prepareGame6SinglePagePrint();
+        window.print();
+      });
       downloadImageButton.addEventListener("click", downloadTableAsImage);
       layoutSelect.addEventListener("change", (event) => {
         setActiveLayout(event.target.value);
@@ -3061,7 +3170,10 @@
       });
       lineColorSelect.addEventListener("change", (event) => applyLineColor(event.target.value));
       game6Button.addEventListener("click", generateGameOf6);
-      printGame6Button.addEventListener("click", () => window.print());
+      printGame6Button.addEventListener("click", () => {
+        prepareGame6SinglePagePrint();
+        window.print();
+      });
       downloadGame6ImageButton.addEventListener("click", downloadGame6AsImage);
       backFromGame6Button.addEventListener("click", showMainTableView);
       initializeTerciaFilterControls();
@@ -3069,6 +3181,8 @@
       setActiveLayout(layoutSelect.value);
       applyLineColor(lineColorSelect.value);
       generateNewTable();
+      window.addEventListener("beforeprint", prepareGame6SinglePagePrint);
+      window.addEventListener("afterprint", restoreGame6SinglePagePrint);
       window.addEventListener("load", updateTableScale);
       window.addEventListener("resize", updateTableScale);
       updateTableScale();
