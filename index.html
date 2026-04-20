@@ -1105,12 +1105,30 @@
         padding: 0;
       }
 
+      .toolbar-shell,
+      .export-note,
+      .table-card-header {
+        display: none !important;
+      }
+
       .controls {
         display: none;
       }
 
       .game6-actions {
         display: none;
+      }
+
+      .table-card,
+      .table-card-body,
+      .table-stage,
+      .table-scale {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        overflow: visible;
       }
 
       .game6-view {
@@ -2981,6 +2999,10 @@
       const printSheet = game6Clone.querySelector("#game6-print-sheet");
 
       game6Clone.querySelectorAll(".game6-header").forEach((node) => {
+        node.style.display = "none";
+      });
+
+      game6Clone.querySelectorAll(".export-note").forEach((node) => {
         node.style.display = "none";
       });
 
