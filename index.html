@@ -3414,10 +3414,82 @@
       }
     }
 
+    function applyCompactStylesToGame6Clone(game6Clone) {
+      const layoutType = game6Clone.dataset.layoutType || "square";
+      const grid = game6Clone.querySelector("#game6-grid");
+      const printSheet = game6Clone.querySelector("#game6-print-sheet");
+
+      game6Clone.querySelectorAll(".game6-header, .export-note, .table-number").forEach((node) => {
+        node.style.display = "none";
+      });
+
+      game6Clone.style.width = "max-content";
+      game6Clone.style.maxWidth = "none";
+      game6Clone.style.height = "auto";
+      game6Clone.style.overflow = "visible";
+      game6Clone.style.padding = "0";
+      game6Clone.style.margin = "0";
+      game6Clone.style.background = "transparent";
+      game6Clone.style.boxShadow = "none";
+      game6Clone.style.border = "none";
+      game6Clone.style.borderRadius = "0";
+
+      if (!grid || !printSheet) {
+        return;
+      }
+
+      printSheet.style.display = "none";
+      printSheet.style.width = "0";
+      printSheet.style.height = "0";
+      printSheet.style.overflow = "hidden";
+
+      if (layoutType === "horizontal" || layoutType === "larguitas-crossed") {
+        grid.style.display = "flex";
+        grid.style.flexDirection = "column";
+        grid.style.flexWrap = "nowrap";
+        grid.style.gap = "4px";
+        grid.style.justifyContent = "flex-start";
+        grid.style.alignItems = "flex-start";
+        grid.style.alignContent = "flex-start";
+        grid.style.width = "max-content";
+      } else {
+        grid.style.display = "grid";
+        grid.style.gridTemplateColumns = "repeat(2, max-content)";
+        grid.style.gap = "6px";
+        grid.style.justifyContent = "start";
+        grid.style.alignContent = "start";
+        grid.style.width = "max-content";
+      }
+
+      grid.style.position = "static";
+      grid.style.transform = "none";
+      grid.style.margin = "0";
+      grid.style.padding = "0";
+      grid.style.background = "transparent";
+
+      grid.querySelectorAll(".table-wrapper").forEach((wrapper) => {
+        wrapper.style.margin = "0";
+        wrapper.style.padding = "0";
+        wrapper.style.width = "auto";
+        wrapper.style.height = "auto";
+        wrapper.style.overflow = "visible";
+        wrapper.style.background = "transparent";
+        wrapper.style.border = "none";
+        wrapper.style.boxShadow = "none";
+        wrapper.style.borderRadius = "0";
+      });
+
+      grid.querySelectorAll(".layout, .layout *").forEach((node) => {
+        node.style.margin = "0";
+        node.style.padding = "0";
+        node.style.borderRadius = "0";
+      });
+    }
+
     async function downloadGame6AsImage() {
       const game6View = document.getElementById("game6-view");
       const downloadButton = document.getElementById("download-game6-image-button");
-      const EXPORT_PADDING = 16;
+      const EXPORT_PADDING = 3;
 
       if (!game6View || game6View.hidden) {
         alert("Primero genera y abre el juego de 6 tablas.");
@@ -3454,7 +3526,7 @@
           downloadButton.textContent = "Generando PNG...";
         }
 
-        applyPrintLikeStylesToGame6Clone(game6Clone);
+        applyCompactStylesToGame6Clone(game6Clone);
         await waitForImagesInElement(game6Clone);
 
         const cloneWidth = Math.ceil(Math.max(game6Clone.scrollWidth, game6Clone.offsetWidth, game6Clone.getBoundingClientRect().width));
