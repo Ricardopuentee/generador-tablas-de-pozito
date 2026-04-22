@@ -10,6 +10,7 @@
     /* Base */
     :root {
       --line-color: #d62828;
+      --line-outline: 0 0 0 1px #000;
       --game6-print-scale: 1;
       --game6-print-offset-x: 0px;
       --game6-print-offset-y: 0px;
@@ -624,13 +625,30 @@
       flex-direction: column;
     }
 
+    .linea-interna,
+    .linea-sq-h-line,
+    .linea-sq-v-line,
+    .table5x6-h-line,
+    .table5x6-v-line,
+    .horizontal-line,
+    .horizontal-vertical-line,
+    .horizontal-h-line,
+    .tercias-below-v-line,
+    .tercias-below-h-line,
+    .tercias-cruzadas-v-line,
+    .tercias-cruzadas-h-line,
+    .larguitas-crossed-v-line,
+    .larguitas-crossed-h-line {
+      box-shadow: var(--line-outline) !important;
+    }
+
     .tercias-cruzadas-v-line {
       position: absolute;
       top: 0;
       bottom: 0;
       width: 4px;
       border-left: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -648,7 +666,7 @@
       right: 0;
       height: 4px;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -685,7 +703,7 @@
       bottom: 0;
       width: 4px;
       border-left: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -703,7 +721,7 @@
       right: 0;
       height: 4px;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -742,7 +760,7 @@
       bottom: 0;
       width: 4px;
       border-left: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -769,7 +787,7 @@
       right: 0;
       height: 4px;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -792,7 +810,7 @@
       width: 586px;
       height: 0;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       display: none;
     }
@@ -819,7 +837,7 @@
       right: 0;
       height: 4px;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -842,7 +860,7 @@
       bottom: 0;
       width: 4px;
       border-left: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -860,7 +878,7 @@
       right: 0;
       height: 4px;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -878,7 +896,7 @@
       bottom: 0;
       width: 4px;
       border-left: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -906,7 +924,7 @@
       left: 0;
       right: 0;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
       display: none;
@@ -926,7 +944,7 @@
       bottom: 0;
       width: 4px;
       border-left: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
@@ -953,7 +971,7 @@
       right: 0;
       height: 4px;
       border-top: 4px solid var(--line-color);
-      box-shadow: 0 0 0 1px #000;
+      box-shadow: var(--line-outline);
       z-index: 20;
       pointer-events: none;
     }
