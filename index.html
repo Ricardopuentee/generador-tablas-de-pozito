@@ -1369,6 +1369,8 @@
         transform: scaleX(1.069) scaleY(1.46);
         margin: 0;
         padding: 0;
+        border-radius: 0 !important;
+        overflow: hidden;
       }
 
       #game6-view.print-sheet-active .print-sheet-cell .horizontal-layout,
@@ -1379,6 +1381,7 @@
         padding: 0;
         gap: 0;
         border-spacing: 0;
+        border-radius: 0 !important;
       }
     }
   </style>
@@ -3369,6 +3372,12 @@
           layout.style.transform = "scaleX(1.069) scaleY(1.46)";
           layout.style.margin = "0";
           layout.style.padding = "0";
+          layout.style.borderRadius = "0";
+          layout.style.overflow = "hidden";
+        });
+
+        printSheet.querySelectorAll(".horizontal-layout *, .larguitas-crossed-layout *").forEach((node) => {
+          node.style.borderRadius = "0";
         });
 
         return;
