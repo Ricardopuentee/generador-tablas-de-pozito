@@ -10,7 +10,6 @@
     /* Base */
     :root {
       --line-color: #d62828;
-      --line-outline: 0 0 0 1px #000;
       --game6-print-scale: 1;
       --game6-print-offset-x: 0px;
       --game6-print-offset-y: 0px;
@@ -569,6 +568,7 @@
       justify-content: center;
       overflow: hidden;
       background: #fff;
+      border-radius: 0;
     }
 
     .tall {
@@ -592,14 +592,14 @@
     }
 
     .six-by-five-box {
-      width: 1.1cm;
-      height: 2.2cm;
+      width: 1cm;
+      height: 2cm;
       border: none;
     }
 
     .six-by-five-small {
-      width: 1.1cm;
-      height: 1.1cm;
+      width: 1cm;
+      height: 1cm;
       border: none;
     }
 
@@ -615,6 +615,92 @@
       border: none;
     }
 
+    .seven-loko-layout {
+      position: relative;
+      background: #fff;
+    }
+
+    .seven-loko-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: #000;
+      z-index: 20;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .seven-loko-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 1px;
+      right: 1px;
+      background: var(--line-color);
+    }
+
+    .seven-loko-v-line-1 { left: 0; }
+    .seven-loko-v-line-2 { left: 20%; }
+    .seven-loko-v-line-3 { left: 40%; }
+    .seven-loko-v-line-4 { left: 60%; }
+    .seven-loko-v-line-5 { left: 80%; }
+    .seven-loko-v-line-6 { right: 0; left: auto; }
+
+    .seven-loko-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: #000;
+      z-index: 20;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .seven-loko-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1px;
+      bottom: 1px;
+      background: var(--line-color);
+    }
+
+    .seven-loko-h-line-1 { top: 0; }
+    .seven-loko-h-line-2 { top: 16.666%; }
+    .seven-loko-h-line-3 { top: 33.333%; }
+    .seven-loko-h-line-4 {
+      top: 48%;
+      height: 12px;
+    }
+    .seven-loko-h-line-5 { top: 66.666%; }
+    .seven-loko-h-line-6 { top: 83.333%; }
+    .seven-loko-h-line-7 { bottom: 0; }
+
+    .seven-loko-box {
+      width: 1cm;
+      height: 2cm;
+      border: none;
+      border-radius: 0;
+      overflow: hidden;
+    }
+
+    .seven-loko-small {
+      width: 1cm;
+      height: 1cm;
+      border: none;
+      border-radius: 0;
+      overflow: hidden;
+    }
+
+    .seven-loko-box img,
+    .seven-loko-small img {
+      border-radius: 0;
+    }
+
     .tercias-cruzadas-layout {
       position: relative;
       background: #fff;
@@ -627,28 +713,67 @@
 
     .linea-interna,
     .linea-sq-h-line,
-    .linea-sq-v-line,
     .table5x6-h-line,
-    .table5x6-v-line,
     .horizontal-line,
-    .horizontal-vertical-line,
     .horizontal-h-line,
-    .tercias-below-v-line,
     .tercias-below-h-line,
-    .tercias-cruzadas-v-line,
     .tercias-cruzadas-h-line,
-    .larguitas-crossed-v-line,
     .larguitas-crossed-h-line {
-      box-shadow: var(--line-outline) !important;
+      background: #000;
+      border-top: none !important;
+      box-shadow: none !important;
+      overflow: hidden;
+    }
+
+    .linea-interna::after,
+    .linea-sq-h-line::after,
+    .table5x6-h-line::after,
+    .horizontal-line::after,
+    .horizontal-h-line::after,
+    .tercias-below-h-line::after,
+    .tercias-cruzadas-h-line::after,
+    .larguitas-crossed-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1px;
+      bottom: 1px;
+      background: var(--line-color);
+    }
+
+    .linea-sq-v-line,
+    .table5x6-v-line,
+    .horizontal-vertical-line,
+    .tercias-below-v-line,
+    .tercias-cruzadas-v-line,
+    .larguitas-crossed-v-line {
+      background: #000;
+      border-left: none !important;
+      box-shadow: none !important;
+      overflow: hidden;
+    }
+
+    .linea-sq-v-line::after,
+    .table5x6-v-line::after,
+    .horizontal-vertical-line::after,
+    .tercias-below-v-line::after,
+    .tercias-cruzadas-v-line::after,
+    .larguitas-crossed-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 1px;
+      right: 1px;
+      background: var(--line-color);
     }
 
     .tercias-cruzadas-v-line {
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
-      border-left: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      width: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -664,9 +789,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 4px;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -675,22 +798,21 @@
     .tercias-cruzadas-h-line-1 { top: 16.666%; }
     .tercias-cruzadas-h-line-2 { top: 33.333%; }
     .tercias-cruzadas-h-line-3 {
-      top: 50%;
-      height: 10px;
-      border-top-width: 10px;
+      top: 48%;
+      height: 12px;
     }
     .tercias-cruzadas-h-line-4 { top: 66.666%; }
     .tercias-cruzadas-h-line-5 { top: 83.333%; }
     .tercias-cruzadas-h-line-6 { bottom: 0; }
 
     .tercias-cruzadas-box {
-      width: 1.3cm;
-      height: 1.35cm;
+      width: 1cm;
+      height: 2cm;
     }
 
     .tercias-cruzadas-small {
-      width: 1.3cm;
-      height: 1.0125cm;
+      width: 1cm;
+      height: 1cm;
     }
 
     .tercias-below-layout {
@@ -701,9 +823,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
-      border-left: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      width: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -719,9 +839,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 4px;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -730,9 +848,8 @@
     .tercias-below-h-line-1 { top: 16.666%; }
     .tercias-below-h-line-2 { top: 33.333%; }
     .tercias-below-h-line-3 {
-      top: 50%;
-      height: 10px;
-      border-top-width: 10px;
+      top: 48%;
+      height: 12px;
     }
     .tercias-below-h-line-4 { top: 66.666%; }
     .tercias-below-h-line-5 { top: 83.333%; }
@@ -758,9 +875,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
-      border-left: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      width: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -772,8 +887,7 @@
     .larguitas-crossed-v-line-4 { left: 40%; }
     .larguitas-crossed-v-line-5 {
       left: 50%;
-      width: 10px;
-      border-left-width: 10px;
+      width: 12px;
     }
     .larguitas-crossed-v-line-6 { left: 60%; }
     .larguitas-crossed-v-line-7 { left: 70%; }
@@ -785,9 +899,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 4px;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -802,15 +914,14 @@
       height: 100%;
       object-fit: fill;
       display: block;
+      border-radius: 0;
     }
 
     .linea-interna {
       position: absolute;
       left: 2px;
       width: 586px;
-      height: 0;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       display: none;
     }
@@ -835,9 +946,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 4px;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -846,9 +955,8 @@
     .linea-sq-h-line-1 { top: 16.666%; }
     .linea-sq-h-line-2 { top: 33.333%; }
     .linea-sq-h-line-3 {
-      top: 50%;
-      height: 10px;
-      border-top-width: 10px;
+      top: 48%;
+      height: 12px;
     }
     .linea-sq-h-line-4 { top: 66.666%; }
     .linea-sq-h-line-5 { top: 83.333%; }
@@ -858,9 +966,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
-      border-left: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      width: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -876,9 +982,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 4px;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -886,7 +990,9 @@
     .table5x6-h-line-0 { top: 0; }
     .table5x6-h-line-1 { top: 20%; }
     .table5x6-h-line-2 { top: 40%; }
-    .table5x6-h-line-3 { top: 60%; }
+    .table5x6-h-line-3 {
+      top: 60%;
+    }
     .table5x6-h-line-4 { top: 80%; }
     .table5x6-h-line-5 { bottom: 0; }
 
@@ -894,9 +1000,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
-      border-left: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      width: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -906,8 +1010,7 @@
     .table5x6-v-line-2 { left: 33.333%; }
     .table5x6-v-line-3 {
       left: 50%;
-      width: 10px;
-      border-left-width: 10px;
+      width: 12px;
     }
     .table5x6-v-line-4 { left: 66.666%; }
     .table5x6-v-line-5 { left: 83.333%; }
@@ -923,8 +1026,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
       display: none;
@@ -942,9 +1044,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 4px;
-      border-left: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      width: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -956,8 +1056,7 @@
     .horizontal-vertical-line-4 { left: 40%; }
     .horizontal-vertical-line-5 {
       left: 50%;
-      width: 10px;
-      border-left-width: 10px;
+      width: 12px;
     }
     .horizontal-vertical-line-6 { left: 60%; }
     .horizontal-vertical-line-7 { left: 70%; }
@@ -969,9 +1068,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: 4px;
-      border-top: 4px solid var(--line-color);
-      box-shadow: var(--line-outline);
+      height: 6px;
       z-index: 20;
       pointer-events: none;
     }
@@ -1310,6 +1407,7 @@
           <option value="tercias-below">Tercias abajo</option>
           <option value="tercias-crossed">Tercias cruzadas</option>
           <option value="larguitas-crossed">Larguitas cruzadas</option>
+          <option value="seven-loko">7 LOKO</option>
         </select>
         <select id="line-color-select" class="layout-select" aria-label="Seleccionar color de lineas">
           <option value="#d62828">Lineas Rojas</option>
@@ -2071,6 +2169,115 @@
           <div class="box larguitas-crossed-small" data-larguitas-crossed-id="52">52</div>
         </div>
       </div>
+
+      <div class="layout seven-loko-layout" aria-label="Tabla 7 LOKO" id="seven-loko-layout" hidden>
+        <div class="seven-loko-v-line seven-loko-v-line-1"></div>
+        <div class="seven-loko-v-line seven-loko-v-line-2"></div>
+        <div class="seven-loko-v-line seven-loko-v-line-3"></div>
+        <div class="seven-loko-v-line seven-loko-v-line-4"></div>
+        <div class="seven-loko-v-line seven-loko-v-line-5"></div>
+        <div class="seven-loko-v-line seven-loko-v-line-6"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-1"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-2"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-3"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-4"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-5"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-6"></div>
+        <div class="seven-loko-h-line seven-loko-h-line-7"></div>
+        <div class="column">
+          <div class="box seven-loko-box" data-seven-loko-id="1">1</div>
+          <div class="box seven-loko-box" data-seven-loko-id="2">2</div>
+          <div class="box seven-loko-box" data-seven-loko-id="3">3</div>
+          <div class="box seven-loko-box" data-seven-loko-id="4">4</div>
+          <div class="box seven-loko-box" data-seven-loko-id="5">5</div>
+          <div class="box seven-loko-box" data-seven-loko-id="6">6</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-small" data-seven-loko-id="31">31</div>
+          <div class="box seven-loko-box" data-seven-loko-id="32">32</div>
+          <div class="box seven-loko-small" data-seven-loko-id="33">33</div>
+          <div class="box seven-loko-small" data-seven-loko-id="32">32</div>
+          <div class="box seven-loko-small" data-seven-loko-id="34">34</div>
+          <div class="box seven-loko-small" data-seven-loko-id="35">35</div>
+          <div class="box seven-loko-box" data-seven-loko-id="36">36</div>
+          <div class="box seven-loko-small" data-seven-loko-id="37">37</div>
+          <div class="box seven-loko-small" data-seven-loko-id="36">36</div>
+          <div class="box seven-loko-small" data-seven-loko-id="38">38</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-box" data-seven-loko-id="7">7</div>
+          <div class="box seven-loko-box" data-seven-loko-id="8">8</div>
+          <div class="box seven-loko-box" data-seven-loko-id="9">9</div>
+          <div class="box seven-loko-box" data-seven-loko-id="10">10</div>
+          <div class="box seven-loko-box" data-seven-loko-id="11">11</div>
+          <div class="box seven-loko-box" data-seven-loko-id="12">12</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-small" data-seven-loko-id="31">31</div>
+          <div class="box seven-loko-box" data-seven-loko-id="33">33</div>
+          <div class="box seven-loko-box" data-seven-loko-id="34">34</div>
+          <div class="box seven-loko-small" data-seven-loko-id="31">31</div>
+          <div class="box seven-loko-small" data-seven-loko-id="35">35</div>
+          <div class="box seven-loko-box" data-seven-loko-id="37">37</div>
+          <div class="box seven-loko-box" data-seven-loko-id="38">38</div>
+          <div class="box seven-loko-small" data-seven-loko-id="35">35</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-box" data-seven-loko-id="13">13</div>
+          <div class="box seven-loko-box" data-seven-loko-id="14">14</div>
+          <div class="box seven-loko-box" data-seven-loko-id="15">15</div>
+          <div class="box seven-loko-box" data-seven-loko-id="16">16</div>
+          <div class="box seven-loko-box" data-seven-loko-id="17">17</div>
+          <div class="box seven-loko-box" data-seven-loko-id="18">18</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-small" data-seven-loko-id="39">39</div>
+          <div class="box seven-loko-box" data-seven-loko-id="40">40</div>
+          <div class="box seven-loko-small" data-seven-loko-id="41">41</div>
+          <div class="box seven-loko-small" data-seven-loko-id="40">40</div>
+          <div class="box seven-loko-small" data-seven-loko-id="42">42</div>
+          <div class="box seven-loko-small" data-seven-loko-id="43">43</div>
+          <div class="box seven-loko-box" data-seven-loko-id="44">44</div>
+          <div class="box seven-loko-box" data-seven-loko-id="45">45</div>
+          <div class="box seven-loko-small" data-seven-loko-id="43">43</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-box" data-seven-loko-id="19">19</div>
+          <div class="box seven-loko-box" data-seven-loko-id="20">20</div>
+          <div class="box seven-loko-box" data-seven-loko-id="21">21</div>
+          <div class="box seven-loko-box" data-seven-loko-id="22">22</div>
+          <div class="box seven-loko-box" data-seven-loko-id="23">23</div>
+          <div class="box seven-loko-box" data-seven-loko-id="24">24</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-small" data-seven-loko-id="39">39</div>
+          <div class="box seven-loko-box" data-seven-loko-id="41">41</div>
+          <div class="box seven-loko-box" data-seven-loko-id="42">42</div>
+          <div class="box seven-loko-small" data-seven-loko-id="39">39</div>
+          <div class="box seven-loko-small" data-seven-loko-id="46">46</div>
+          <div class="box seven-loko-box" data-seven-loko-id="47">47</div>
+          <div class="box seven-loko-box" data-seven-loko-id="48">48</div>
+          <div class="box seven-loko-small" data-seven-loko-id="46">46</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-box" data-seven-loko-id="25">25</div>
+          <div class="box seven-loko-box" data-seven-loko-id="26">26</div>
+          <div class="box seven-loko-box" data-seven-loko-id="27">27</div>
+          <div class="box seven-loko-box" data-seven-loko-id="28">28</div>
+          <div class="box seven-loko-box" data-seven-loko-id="29">29</div>
+          <div class="box seven-loko-box" data-seven-loko-id="30">30</div>
+        </div>
+        <div class="column">
+          <div class="box seven-loko-small" data-seven-loko-id="54">54</div>
+          <div class="box seven-loko-box" data-seven-loko-id="49">49</div>
+          <div class="box seven-loko-box" data-seven-loko-id="50">50</div>
+          <div class="box seven-loko-small" data-seven-loko-id="54">54</div>
+          <div class="box seven-loko-small" data-seven-loko-id="51">51</div>
+          <div class="box seven-loko-box" data-seven-loko-id="52">52</div>
+          <div class="box seven-loko-box" data-seven-loko-id="53">53</div>
+          <div class="box seven-loko-small" data-seven-loko-id="51">51</div>
+        </div>
+      </div>
     </div>
       </div>
     </section>
@@ -2146,6 +2353,7 @@
     const larguitasCrossedPrimaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
     const larguitasCrossedSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
     const larguitasCrossedTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
+    const sevenLokoTargetIds = Array.from({ length: 73 }, (_, index) => index + 1);
     const TERCIA_FILTER_MAX = 5;
     const forcedTerciaCardIds = new Set();
 
@@ -2217,6 +2425,10 @@
 
     function setImageByLarguitasCrossedId(id, imagePath) {
       setImageByAttribute("data-larguitas-crossed-id", id, imagePath);
+    }
+
+    function setImageBySevenLokoId(id, imagePath) {
+      setImageByAttribute("data-seven-loko-id", id, imagePath);
     }
 
     function getForcedTerciaCardIdList() {
@@ -2527,6 +2739,23 @@
       });
     }
 
+    function createSevenLokoTableAssignment() {
+      const imagePaths = shuffle(getSelectedDeckImagePaths());
+      const assignment = {};
+
+      sevenLokoTargetIds.forEach((id, index) => {
+        assignment[id] = imagePaths[index % imagePaths.length];
+      });
+
+      return assignment;
+    }
+
+    function applySevenLokoAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageBySevenLokoId(id, imagePath);
+      });
+    }
+
     function generateNewTable() {
       const selectedLayout = document.getElementById("layout-select").value;
       showMainTableView(false);
@@ -2561,6 +2790,12 @@
         return;
       }
 
+      if (selectedLayout === "seven-loko") {
+        applySevenLokoAssignmentToDocument(createSevenLokoTableAssignment());
+        updateTableScale();
+        return;
+      }
+
       applyAssignmentToDocument(createTableAssignment());
       updateTableScale();
     }
@@ -2580,6 +2815,7 @@
       const terciasBelowLayout = document.getElementById("tercias-below-layout");
       const terciasCrossedLayout = document.getElementById("tercias-crossed-layout");
       const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
+      const sevenLokoLayout = document.getElementById("seven-loko-layout");
       const generateButton = document.getElementById("generate-table-button");
 
       const isSquare = layoutType === "square";
@@ -2588,6 +2824,7 @@
       const isTerciasBelow = layoutType === "tercias-below";
       const isTerciasCrossed = layoutType === "tercias-crossed";
       const isLarguitasCrossed = layoutType === "larguitas-crossed";
+      const isSevenLoko = layoutType === "seven-loko";
 
       tableLayout.hidden = !isSquare;
       horizontalLayout.hidden = !isHorizontal;
@@ -2595,6 +2832,7 @@
       terciasBelowLayout.hidden = !isTerciasBelow;
       terciasCrossedLayout.hidden = !isTerciasCrossed;
       larguitasCrossedLayout.hidden = !isLarguitasCrossed;
+      sevenLokoLayout.hidden = !isSevenLoko;
       generateButton.disabled = false;
       generateButton.style.opacity = "1";
       generateButton.style.cursor = "pointer";
@@ -2762,14 +3000,15 @@
     }
 
     function populateLayoutClone(layoutClone, assignment) {
-      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id]");
+      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id], [data-seven-loko-id]");
       boxes.forEach((box) => {
         const id = box.getAttribute("data-id")
           || box.getAttribute("data-horizontal-id")
           || box.getAttribute("data-six-by-five-id")
           || box.getAttribute("data-tercias-below-id")
           || box.getAttribute("data-tercias-crossed-id")
-          || box.getAttribute("data-larguitas-crossed-id");
+          || box.getAttribute("data-larguitas-crossed-id")
+          || box.getAttribute("data-seven-loko-id");
         const src = assignment[id];
         box.replaceChildren();
         if (src) {
@@ -2787,7 +3026,8 @@
         "six-by-five": document.getElementById("six-by-five-layout"),
         "tercias-below": document.getElementById("tercias-below-layout"),
         "tercias-crossed": document.getElementById("tercias-crossed-layout"),
-        "larguitas-crossed": document.getElementById("larguitas-crossed-layout")
+        "larguitas-crossed": document.getElementById("larguitas-crossed-layout"),
+        "seven-loko": document.getElementById("seven-loko-layout")
       };
       const sourceLayout = layoutMap[layoutType] || layoutMap.square;
       const game6View = document.getElementById("game6-view");
