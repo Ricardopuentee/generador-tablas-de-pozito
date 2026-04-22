@@ -3223,7 +3223,7 @@
     async function downloadTableAsImage() {
       const downloadButton = document.getElementById("download-image-button");
       const activeLayout = getActiveLayout();
-      const EXPORT_PADDING = 12;
+      const EXPORT_PADDING = 0;
 
       if (!activeLayout) {
         alert("No hay una tabla visible para descargar.");
@@ -3386,7 +3386,7 @@
       printSheet.style.display = "none";
       grid.style.display = "grid";
       grid.style.gridTemplateColumns = "repeat(2, max-content)";
-      grid.style.gap = "0.2cm";
+      grid.style.gap = "0";
       grid.style.justifyContent = "start";
       grid.style.alignContent = "start";
       game6Clone.style.width = "max-content";
@@ -3447,7 +3447,7 @@
         grid.style.display = "flex";
         grid.style.flexDirection = "column";
         grid.style.flexWrap = "nowrap";
-        grid.style.gap = "4px";
+        grid.style.gap = "0";
         grid.style.justifyContent = "flex-start";
         grid.style.alignItems = "flex-start";
         grid.style.alignContent = "flex-start";
@@ -3455,7 +3455,7 @@
       } else {
         grid.style.display = "grid";
         grid.style.gridTemplateColumns = "repeat(2, max-content)";
-        grid.style.gap = "6px";
+        grid.style.gap = "0";
         grid.style.justifyContent = "start";
         grid.style.alignContent = "start";
         grid.style.width = "max-content";
@@ -3489,7 +3489,7 @@
     async function downloadGame6AsImage() {
       const game6View = document.getElementById("game6-view");
       const downloadButton = document.getElementById("download-game6-image-button");
-      const EXPORT_PADDING = 3;
+      const EXPORT_PADDING = 0;
 
       if (!game6View || game6View.hidden) {
         alert("Primero genera y abre el juego de 6 tablas.");
