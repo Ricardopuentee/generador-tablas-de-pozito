@@ -2062,10 +2062,13 @@
         const number = String(index + 1).padStart(2, "0");
         return `Baraja de loteria optimizada/imagen-${number}.jpg`;
       }),
-      "carpeta-sin-titulo": [
-        ...Array.from({ length: 15 }, (_, index) => `cartas_recortadas/Imagen ${index + 1}.png`),
-        ...Array.from({ length: 39 }, (_, index) => `cartas_recortadas/${index + 16}.png`)
-      ],
+      "carpeta-sin-titulo": Array.from({ length: 54 }, (_, index) => {
+        if (index === 0) {
+          return 'Baraja "Grande"/Imagen 1.png';
+        }
+
+        return `Baraja "Grande"/${index + 1}.png`;
+      }),
       stylized: Array.from({ length: 54 }, (_, index) => {
         if (index === 0) {
           return "Baraja estilizada/unnamed.jpg";
@@ -2120,11 +2123,33 @@
       return deckImagePathsByDeck[selectedDeck] || deckImagePathsByDeck.traditional;
     }
 
+    function escapeHtmlAttribute(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function createCardImageElement(imagePath, altText, className = "") {
+      const image = document.createElement("img");
+      image.src = imagePath;
+      image.alt = altText;
+      image.loading = "eager";
+      image.decoding = "async";
+
+      if (className) {
+        image.className = className;
+      }
+
+      return image;
+    }
+
     function setImageByAttribute(attributeName, id, imagePath) {
       const boxes = document.querySelectorAll(`[${attributeName}="${id}"]`);
 
       boxes.forEach((box) => {
-        box.innerHTML = `<img src="${imagePath}" alt="Carta de loteria ${id}" loading="eager" decoding="async">`;
+        box.replaceChildren(createCardImageElement(imagePath, `Carta de loteria ${id}`));
       });
     }
 
@@ -2230,7 +2255,7 @@
         return `
           <label class="tercia-filter-item">
             <input type="checkbox" data-tercia-filter-id="${cardId}" ${checked}>
-            <img src="${imagePath}" alt="Carta ${cardNumber}" class="tercia-filter-thumb" loading="lazy" decoding="async">
+            <img src="${escapeHtmlAttribute(imagePath)}" alt="Carta ${cardNumber}" class="tercia-filter-thumb" loading="lazy" decoding="async">
             <span class="tercia-filter-label">Carta ${cardNumber}</span>
           </label>
         `;
@@ -2631,7 +2656,7 @@
       function boxImg(id, cls) {
         const src = assignment[id] || "";
         return `<div class="box ${cls}" data-id="${id}">` +
-          (src ? `<img src="${src}" alt="Carta ${id}">` : id) +
+          (src ? `<img src="${escapeHtmlAttribute(src)}" alt="Carta ${id}">` : id) +
           `</div>`;
       }
 
@@ -2704,7 +2729,12 @@
           || box.getAttribute("data-tercias-crossed-id")
           || box.getAttribute("data-larguitas-crossed-id");
         const src = assignment[id];
-        box.innerHTML = src ? `<img src="${src}" alt="Carta ${id}">` : id;
+        box.replaceChildren();
+        if (src) {
+          box.appendChild(createCardImageElement(src, `Carta ${id}`));
+        } else {
+          box.textContent = id;
+        }
       });
     }
 
