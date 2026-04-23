@@ -967,6 +967,94 @@
     .larguitas-crossed-h-line-2 { top: 66.666%; }
     .larguitas-crossed-h-line-3 { bottom: 0; }
 
+    .model16-layout {
+      position: relative;
+      background: #fff;
+    }
+
+    .model16-column {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 1cm;
+      height: 12cm;
+    }
+
+    .model16-box {
+      width: 1cm;
+      height: 2cm;
+      border: none;
+    }
+
+    .model16-small {
+      width: 1cm;
+      height: 1cm;
+      border: none;
+    }
+
+    .model16-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--line-size);
+      background: var(--line-frame-color);
+      z-index: 20;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .model16-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .model16-v-line-1 { left: 0; }
+    .model16-v-line-2 { left: 20%; }
+    .model16-v-line-3 { left: 40%; }
+    .model16-v-line-4 { left: 60%; }
+    .model16-v-line-5 { left: 80%; }
+    .model16-v-line-6 { right: 0; left: auto; }
+
+    .model16-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: var(--line-size);
+      background: var(--line-frame-color);
+      z-index: 20;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .model16-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .model16-h-line-1 {
+      top: 0;
+      transform: translateY(-100%);
+    }
+    .model16-h-line-2 { top: 16.666%; }
+    .model16-h-line-3 { top: 33.333%; }
+    .model16-h-line-4 {
+      top: 48%;
+      height: var(--line-size-double);
+    }
+    .model16-h-line-5 { top: 66.666%; }
+    .model16-h-line-6 { top: 83.333%; }
+    .model16-h-line-7 { bottom: 0; }
+
     .modelo10-layout {
       position: relative;
       background: #fff;
@@ -1569,6 +1657,7 @@
           <option value="tercias-crossed">Tercias cruzadas</option>
           <option value="larguitas-crossed">Larguitas cruzadas</option>
           <option value="modelo-10">Modelo 10</option>
+          <option value="modelo-16">Modelo 16</option>
           <option value="seven-loko">7 LOKO</option>
         </select>
         <label class="color-control" for="line-color-picker">
@@ -2328,6 +2417,128 @@
           <div class="box larguitas-crossed-box" data-larguitas-crossed-id="53">53</div>
           <div class="box larguitas-crossed-box" data-larguitas-crossed-id="54">54</div>
           <div class="box larguitas-crossed-small" data-larguitas-crossed-id="52">52</div>
+        </div>
+      </div>
+
+      <div class="layout model16-layout" aria-label="Tabla Modelo 16" id="modelo16-layout" hidden>
+        <div class="model16-v-line model16-v-line-1"></div>
+        <div class="model16-v-line model16-v-line-2"></div>
+        <div class="model16-v-line model16-v-line-3"></div>
+        <div class="model16-v-line model16-v-line-4"></div>
+        <div class="model16-v-line model16-v-line-5"></div>
+        <div class="model16-v-line model16-v-line-6"></div>
+        <div class="model16-h-line model16-h-line-1"></div>
+        <div class="model16-h-line model16-h-line-2"></div>
+        <div class="model16-h-line model16-h-line-3"></div>
+        <div class="model16-h-line model16-h-line-4"></div>
+        <div class="model16-h-line model16-h-line-5"></div>
+        <div class="model16-h-line model16-h-line-6"></div>
+        <div class="model16-h-line model16-h-line-7"></div>
+
+        <div class="model16-column">
+          <div class="box model16-box" data-id="1">1</div>
+          <div class="box model16-box" data-id="2">2</div>
+          <div class="box model16-box" data-id="3">3</div>
+          <div class="box model16-box" data-id="4">4</div>
+          <div class="box model16-box" data-id="5">5</div>
+          <div class="box model16-box" data-id="6">6</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-small" data-id="31">31</div>
+          <div class="box model16-box" data-id="32">32</div>
+          <div class="box model16-small" data-id="33">33</div>
+          <div class="box model16-small" data-id="34">34</div>
+          <div class="box model16-small" data-id="35">35</div>
+          <div class="box model16-small" data-id="35">35</div>
+          <div class="box model16-small" data-id="36">36</div>
+          <div class="box model16-small" data-id="37">37</div>
+          <div class="box model16-box" data-id="38">38</div>
+          <div class="box model16-small" data-id="39">39</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-box" data-id="7">7</div>
+          <div class="box model16-box" data-id="8">8</div>
+          <div class="box model16-box" data-id="9">9</div>
+          <div class="box model16-box" data-id="10">10</div>
+          <div class="box model16-box" data-id="11">11</div>
+          <div class="box model16-box" data-id="12">12</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-small" data-id="32">32</div>
+          <div class="box model16-box" data-id="42">42</div>
+          <div class="box model16-small" data-id="33">33</div>
+          <div class="box model16-small" data-id="35">35</div>
+          <div class="box model16-small" data-id="41">41</div>
+          <div class="box model16-small" data-id="41">41</div>
+          <div class="box model16-small" data-id="36">36</div>
+          <div class="box model16-small" data-id="38">38</div>
+          <div class="box model16-box" data-id="40">40</div>
+          <div class="box model16-small" data-id="39">39</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-box" data-id="13">13</div>
+          <div class="box model16-box" data-id="14">14</div>
+          <div class="box model16-box" data-id="15">15</div>
+          <div class="box model16-box" data-id="16">16</div>
+          <div class="box model16-box" data-id="17">17</div>
+          <div class="box model16-box" data-id="18">18</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-small" data-id="42">42</div>
+          <div class="box model16-box" data-id="31">31</div>
+          <div class="box model16-small" data-id="33">33</div>
+          <div class="box model16-small" data-id="41">41</div>
+          <div class="box model16-small" data-id="34">34</div>
+          <div class="box model16-small" data-id="34">34</div>
+          <div class="box model16-small" data-id="36">36</div>
+          <div class="box model16-small" data-id="40">40</div>
+          <div class="box model16-box" data-id="37">37</div>
+          <div class="box model16-small" data-id="39">39</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-box" data-id="19">19</div>
+          <div class="box model16-box" data-id="20">20</div>
+          <div class="box model16-box" data-id="21">21</div>
+          <div class="box model16-box" data-id="22">22</div>
+          <div class="box model16-box" data-id="23">23</div>
+          <div class="box model16-box" data-id="24">24</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-small" data-id="43">43</div>
+          <div class="box model16-box" data-id="44">44</div>
+          <div class="box model16-box" data-id="45">45</div>
+          <div class="box model16-small" data-id="43">43</div>
+          <div class="box model16-small" data-id="46">46</div>
+          <div class="box model16-box" data-id="47">47</div>
+          <div class="box model16-box" data-id="48">48</div>
+          <div class="box model16-small" data-id="46">46</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-box" data-id="25">25</div>
+          <div class="box model16-box" data-id="26">26</div>
+          <div class="box model16-box" data-id="27">27</div>
+          <div class="box model16-box" data-id="28">28</div>
+          <div class="box model16-box" data-id="29">29</div>
+          <div class="box model16-box" data-id="30">30</div>
+        </div>
+
+        <div class="model16-column">
+          <div class="box model16-small" data-id="49">49</div>
+          <div class="box model16-box" data-id="50">50</div>
+          <div class="box model16-box" data-id="51">51</div>
+          <div class="box model16-small" data-id="49">49</div>
+          <div class="box model16-small" data-id="52">52</div>
+          <div class="box model16-box" data-id="53">53</div>
+          <div class="box model16-box" data-id="54">54</div>
+          <div class="box model16-small" data-id="52">52</div>
         </div>
       </div>
 
@@ -3135,6 +3346,7 @@
       const terciasBelowLayout = document.getElementById("tercias-below-layout");
       const terciasCrossedLayout = document.getElementById("tercias-crossed-layout");
       const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
+      const modelo16Layout = document.getElementById("modelo16-layout");
       const modelo10Layout = document.getElementById("modelo10-layout");
       const sevenLokoLayout = document.getElementById("seven-loko-layout");
       const generateButton = document.getElementById("generate-table-button");
@@ -3145,6 +3357,7 @@
       const isTerciasBelow = layoutType === "tercias-below";
       const isTerciasCrossed = layoutType === "tercias-crossed";
       const isLarguitasCrossed = layoutType === "larguitas-crossed";
+      const isModelo16 = layoutType === "modelo-16";
       const isModelo10 = layoutType === "modelo-10";
       const isSevenLoko = layoutType === "seven-loko";
 
@@ -3154,6 +3367,7 @@
       terciasBelowLayout.hidden = !isTerciasBelow;
       terciasCrossedLayout.hidden = !isTerciasCrossed;
       larguitasCrossedLayout.hidden = !isLarguitasCrossed;
+      modelo16Layout.hidden = !isModelo16;
       modelo10Layout.hidden = !isModelo10;
       sevenLokoLayout.hidden = !isSevenLoko;
       generateButton.disabled = false;
@@ -3350,6 +3564,7 @@
         "tercias-below": document.getElementById("tercias-below-layout"),
         "tercias-crossed": document.getElementById("tercias-crossed-layout"),
         "larguitas-crossed": document.getElementById("larguitas-crossed-layout"),
+        "modelo-16": document.getElementById("modelo16-layout"),
         "modelo-10": document.getElementById("modelo10-layout"),
         "seven-loko": document.getElementById("seven-loko-layout")
       };
