@@ -2798,6 +2798,7 @@
       <div class="game6-actions">
         <button type="button" class="print-button temporarily-hidden" id="print-game6-button" aria-hidden="true">Imprimir juego de 6</button>
         <button type="button" class="print-button" id="download-game6-image-button">Descargar juego de 6 PNG</button>
+        <button type="button" class="print-button" id="download-game6-individual-images-button">Descargar 6 PNG separados</button>
         <button type="button" class="back-button" id="back-from-game6-button">Volver a la tabla normal</button>
       </div>
     </div>
@@ -4010,23 +4011,14 @@
       printSheet.style.height = "0";
       printSheet.style.overflow = "hidden";
 
-      if (layoutType === "horizontal" || layoutType === "larguitas-crossed") {
-        grid.style.display = "flex";
-        grid.style.flexDirection = "column";
-        grid.style.flexWrap = "nowrap";
-        grid.style.gap = "0";
-        grid.style.justifyContent = "flex-start";
-        grid.style.alignItems = "flex-start";
-        grid.style.alignContent = "flex-start";
-        grid.style.width = "max-content";
-      } else {
-        grid.style.display = "grid";
-        grid.style.gridTemplateColumns = "repeat(2, max-content)";
-        grid.style.gap = "0";
-        grid.style.justifyContent = "start";
-        grid.style.alignContent = "start";
-        grid.style.width = "max-content";
-      }
+      grid.style.display = "flex";
+      grid.style.flexDirection = "column";
+      grid.style.flexWrap = "nowrap";
+      grid.style.gap = "0";
+      grid.style.justifyContent = "flex-start";
+      grid.style.alignItems = "flex-start";
+      grid.style.alignContent = "flex-start";
+      grid.style.width = "max-content";
 
       grid.style.position = "static";
       grid.style.transform = "none";
@@ -4146,6 +4138,136 @@
       }
     }
 
+    async function downloadBlobAsFile(blob, fileName) {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      link.click();
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      URL.revokeObjectURL(link.href);
+    }
+
+    async function downloadGame6AsIndividualImages() {
+      const game6View = document.getElementById("game6-view");
+      const downloadButton = document.getElementById("download-game6-individual-images-button");
+
+      if (!game6View || game6View.hidden) {
+        alert("Primero genera y abre el juego de 6 tablas.");
+        return;
+      }
+
+      if (typeof window.html2canvas !== "function") {
+        alert("No se pudo cargar el exportador de imagen.");
+        return;
+      }
+
+      const tableWrappers = Array.from(game6View.querySelectorAll("#game6-grid .table-wrapper"));
+
+      if (tableWrappers.length !== 6) {
+        alert("No se encontraron las 6 tablas para exportar.");
+        return;
+      }
+
+      const exportWrapper = document.createElement("div");
+      exportWrapper.style.position = "fixed";
+      exportWrapper.style.left = "-10000px";
+      exportWrapper.style.top = "0";
+      exportWrapper.style.padding = "0";
+      exportWrapper.style.margin = "0";
+      exportWrapper.style.background = "#ffffff";
+      exportWrapper.style.display = "inline-block";
+      exportWrapper.style.width = "max-content";
+      exportWrapper.style.overflow = "visible";
+      exportWrapper.style.boxSizing = "border-box";
+      document.body.appendChild(exportWrapper);
+
+      const originalLabel = downloadButton ? downloadButton.textContent : "";
+      const layoutType = game6View.dataset.layoutType || document.getElementById("layout-select").value;
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+
+      try {
+        if (downloadButton) {
+          downloadButton.disabled = true;
+          downloadButton.textContent = "Generando 6 PNG...";
+        }
+
+        for (let index = 0; index < tableWrappers.length; index += 1) {
+          if (downloadButton) {
+            downloadButton.textContent = `Generando PNG ${index + 1}/6...`;
+          }
+
+          exportWrapper.innerHTML = "";
+          const tableClone = tableWrappers[index].cloneNode(true);
+          exportWrapper.appendChild(tableClone);
+
+          tableClone.style.margin = "0";
+          tableClone.style.padding = "0";
+          tableClone.style.width = "max-content";
+          tableClone.style.height = "auto";
+          tableClone.style.background = "#ffffff";
+          tableClone.style.border = "none";
+          tableClone.style.borderRadius = "0";
+          tableClone.style.boxShadow = "none";
+          tableClone.style.overflow = "visible";
+
+          tableClone.querySelectorAll(".table-number").forEach((node) => {
+            node.style.display = "none";
+          });
+
+          tableClone.querySelectorAll(".layout, .layout *").forEach((node) => {
+            node.style.margin = "0";
+            node.style.padding = "0";
+            node.style.borderRadius = "0";
+          });
+
+          prepareTopLinesForExport(tableClone);
+          await waitForImagesInElement(tableClone);
+
+          const cloneWidth = Math.ceil(Math.max(tableClone.scrollWidth, tableClone.offsetWidth, tableClone.getBoundingClientRect().width));
+          const cloneHeight = Math.ceil(Math.max(tableClone.scrollHeight, tableClone.offsetHeight, tableClone.getBoundingClientRect().height));
+
+          exportWrapper.style.width = `${cloneWidth}px`;
+
+          const canvas = await window.html2canvas(exportWrapper, {
+            backgroundColor: "#ffffff",
+            scale: 2,
+            width: cloneWidth,
+            height: cloneHeight,
+            windowWidth: cloneWidth,
+            windowHeight: cloneHeight,
+            useCORS: true,
+            allowTaint: true
+          });
+
+          const fileName = `juego6-${layoutType}-tabla-${index + 1}-${timestamp}.png`;
+
+          if (canvas.toBlob) {
+            const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+            if (blob) {
+              await downloadBlobAsFile(blob, fileName);
+              continue;
+            }
+          }
+
+          const fallbackLink = document.createElement("a");
+          fallbackLink.href = canvas.toDataURL("image/png");
+          fallbackLink.download = fileName;
+          fallbackLink.click();
+          await new Promise((resolve) => setTimeout(resolve, 150));
+        }
+      } catch (error) {
+        console.error("Error al descargar las 6 tablas por separado:", error);
+        alert("No se pudieron generar los PNG individuales del juego de 6.");
+      } finally {
+        exportWrapper.remove();
+
+        if (downloadButton) {
+          downloadButton.disabled = false;
+          downloadButton.textContent = originalLabel || "Descargar 6 PNG separados";
+        }
+      }
+    }
+
     function initializeApp() {
       const generateButton = document.getElementById("generate-table-button");
       const printButton = document.getElementById("print-table-button");
@@ -4158,6 +4280,7 @@
       const game6Button = document.getElementById("game6-button");
       const printGame6Button = document.getElementById("print-game6-button");
       const downloadGame6ImageButton = document.getElementById("download-game6-image-button");
+      const downloadGame6IndividualImagesButton = document.getElementById("download-game6-individual-images-button");
       const backFromGame6Button = document.getElementById("back-from-game6-button");
 
       if (
@@ -4172,6 +4295,7 @@
         !game6Button ||
         !printGame6Button ||
         !downloadGame6ImageButton ||
+        !downloadGame6IndividualImagesButton ||
         !backFromGame6Button
       ) {
         console.error("No se pudieron inicializar los controles de la tabla.");
@@ -4200,6 +4324,7 @@
         window.print();
       });
       downloadGame6ImageButton.addEventListener("click", downloadGame6AsImage);
+      downloadGame6IndividualImagesButton.addEventListener("click", downloadGame6AsIndividualImages);
       backFromGame6Button.addEventListener("click", showMainTableView);
       initializeTerciaFilterControls();
 
