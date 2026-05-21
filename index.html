@@ -14,6 +14,10 @@
       --line-size: 8px;
       --line-size-double: 14px;
       --line-frame-size: 2px;
+      --inner-line-scale: 100;
+      --inner-line-size: calc(var(--line-size) * var(--inner-line-scale) / 100);
+      --inner-line-size-double: calc(var(--line-size-double) * var(--inner-line-scale) / 100);
+      --inner-line-frame-size: calc(var(--line-frame-size) * var(--inner-line-scale) / 100);
       --outer-border-scale: 100;
       --outer-line-size: calc(var(--line-size) * var(--outer-border-scale) / 100);
       --outer-line-frame-size: calc(var(--line-frame-size) * var(--outer-border-scale) / 100);
@@ -147,62 +151,6 @@
 
     .controls > * {
       min-height: 48px;
-    }
-
-    .login-screen {
-      min-height: calc(100vh - 32px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .login-card {
-      width: min(360px, 100%);
-      border: 1px solid var(--border-soft);
-      border-radius: 22px;
-      padding: 28px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: var(--shadow-medium);
-      backdrop-filter: blur(12px);
-    }
-
-    .login-title {
-      margin: 0 0 8px;
-      font-family: "Bebas Neue", sans-serif;
-      letter-spacing: 0.04em;
-      font-size: 40px;
-      font-weight: 400;
-      color: var(--text-primary);
-    }
-
-    .login-subtitle {
-      margin: 0 0 20px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .login-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .login-input {
-      width: 100%;
-      border: 1px solid var(--border-soft);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 16px;
-      background: #fff;
-      color: var(--text-primary);
-      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
-    }
-
-    .login-error {
-      min-height: 20px;
-      margin: 0;
-      font-size: 14px;
-      color: var(--accent);
     }
 
     .app-shell[hidden] {
@@ -1088,6 +1036,347 @@
     .model16-h-line-6 { top: 83.333%; }
     .model16-h-line-7 { bottom: 0; }
 
+    .model17-layout {
+      position: relative;
+      background: #fff;
+    }
+
+    .model17-block {
+      display: flex;
+      position: relative;
+      width: 2cm;
+      height: 10.78cm;
+    }
+
+    .model17-column {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 1cm;
+      height: 10cm;
+    }
+
+    .model17-box,
+    .model17-small {
+      width: 1cm;
+      border: none;
+    }
+
+    .model17-box { height: 2cm; }
+    .model17-small { height: 1cm; }
+
+    .model17-grid-v-line,
+    .model17-grid-h-line {
+      position: absolute;
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .model17-grid-v-line {
+      top: 0;
+      bottom: 0;
+      width: var(--line-size);
+    }
+
+    .model17-grid-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .model17-grid-h-line {
+      left: 0;
+      right: 0;
+      height: var(--line-size);
+    }
+
+    .model17-grid-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .model17-grid-v-line-0 { left: 0; }
+    .model17-grid-v-line-1 { left: 16.666%; }
+    .model17-grid-v-line-2 { left: 33.333%; }
+    .model17-grid-v-line-3 {
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--line-size-double);
+    }
+
+    .model17-grid-v-line-3::after {
+      left: 1px;
+      right: 1px;
+    }
+    .model17-grid-v-line-4 { left: 66.666%; }
+    .model17-grid-v-line-5 { left: 83.333%; }
+    .model17-grid-v-line-6 { right: 0; left: auto; }
+    .model17-grid-h-line-0 {
+      top: 0;
+      transform: translateY(-100%);
+    }
+    .model17-grid-h-line-1 { top: calc(20% - 4px); }
+    .model17-grid-h-line-2 { top: calc(40% - 4px); }
+    .model17-grid-h-line-3 { top: calc(60% - 4px); }
+    .model17-grid-h-line-4 { top: calc(80% - 4px); }
+    .model17-grid-h-line-5 { bottom: 0; }
+
+    .model12-triples-layout {
+      position: relative;
+      background: #fff;
+    }
+
+    .model12-triples-block {
+      display: flex;
+      position: relative;
+      width: 2cm;
+      height: 12cm;
+    }
+
+    .model12-triples-column {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      width: 1cm;
+      height: 12cm;
+    }
+
+    .model12-triples-box,
+    .model12-triples-small {
+      width: 1cm;
+      border: none;
+    }
+
+    .model12-triples-box { height: 2cm; }
+    .model12-triples-small { height: 1cm; }
+
+    .model12-triples-v-line,
+    .model12-triples-h-line {
+      position: absolute;
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .model12-triples-v-line {
+      top: 0;
+      bottom: 0;
+      width: var(--line-size);
+    }
+
+    .model12-triples-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .model12-triples-h-line {
+      left: 0;
+      right: 0;
+      height: var(--line-size);
+    }
+
+    .model12-triples-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .model12-triples-v-line-0 { left: 0; }
+    .model12-triples-v-line-1 { left: 20%; }
+    .model12-triples-v-line-2 { left: 40%; }
+    .model12-triples-v-line-3 { left: 60%; }
+    .model12-triples-v-line-4 { left: 80%; }
+    .model12-triples-v-line-5 { right: 0; left: auto; }
+    .model12-triples-h-line-0 {
+      top: 0;
+      transform: translateY(-100%);
+    }
+    .model12-triples-h-line-1 { top: calc(16.666% - 4px); }
+    .model12-triples-h-line-2 { top: calc(33.333% - 4px); }
+    .model12-triples-h-line-3 {
+      top: calc(49.25% - 4px);
+      height: var(--line-size-double);
+    }
+    .model12-triples-h-line-4 { top: calc(66.666% - 4px); }
+    .model12-triples-h-line-5 { top: calc(83.333% - 4px); }
+    .model12-triples-h-line-6 { bottom: 0; }
+
+    .vertical-con-grande-layout {
+      position: relative;
+      flex-direction: column;
+      width: 15cm;
+      height: 10.78cm;
+      background: #fff;
+    }
+
+    .vertical-con-grande-row {
+      display: flex;
+      position: relative;
+      width: 15cm;
+      height: 2cm;
+      flex-shrink: 0;
+    }
+
+    .vertical-con-grande-wide,
+    .vertical-con-grande-small {
+      border: none;
+    }
+
+    .vertical-con-grande-wide {
+      width: 3cm;
+      height: 2cm;
+    }
+
+    .vertical-con-grande-wide img {
+      width: 2.01cm;
+      height: 3.01cm;
+      object-fit: cover;
+      transform: rotate(90deg);
+      transform-origin: center;
+    }
+
+    .vertical-con-grande-small-row {
+      height: 2.26cm;
+    }
+
+    .vertical-con-grande-small {
+      width: 1cm;
+      height: 2.26cm;
+    }
+
+    .vertical-con-grande-split-cell {
+      display: flex;
+      flex-direction: column;
+      width: 1cm;
+      height: 2.26cm;
+      flex-shrink: 0;
+    }
+
+    .vertical-con-grande-half {
+      width: 1cm;
+      height: 1.13cm;
+      border: none;
+    }
+
+    .vertical-con-grande-h-line,
+    .vertical-con-grande-center-h-line,
+    .vertical-con-grande-wide-v-line,
+    .vertical-con-grande-mid-v-line {
+      position: absolute;
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .vertical-con-grande-center-h-line,
+    .vertical-con-grande-h-line {
+      left: 0;
+      right: 0;
+      height: var(--line-size);
+    }
+
+    .vertical-con-grande-center-h-line {
+      top: 5.28cm;
+    }
+
+    .vertical-con-grande-center-h-line::after,
+    .vertical-con-grande-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .vertical-con-grande-wide-v-line,
+    .vertical-con-grande-mid-v-line {
+      width: var(--line-size);
+    }
+
+    .vertical-con-grande-wide-v-line::after,
+    .vertical-con-grande-mid-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .vertical-con-grande-h-line-0 {
+      top: 0;
+      transform: translateY(-100%);
+    }
+    .vertical-con-grande-h-line-1 { top: 2cm; }
+    .vertical-con-grande-h-line-2 { top: 4.26cm; }
+    .vertical-con-grande-h-line-3 { top: 6.52cm; }
+    .vertical-con-grande-h-line-4 { top: 8.78cm; }
+    .vertical-con-grande-h-line-5 { bottom: 0; }
+
+    .vertical-con-grande-wide-v-line-top {
+      top: 0;
+      height: 2cm;
+    }
+
+    .vertical-con-grande-wide-v-line-bottom {
+      bottom: 0;
+      height: 2cm;
+    }
+
+    .vertical-con-grande-wide-v-line-0 { left: 0; }
+    .vertical-con-grande-wide-v-line-1 { left: 20%; }
+    .vertical-con-grande-wide-v-line-2 { left: 40%; }
+    .vertical-con-grande-wide-v-line-3 { left: 60%; }
+    .vertical-con-grande-wide-v-line-4 { left: 80%; }
+    .vertical-con-grande-wide-v-line-5 { right: 0; left: auto; }
+
+    .vertical-con-grande-mid-v-line {
+      top: 2cm;
+      height: 6.78cm;
+    }
+
+    .vertical-con-grande-mid-v-line-0 { left: 0; }
+    .vertical-con-grande-mid-v-line-1 { left: 6.666%; }
+    .vertical-con-grande-mid-v-line-2 { left: 13.333%; }
+    .vertical-con-grande-mid-v-line-3 { left: 20%; }
+    .vertical-con-grande-mid-v-line-4 { left: 26.666%; }
+    .vertical-con-grande-mid-v-line-5 { left: 33.333%; }
+    .vertical-con-grande-mid-v-line-6 { left: 40%; }
+    .vertical-con-grande-mid-v-line-7 { left: 46.666%; }
+    .vertical-con-grande-mid-v-line-8 { left: 53.333%; }
+    .vertical-con-grande-mid-v-line-9 { left: 60%; }
+    .vertical-con-grande-mid-v-line-10 { left: 66.666%; }
+    .vertical-con-grande-mid-v-line-11 { left: 73.333%; }
+    .vertical-con-grande-mid-v-line-12 { left: 80%; }
+    .vertical-con-grande-mid-v-line-13 { left: 86.666%; }
+    .vertical-con-grande-mid-v-line-14 { left: 93.333%; }
+    .vertical-con-grande-mid-v-line-15 { right: 0; left: auto; }
+
     .modelo10-layout {
       position: relative;
       background: #fff;
@@ -1182,6 +1471,16 @@
       object-fit: fill;
       display: block;
       border-radius: 0;
+    }
+
+    .vertical-con-grande-wide img {
+      width: calc(2cm + 2px) !important;
+      height: calc(3cm + 2px) !important;
+      object-fit: fill !important;
+      transform: rotate(90deg);
+      transform-origin: center;
+      max-width: none;
+      max-height: none;
     }
 
     .linea-interna {
@@ -1355,6 +1654,94 @@
     .horizontal-h-line-3 { bottom: 0; }
 
     .linea-sq-h-line-0,
+    .linea-interna,
+    .linea-sq-h-line,
+    .table5x6-h-line,
+    .horizontal-line,
+    .horizontal-h-line,
+    .tercias-below-h-line,
+    .tercias-cruzadas-h-line,
+    .larguitas-crossed-h-line,
+    .model16-h-line,
+    .model17-grid-h-line,
+    .model12-triples-h-line,
+    .vertical-con-grande-center-h-line,
+    .vertical-con-grande-h-line,
+    .modelo10-global-h-line,
+    .seven-loko-h-line {
+      height: var(--inner-line-size) !important;
+    }
+
+    .linea-sq-v-line,
+    .table5x6-v-line,
+    .horizontal-vertical-line,
+    .tercias-below-v-line,
+    .tercias-cruzadas-v-line,
+    .larguitas-crossed-v-line,
+    .model16-v-line,
+    .model17-grid-v-line,
+    .model12-triples-v-line,
+    .vertical-con-grande-wide-v-line,
+    .vertical-con-grande-mid-v-line,
+    .modelo10-v-line,
+    .seven-loko-v-line {
+      width: var(--inner-line-size) !important;
+    }
+
+    .linea-interna::after,
+    .linea-sq-h-line::after,
+    .table5x6-h-line::after,
+    .horizontal-line::after,
+    .horizontal-h-line::after,
+    .tercias-below-h-line::after,
+    .tercias-cruzadas-h-line::after,
+    .larguitas-crossed-h-line::after,
+    .model16-h-line::after,
+    .model17-grid-h-line::after,
+    .model12-triples-h-line::after,
+    .vertical-con-grande-center-h-line::after,
+    .vertical-con-grande-h-line::after,
+    .modelo10-global-h-line::after,
+    .seven-loko-h-line::after {
+      top: var(--inner-line-frame-size) !important;
+      bottom: var(--inner-line-frame-size) !important;
+    }
+
+    .linea-sq-v-line::after,
+    .table5x6-v-line::after,
+    .horizontal-vertical-line::after,
+    .tercias-below-v-line::after,
+    .tercias-cruzadas-v-line::after,
+    .larguitas-crossed-v-line::after,
+    .model16-v-line::after,
+    .model17-grid-v-line::after,
+    .model12-triples-v-line::after,
+    .vertical-con-grande-wide-v-line::after,
+    .vertical-con-grande-mid-v-line::after,
+    .modelo10-v-line::after,
+    .seven-loko-v-line::after {
+      left: var(--inner-line-frame-size) !important;
+      right: var(--inner-line-frame-size) !important;
+    }
+
+    .linea-sq-h-line-3,
+    .tercias-below-h-line-3,
+    .tercias-cruzadas-h-line-3,
+    .model16-h-line-4,
+    .model12-triples-h-line-3,
+    .seven-loko-h-line-4 {
+      height: var(--inner-line-size-double) !important;
+    }
+
+    .table5x6-v-line-3,
+    .horizontal-vertical-line-5,
+    .larguitas-crossed-v-line-5,
+    .model17-grid-v-line-3,
+    .modelo10-v-line-5 {
+      width: var(--inner-line-size-double) !important;
+    }
+
+    .linea-sq-h-line-0,
     .linea-sq-h-line-6,
     .table5x6-h-line-0,
     .table5x6-h-line-5,
@@ -1368,6 +1755,12 @@
     .larguitas-crossed-h-line-3,
     .model16-h-line-1,
     .model16-h-line-7,
+    .model17-grid-h-line-0,
+    .model17-grid-h-line-5,
+    .model12-triples-h-line-0,
+    .model12-triples-h-line-6,
+    .vertical-con-grande-h-line-0,
+    .vertical-con-grande-h-line-5,
     .modelo10-global-h-line-top,
     .modelo10-global-h-line-bottom,
     .seven-loko-h-line-1,
@@ -1389,6 +1782,14 @@
     .larguitas-crossed-v-line-10,
     .model16-v-line-1,
     .model16-v-line-6,
+    .model17-grid-v-line-0,
+    .model17-grid-v-line-6,
+    .model12-triples-v-line-0,
+    .model12-triples-v-line-5,
+    .vertical-con-grande-wide-v-line-0,
+    .vertical-con-grande-wide-v-line-5,
+    .vertical-con-grande-mid-v-line-0,
+    .vertical-con-grande-mid-v-line-15,
     .modelo10-v-line-0,
     .modelo10-v-line-10,
     .seven-loko-v-line-1,
@@ -1410,6 +1811,12 @@
     .larguitas-crossed-h-line-3::after,
     .model16-h-line-1::after,
     .model16-h-line-7::after,
+    .model17-grid-h-line-0::after,
+    .model17-grid-h-line-5::after,
+    .model12-triples-h-line-0::after,
+    .model12-triples-h-line-6::after,
+    .vertical-con-grande-h-line-0::after,
+    .vertical-con-grande-h-line-5::after,
     .modelo10-global-h-line-top::after,
     .modelo10-global-h-line-bottom::after,
     .seven-loko-h-line-1::after,
@@ -1432,6 +1839,14 @@
     .larguitas-crossed-v-line-10::after,
     .model16-v-line-1::after,
     .model16-v-line-6::after,
+    .model17-grid-v-line-0::after,
+    .model17-grid-v-line-6::after,
+    .model12-triples-v-line-0::after,
+    .model12-triples-v-line-5::after,
+    .vertical-con-grande-wide-v-line-0::after,
+    .vertical-con-grande-wide-v-line-5::after,
+    .vertical-con-grande-mid-v-line-0::after,
+    .vertical-con-grande-mid-v-line-15::after,
     .modelo10-v-line-0::after,
     .modelo10-v-line-10::after,
     .seven-loko-v-line-1::after,
@@ -1748,20 +2163,7 @@
   </style>
 </head>
 <body>
-  <section class="login-screen" id="login-screen">
-    <div class="login-card">
-      <h1 class="login-title">Acceso</h1>
-      <p class="login-subtitle">Ingresa tu usuario y contrasena para entrar.</p>
-      <form class="login-form" id="login-form">
-        <input id="login-username" class="login-input" type="text" placeholder="Usuario" autocomplete="username" required>
-        <input id="login-password" class="login-input" type="password" placeholder="Contrasena" autocomplete="current-password" required>
-        <button type="submit" class="generate-button">Entrar</button>
-        <p class="login-error" id="login-error" aria-live="polite"></p>
-      </form>
-    </div>
-  </section>
-
-  <div class="app-shell" id="app-shell" hidden>
+  <div class="app-shell" id="app-shell">
     <section class="toolbar-shell" aria-label="Controles principales">
       <div class="controls">
         <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
@@ -1776,8 +2178,11 @@
           <option value="tercias-below">Tercias abajo</option>
           <option value="tercias-crossed">Tercias cruzadas</option>
           <option value="larguitas-crossed">Larguitas cruzadas</option>
+          <option value="vertical-con-grande">Vertical con grande</option>
           <option value="modelo-10">Modelo 10</option>
+          <option value="modelo-12-triples">Modelo 12 triples</option>
           <option value="modelo-16">Modelo 16</option>
+          <option value="modelo-17">Modelo 17</option>
           <option value="seven-loko">7 LOKO</option>
         </select>
         <label class="color-control" for="line-color-picker">
@@ -1792,6 +2197,11 @@
           <span class="color-control-label">Bordes exteriores</span>
           <input id="outer-border-size-slider" class="range-control-input" type="range" min="0" max="100" step="1" value="100" aria-label="Ajustar tamano de bordes exteriores">
           <span class="range-control-value" id="outer-border-size-value">100</span>
+        </label>
+        <label class="range-control" for="inner-line-size-slider">
+          <span class="color-control-label">Lineas internas</span>
+          <input id="inner-line-size-slider" class="range-control-input" type="range" min="0" max="150" step="1" value="100" aria-label="Ajustar tamano de lineas internas">
+          <span class="range-control-value" id="inner-line-size-value">100</span>
         </label>
         <details class="tercia-filter-menu" id="tercia-filter-menu">
           <summary id="tercia-filter-summary">Filtro de tercias (0/5)</summary>
@@ -2667,6 +3077,387 @@
         </div>
       </div>
 
+      <div class="layout model12-triples-layout" aria-label="Tabla Modelo 12 triples" id="modelo12-triples-layout" hidden>
+        <div class="model12-triples-v-line model12-triples-v-line-0"></div>
+        <div class="model12-triples-v-line model12-triples-v-line-1"></div>
+        <div class="model12-triples-v-line model12-triples-v-line-2"></div>
+        <div class="model12-triples-v-line model12-triples-v-line-3"></div>
+        <div class="model12-triples-v-line model12-triples-v-line-4"></div>
+        <div class="model12-triples-v-line model12-triples-v-line-5"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-0"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-1"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-2"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-3"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-4"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-5"></div>
+        <div class="model12-triples-h-line model12-triples-h-line-6"></div>
+
+        <div class="model12-triples-block">
+          <div class="model12-triples-column">
+            <div class="box model12-triples-box" data-model12-triples-id="1">1</div>
+            <div class="box model12-triples-box" data-model12-triples-id="2">2</div>
+            <div class="box model12-triples-box" data-model12-triples-id="3">3</div>
+            <div class="box model12-triples-box" data-model12-triples-id="4">4</div>
+            <div class="box model12-triples-box" data-model12-triples-id="5">5</div>
+            <div class="box model12-triples-box" data-model12-triples-id="6">6</div>
+          </div>
+          <div class="model12-triples-column">
+            <div class="box model12-triples-small" data-model12-triples-id="31">31</div>
+            <div class="box model12-triples-small" data-model12-triples-id="32">32</div>
+            <div class="box model12-triples-small" data-model12-triples-id="32">32</div>
+            <div class="box model12-triples-small" data-model12-triples-id="33">33</div>
+            <div class="box model12-triples-small" data-model12-triples-id="33">33</div>
+            <div class="box model12-triples-small" data-model12-triples-id="34">34</div>
+            <div class="box model12-triples-small" data-model12-triples-id="32">32</div>
+            <div class="box model12-triples-small" data-model12-triples-id="34">34</div>
+            <div class="box model12-triples-small" data-model12-triples-id="34">34</div>
+            <div class="box model12-triples-small" data-model12-triples-id="31">31</div>
+            <div class="box model12-triples-small" data-model12-triples-id="31">31</div>
+            <div class="box model12-triples-small" data-model12-triples-id="33">33</div>
+          </div>
+        </div>
+        <div class="model12-triples-block">
+          <div class="model12-triples-column">
+            <div class="box model12-triples-box" data-model12-triples-id="7">7</div>
+            <div class="box model12-triples-box" data-model12-triples-id="8">8</div>
+            <div class="box model12-triples-box" data-model12-triples-id="9">9</div>
+            <div class="box model12-triples-box" data-model12-triples-id="10">10</div>
+            <div class="box model12-triples-box" data-model12-triples-id="11">11</div>
+            <div class="box model12-triples-box" data-model12-triples-id="12">12</div>
+          </div>
+          <div class="model12-triples-column">
+            <div class="box model12-triples-small" data-model12-triples-id="35">35</div>
+            <div class="box model12-triples-small" data-model12-triples-id="36">36</div>
+            <div class="box model12-triples-small" data-model12-triples-id="36">36</div>
+            <div class="box model12-triples-small" data-model12-triples-id="37">37</div>
+            <div class="box model12-triples-small" data-model12-triples-id="37">37</div>
+            <div class="box model12-triples-small" data-model12-triples-id="38">38</div>
+            <div class="box model12-triples-small" data-model12-triples-id="36">36</div>
+            <div class="box model12-triples-small" data-model12-triples-id="38">38</div>
+            <div class="box model12-triples-small" data-model12-triples-id="38">38</div>
+            <div class="box model12-triples-small" data-model12-triples-id="35">35</div>
+            <div class="box model12-triples-small" data-model12-triples-id="35">35</div>
+            <div class="box model12-triples-small" data-model12-triples-id="37">37</div>
+          </div>
+        </div>
+        <div class="model12-triples-block">
+          <div class="model12-triples-column">
+            <div class="box model12-triples-box" data-model12-triples-id="13">13</div>
+            <div class="box model12-triples-box" data-model12-triples-id="14">14</div>
+            <div class="box model12-triples-box" data-model12-triples-id="15">15</div>
+            <div class="box model12-triples-box" data-model12-triples-id="16">16</div>
+            <div class="box model12-triples-box" data-model12-triples-id="17">17</div>
+            <div class="box model12-triples-box" data-model12-triples-id="18">18</div>
+          </div>
+          <div class="model12-triples-column">
+            <div class="box model12-triples-small" data-model12-triples-id="39">39</div>
+            <div class="box model12-triples-small" data-model12-triples-id="40">40</div>
+            <div class="box model12-triples-small" data-model12-triples-id="40">40</div>
+            <div class="box model12-triples-small" data-model12-triples-id="41">41</div>
+            <div class="box model12-triples-small" data-model12-triples-id="41">41</div>
+            <div class="box model12-triples-small" data-model12-triples-id="42">42</div>
+            <div class="box model12-triples-small" data-model12-triples-id="40">40</div>
+            <div class="box model12-triples-small" data-model12-triples-id="42">42</div>
+            <div class="box model12-triples-small" data-model12-triples-id="42">42</div>
+            <div class="box model12-triples-small" data-model12-triples-id="39">39</div>
+            <div class="box model12-triples-small" data-model12-triples-id="39">39</div>
+            <div class="box model12-triples-small" data-model12-triples-id="41">41</div>
+          </div>
+        </div>
+        <div class="model12-triples-block">
+          <div class="model12-triples-column">
+            <div class="box model12-triples-box" data-model12-triples-id="19">19</div>
+            <div class="box model12-triples-box" data-model12-triples-id="20">20</div>
+            <div class="box model12-triples-box" data-model12-triples-id="21">21</div>
+            <div class="box model12-triples-box" data-model12-triples-id="22">22</div>
+            <div class="box model12-triples-box" data-model12-triples-id="23">23</div>
+            <div class="box model12-triples-box" data-model12-triples-id="24">24</div>
+          </div>
+          <div class="model12-triples-column">
+            <div class="box model12-triples-small" data-model12-triples-id="43">43</div>
+            <div class="box model12-triples-small" data-model12-triples-id="44">44</div>
+            <div class="box model12-triples-small" data-model12-triples-id="44">44</div>
+            <div class="box model12-triples-small" data-model12-triples-id="45">45</div>
+            <div class="box model12-triples-small" data-model12-triples-id="45">45</div>
+            <div class="box model12-triples-small" data-model12-triples-id="43">43</div>
+            <div class="box model12-triples-small" data-model12-triples-id="46">46</div>
+            <div class="box model12-triples-small" data-model12-triples-id="47">47</div>
+            <div class="box model12-triples-small" data-model12-triples-id="47">47</div>
+            <div class="box model12-triples-small" data-model12-triples-id="48">48</div>
+            <div class="box model12-triples-small" data-model12-triples-id="48">48</div>
+            <div class="box model12-triples-small" data-model12-triples-id="46">46</div>
+          </div>
+        </div>
+        <div class="model12-triples-block">
+          <div class="model12-triples-column">
+            <div class="box model12-triples-box" data-model12-triples-id="25">25</div>
+            <div class="box model12-triples-box" data-model12-triples-id="26">26</div>
+            <div class="box model12-triples-box" data-model12-triples-id="27">27</div>
+            <div class="box model12-triples-box" data-model12-triples-id="28">28</div>
+            <div class="box model12-triples-box" data-model12-triples-id="29">29</div>
+            <div class="box model12-triples-box" data-model12-triples-id="30">30</div>
+          </div>
+          <div class="model12-triples-column">
+            <div class="box model12-triples-small" data-model12-triples-id="49">49</div>
+            <div class="box model12-triples-small" data-model12-triples-id="50">50</div>
+            <div class="box model12-triples-small" data-model12-triples-id="50">50</div>
+            <div class="box model12-triples-small" data-model12-triples-id="51">51</div>
+            <div class="box model12-triples-small" data-model12-triples-id="51">51</div>
+            <div class="box model12-triples-small" data-model12-triples-id="49">49</div>
+            <div class="box model12-triples-small" data-model12-triples-id="52">52</div>
+            <div class="box model12-triples-small" data-model12-triples-id="53">53</div>
+            <div class="box model12-triples-small" data-model12-triples-id="53">53</div>
+            <div class="box model12-triples-small" data-model12-triples-id="54">54</div>
+            <div class="box model12-triples-small" data-model12-triples-id="54">54</div>
+            <div class="box model12-triples-small" data-model12-triples-id="52">52</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layout vertical-con-grande-layout" aria-label="Tabla vertical con grande" id="vertical-con-grande-layout" hidden>
+        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-0"></div>
+        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-1"></div>
+        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-2"></div>
+        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-3"></div>
+        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-4"></div>
+        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-5"></div>
+        <div class="vertical-con-grande-center-h-line"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-0"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-1"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-2"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-3"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-4"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-5"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-0"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-1"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-2"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-3"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-4"></div>
+        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-5"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-0"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-1"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-2"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-3"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-4"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-5"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-6"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-7"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-8"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-9"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-10"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-11"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-12"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-13"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-14"></div>
+        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-15"></div>
+
+        <div class="vertical-con-grande-row vertical-con-grande-wide-row">
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="31">31</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="32">32</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="33">33</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="34">34</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="35">35</div>
+        </div>
+        <div class="vertical-con-grande-row vertical-con-grande-small-row">
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="1">6</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="2">7</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="3">8</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="4">9</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="5">10</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="6">11</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="7">12</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="8">13</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="9">14</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="10">15</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="11">16</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="12">17</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="13">18</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="14">19</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="15">20</div>
+        </div>
+        <div class="vertical-con-grande-row vertical-con-grande-small-row">
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="43">49</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="44">44</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="45">45</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="46">46</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="47">47</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="48">48</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="49">49</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="50">50</div>
+          <div class="vertical-con-grande-split-cell">
+            <div class="box vertical-con-grande-half" data-vertical-con-grande-id="41">41</div>
+            <div class="box vertical-con-grande-half" data-vertical-con-grande-id="42">42</div>
+          </div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="51">51</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="52">52</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="41">41</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="42">42</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="53">53</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="54">54</div>
+        </div>
+        <div class="vertical-con-grande-row vertical-con-grande-small-row">
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="16">16</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="17">17</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="18">18</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="19">19</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="20">20</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="21">21</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="22">22</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="23">23</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="24">24</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="25">25</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="26">26</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="27">27</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="28">28</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="29">29</div>
+          <div class="box vertical-con-grande-small" data-vertical-con-grande-id="30">30</div>
+        </div>
+        <div class="vertical-con-grande-row vertical-con-grande-wide-row">
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="36">36</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="37">37</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="38">38</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="39">39</div>
+          <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="40">40</div>
+        </div>
+      </div>
+
+      <div class="layout model17-layout" aria-label="Tabla Modelo 17" id="modelo17-layout" hidden>
+        <div class="model17-grid-v-line model17-grid-v-line-0"></div>
+        <div class="model17-grid-v-line model17-grid-v-line-1"></div>
+        <div class="model17-grid-v-line model17-grid-v-line-2"></div>
+        <div class="model17-grid-v-line model17-grid-v-line-3"></div>
+        <div class="model17-grid-v-line model17-grid-v-line-4"></div>
+        <div class="model17-grid-v-line model17-grid-v-line-5"></div>
+        <div class="model17-grid-v-line model17-grid-v-line-6"></div>
+        <div class="model17-grid-h-line model17-grid-h-line-0"></div>
+        <div class="model17-grid-h-line model17-grid-h-line-1"></div>
+        <div class="model17-grid-h-line model17-grid-h-line-2"></div>
+        <div class="model17-grid-h-line model17-grid-h-line-3"></div>
+        <div class="model17-grid-h-line model17-grid-h-line-4"></div>
+        <div class="model17-grid-h-line model17-grid-h-line-5"></div>
+
+        <div class="model17-block">
+          <div class="model17-column">
+            <div class="box model17-box" data-model17-id="1">1</div>
+            <div class="box model17-box" data-model17-id="2">2</div>
+            <div class="box model17-box" data-model17-id="3">3</div>
+            <div class="box model17-box" data-model17-id="4">4</div>
+            <div class="box model17-box" data-model17-id="5">5</div>
+          </div>
+          <div class="model17-column">
+            <div class="box model17-small" data-model17-id="31">31</div>
+            <div class="box model17-small" data-model17-id="34">34</div>
+            <div class="box model17-small" data-model17-id="32">32</div>
+            <div class="box model17-small" data-model17-id="34">34</div>
+            <div class="box model17-small" data-model17-id="33">33</div>
+            <div class="box model17-small" data-model17-id="34">34</div>
+            <div class="box model17-small" data-model17-id="43">43</div>
+            <div class="box model17-box" data-model17-id="49">49</div>
+            <div class="box model17-small" data-model17-id="44">44</div>
+          </div>
+        </div>
+        <div class="model17-block">
+          <div class="model17-column">
+            <div class="box model17-box" data-model17-id="6">6</div>
+            <div class="box model17-box" data-model17-id="7">7</div>
+            <div class="box model17-box" data-model17-id="8">8</div>
+            <div class="box model17-box" data-model17-id="9">9</div>
+            <div class="box model17-box" data-model17-id="10">10</div>
+          </div>
+          <div class="model17-column">
+            <div class="box model17-small" data-model17-id="31">31</div>
+            <div class="box model17-small" data-model17-id="35">35</div>
+            <div class="box model17-small" data-model17-id="32">32</div>
+            <div class="box model17-small" data-model17-id="35">35</div>
+            <div class="box model17-small" data-model17-id="33">33</div>
+            <div class="box model17-small" data-model17-id="35">35</div>
+            <div class="box model17-small" data-model17-id="43">43</div>
+            <div class="box model17-box" data-model17-id="50">50</div>
+            <div class="box model17-small" data-model17-id="44">44</div>
+          </div>
+        </div>
+        <div class="model17-block">
+          <div class="model17-column">
+            <div class="box model17-box" data-model17-id="11">11</div>
+            <div class="box model17-box" data-model17-id="12">12</div>
+            <div class="box model17-box" data-model17-id="13">13</div>
+            <div class="box model17-box" data-model17-id="14">14</div>
+            <div class="box model17-box" data-model17-id="15">15</div>
+          </div>
+          <div class="model17-column">
+            <div class="box model17-small" data-model17-id="31">31</div>
+            <div class="box model17-small" data-model17-id="36">36</div>
+            <div class="box model17-small" data-model17-id="32">32</div>
+            <div class="box model17-small" data-model17-id="36">36</div>
+            <div class="box model17-small" data-model17-id="33">33</div>
+            <div class="box model17-small" data-model17-id="36">36</div>
+            <div class="box model17-small" data-model17-id="45">45</div>
+            <div class="box model17-box" data-model17-id="51">51</div>
+            <div class="box model17-small" data-model17-id="46">46</div>
+          </div>
+        </div>
+        <div class="model17-block">
+          <div class="model17-column">
+            <div class="box model17-box" data-model17-id="16">16</div>
+            <div class="box model17-box" data-model17-id="17">17</div>
+            <div class="box model17-box" data-model17-id="18">18</div>
+            <div class="box model17-box" data-model17-id="19">19</div>
+            <div class="box model17-box" data-model17-id="20">20</div>
+          </div>
+          <div class="model17-column">
+            <div class="box model17-small" data-model17-id="37">37</div>
+            <div class="box model17-small" data-model17-id="40">40</div>
+            <div class="box model17-small" data-model17-id="38">38</div>
+            <div class="box model17-small" data-model17-id="40">40</div>
+            <div class="box model17-small" data-model17-id="39">39</div>
+            <div class="box model17-small" data-model17-id="40">40</div>
+            <div class="box model17-small" data-model17-id="45">45</div>
+            <div class="box model17-box" data-model17-id="52">52</div>
+            <div class="box model17-small" data-model17-id="46">46</div>
+          </div>
+        </div>
+        <div class="model17-block">
+          <div class="model17-column">
+            <div class="box model17-box" data-model17-id="21">21</div>
+            <div class="box model17-box" data-model17-id="22">22</div>
+            <div class="box model17-box" data-model17-id="23">23</div>
+            <div class="box model17-box" data-model17-id="24">24</div>
+            <div class="box model17-box" data-model17-id="25">25</div>
+          </div>
+          <div class="model17-column">
+            <div class="box model17-small" data-model17-id="37">37</div>
+            <div class="box model17-small" data-model17-id="41">41</div>
+            <div class="box model17-small" data-model17-id="38">38</div>
+            <div class="box model17-small" data-model17-id="41">41</div>
+            <div class="box model17-small" data-model17-id="39">39</div>
+            <div class="box model17-small" data-model17-id="41">41</div>
+            <div class="box model17-small" data-model17-id="47">47</div>
+            <div class="box model17-box" data-model17-id="53">53</div>
+            <div class="box model17-small" data-model17-id="48">48</div>
+          </div>
+        </div>
+        <div class="model17-block">
+          <div class="model17-column">
+            <div class="box model17-box" data-model17-id="26">26</div>
+            <div class="box model17-box" data-model17-id="27">27</div>
+            <div class="box model17-box" data-model17-id="28">28</div>
+            <div class="box model17-box" data-model17-id="29">29</div>
+            <div class="box model17-box" data-model17-id="30">30</div>
+          </div>
+          <div class="model17-column">
+            <div class="box model17-small" data-model17-id="37">37</div>
+            <div class="box model17-small" data-model17-id="42">42</div>
+            <div class="box model17-small" data-model17-id="38">38</div>
+            <div class="box model17-small" data-model17-id="42">42</div>
+            <div class="box model17-small" data-model17-id="39">39</div>
+            <div class="box model17-small" data-model17-id="42">42</div>
+            <div class="box model17-small" data-model17-id="47">47</div>
+            <div class="box model17-box" data-model17-id="54">54</div>
+            <div class="box model17-small" data-model17-id="48">48</div>
+          </div>
+        </div>
+      </div>
+
       <div class="layout modelo10-layout" aria-label="Tabla Modelo 10" id="modelo10-layout" hidden>
         <div class="modelo10-v-line modelo10-v-line-0"></div>
         <div class="modelo10-v-line modelo10-v-line-1"></div>
@@ -2936,9 +3727,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
-    const LOGIN_USERNAME = "MARYVALDEZ";
-    const LOGIN_PASSWORD = "123";
-
     const deckImagePathsByDeck = {
       traditional: Array.from({ length: 54 }, (_, index) => {
         const number = String(index + 1).padStart(2, "0");
@@ -3116,8 +3904,20 @@
       setImageByAttribute("data-larguitas-crossed-id", id, imagePath);
     }
 
+    function setImageByVerticalConGrandeId(id, imagePath) {
+      setImageByAttribute("data-vertical-con-grande-id", id, imagePath);
+    }
+
     function setImageBySevenLokoId(id, imagePath) {
       setImageByAttribute("data-seven-loko-id", id, imagePath);
+    }
+
+    function setImageByModel12TriplesId(id, imagePath) {
+      setImageByAttribute("data-model12-triples-id", id, imagePath);
+    }
+
+    function setImageByModel17Id(id, imagePath) {
+      setImageByAttribute("data-model17-id", id, imagePath);
     }
 
     function getForcedTerciaCardIdList() {
@@ -3289,6 +4089,23 @@
       });
     }
 
+    function createModel17TableAssignment() {
+      const imagePaths = shuffle(getSelectedDeckImagePaths());
+      const assignment = {};
+
+      for (let id = 1; id <= 84; id += 1) {
+        assignment[id] = imagePaths[(id - 1) % imagePaths.length];
+      }
+
+      return assignment;
+    }
+
+    function applyModel17AssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByModel17Id(id, imagePath);
+      });
+    }
+
     function createHorizontalTableAssignment() {
       const imagePaths = getSelectedDeckImagePaths();
       const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
@@ -3428,6 +4245,40 @@
       });
     }
 
+    function createVerticalConGrandeTableAssignment() {
+      const imagePaths = shuffle(getSelectedDeckImagePaths());
+      const assignment = {};
+
+      for (let id = 1; id <= 56; id += 1) {
+        assignment[id] = imagePaths[(id - 1) % imagePaths.length];
+      }
+
+      return assignment;
+    }
+
+    function applyVerticalConGrandeAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByVerticalConGrandeId(id, imagePath);
+      });
+    }
+
+    function createModel12TriplesTableAssignment() {
+      const imagePaths = shuffle(getSelectedDeckImagePaths());
+      const assignment = {};
+
+      for (let id = 1; id <= 54; id += 1) {
+        assignment[id] = imagePaths[(id - 1) % imagePaths.length];
+      }
+
+      return assignment;
+    }
+
+    function applyModel12TriplesAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByModel12TriplesId(id, imagePath);
+      });
+    }
+
     function createSevenLokoTableAssignment() {
       const imagePaths = shuffle(getSelectedDeckImagePaths());
       const assignment = {};
@@ -3479,8 +4330,26 @@
         return;
       }
 
+      if (selectedLayout === "vertical-con-grande") {
+        applyVerticalConGrandeAssignmentToDocument(createVerticalConGrandeTableAssignment());
+        updateTableScale();
+        return;
+      }
+
       if (selectedLayout === "modelo-10") {
         applyAssignmentToDocument(createTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      if (selectedLayout === "modelo-12-triples") {
+        applyModel12TriplesAssignmentToDocument(createModel12TriplesTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      if (selectedLayout === "modelo-17") {
+        applyModel17AssignmentToDocument(createModel17TableAssignment());
         updateTableScale();
         return;
       }
@@ -3528,8 +4397,11 @@
       const terciasBelowLayout = document.getElementById("tercias-below-layout");
       const terciasCrossedLayout = document.getElementById("tercias-crossed-layout");
       const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
+      const verticalConGrandeLayout = document.getElementById("vertical-con-grande-layout");
       const modelo16Layout = document.getElementById("modelo16-layout");
       const modelo10Layout = document.getElementById("modelo10-layout");
+      const modelo12TriplesLayout = document.getElementById("modelo12-triples-layout");
+      const modelo17Layout = document.getElementById("modelo17-layout");
       const sevenLokoLayout = document.getElementById("seven-loko-layout");
       const generateButton = document.getElementById("generate-table-button");
 
@@ -3539,8 +4411,11 @@
       const isTerciasBelow = layoutType === "tercias-below";
       const isTerciasCrossed = layoutType === "tercias-crossed";
       const isLarguitasCrossed = layoutType === "larguitas-crossed";
+      const isVerticalConGrande = layoutType === "vertical-con-grande";
       const isModelo16 = layoutType === "modelo-16";
       const isModelo10 = layoutType === "modelo-10";
+      const isModelo12Triples = layoutType === "modelo-12-triples";
+      const isModelo17 = layoutType === "modelo-17";
       const isSevenLoko = layoutType === "seven-loko";
 
       tableLayout.hidden = !isSquare;
@@ -3549,8 +4424,11 @@
       terciasBelowLayout.hidden = !isTerciasBelow;
       terciasCrossedLayout.hidden = !isTerciasCrossed;
       larguitasCrossedLayout.hidden = !isLarguitasCrossed;
+      verticalConGrandeLayout.hidden = !isVerticalConGrande;
       modelo16Layout.hidden = !isModelo16;
       modelo10Layout.hidden = !isModelo10;
+      modelo12TriplesLayout.hidden = !isModelo12Triples;
+      modelo17Layout.hidden = !isModelo17;
       sevenLokoLayout.hidden = !isSevenLoko;
       generateButton.disabled = false;
       generateButton.style.opacity = "1";
@@ -3719,7 +4597,7 @@
     }
 
     function populateLayoutClone(layoutClone, assignment) {
-      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id], [data-seven-loko-id]");
+      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id], [data-vertical-con-grande-id], [data-seven-loko-id], [data-model12-triples-id], [data-model17-id]");
       boxes.forEach((box) => {
         const id = box.getAttribute("data-id")
           || box.getAttribute("data-horizontal-id")
@@ -3727,7 +4605,10 @@
           || box.getAttribute("data-tercias-below-id")
           || box.getAttribute("data-tercias-crossed-id")
           || box.getAttribute("data-larguitas-crossed-id")
-          || box.getAttribute("data-seven-loko-id");
+          || box.getAttribute("data-vertical-con-grande-id")
+          || box.getAttribute("data-seven-loko-id")
+          || box.getAttribute("data-model12-triples-id")
+          || box.getAttribute("data-model17-id");
         const src = assignment[id];
         box.replaceChildren();
         if (src) {
@@ -3746,8 +4627,11 @@
         "tercias-below": document.getElementById("tercias-below-layout"),
         "tercias-crossed": document.getElementById("tercias-crossed-layout"),
         "larguitas-crossed": document.getElementById("larguitas-crossed-layout"),
+        "vertical-con-grande": document.getElementById("vertical-con-grande-layout"),
         "modelo-16": document.getElementById("modelo16-layout"),
         "modelo-10": document.getElementById("modelo10-layout"),
+        "modelo-12-triples": document.getElementById("modelo12-triples-layout"),
+        "modelo-17": document.getElementById("modelo17-layout"),
         "seven-loko": document.getElementById("seven-loko-layout")
       };
       const sourceLayout = layoutMap[layoutType] || layoutMap.square;
@@ -3818,7 +4702,13 @@
 
     function generateGameOf6() {
       const selectedLayout = getSelectedLayoutType();
-      const assignments = createGameOf6Assignments();
+      const assignments = selectedLayout === "vertical-con-grande"
+        ? Array.from({ length: 6 }, () => createVerticalConGrandeTableAssignment())
+        : selectedLayout === "modelo-12-triples"
+        ? Array.from({ length: 6 }, () => createModel12TriplesTableAssignment())
+        : selectedLayout === "modelo-17"
+          ? Array.from({ length: 6 }, () => createModel17TableAssignment())
+          : createGameOf6Assignments();
       renderGameOf6(assignments, selectedLayout);
     }
 
@@ -3950,6 +4840,9 @@
         ".tercias-below-h-line-0",
         ".tercias-cruzadas-h-line-0",
         ".larguitas-crossed-h-line-0",
+        ".vertical-con-grande-h-line-0",
+        ".model17-grid-h-line-0",
+        ".model12-triples-h-line-0",
         ".modelo10-global-h-line-top",
         ".seven-loko-h-line-1"
       ];
@@ -3990,6 +4883,27 @@
       updateTableScale();
     }
 
+    function applyInnerLineScale(value) {
+      const normalizedValue = Number.parseInt(value, 10);
+      const nextValue = Number.isFinite(normalizedValue)
+        ? Math.min(150, Math.max(0, normalizedValue))
+        : 100;
+      const valueLabel = document.getElementById("inner-line-size-value");
+      const slider = document.getElementById("inner-line-size-slider");
+
+      document.documentElement.style.setProperty("--inner-line-scale", String(nextValue));
+
+      if (valueLabel) {
+        valueLabel.textContent = String(nextValue);
+      }
+
+      if (slider && slider.value !== String(nextValue)) {
+        slider.value = String(nextValue);
+      }
+
+      updateTableScale();
+    }
+
     function initializeOuterBorderControls() {
       const slider = document.getElementById("outer-border-size-slider");
 
@@ -3998,6 +4912,16 @@
       }
 
       applyOuterBorderScale(slider.value);
+    }
+
+    function initializeInnerLineControls() {
+      const slider = document.getElementById("inner-line-size-slider");
+
+      if (!slider) {
+        return;
+      }
+
+      applyInnerLineScale(slider.value);
     }
 
     async function downloadTableAsImage() {
@@ -4503,6 +5427,7 @@
       const lineColorPicker = document.getElementById("line-color-picker");
       const lineFrameColorPicker = document.getElementById("line-frame-color-picker");
       const outerBorderSizeSlider = document.getElementById("outer-border-size-slider");
+      const innerLineSizeSlider = document.getElementById("inner-line-size-slider");
       const terciaFilterMenu = document.getElementById("tercia-filter-menu");
       const game6Button = document.getElementById("game6-button");
       const printGame6Button = document.getElementById("print-game6-button");
@@ -4519,6 +5444,7 @@
         !lineColorPicker ||
         !lineFrameColorPicker ||
         !outerBorderSizeSlider ||
+        !innerLineSizeSlider ||
         !terciaFilterMenu ||
         !game6Button ||
         !printGame6Button ||
@@ -4547,6 +5473,7 @@
       lineColorPicker.addEventListener("input", (event) => applyLineColor(event.target.value));
       lineFrameColorPicker.addEventListener("input", (event) => applyLineFrameColor(event.target.value));
       outerBorderSizeSlider.addEventListener("input", (event) => applyOuterBorderScale(event.target.value));
+      innerLineSizeSlider.addEventListener("input", (event) => applyInnerLineScale(event.target.value));
       game6Button.addEventListener("click", generateGameOf6);
       printGame6Button.addEventListener("click", () => {
         prepareGame6SinglePagePrint();
@@ -4561,6 +5488,7 @@
       applyLineColor(lineColorPicker.value);
       applyLineFrameColor(lineFrameColorPicker.value);
       initializeOuterBorderControls();
+      initializeInnerLineControls();
       generateNewTable();
       window.addEventListener("beforeprint", prepareGame6SinglePagePrint);
       window.addEventListener("afterprint", restoreGame6SinglePagePrint);
@@ -4569,52 +5497,10 @@
       updateTableScale();
     }
 
-    function initializeLogin() {
-      const loginScreen = document.getElementById("login-screen");
-      const appShell = document.getElementById("app-shell");
-      const loginForm = document.getElementById("login-form");
-      const usernameInput = document.getElementById("login-username");
-      const passwordInput = document.getElementById("login-password");
-      const errorMessage = document.getElementById("login-error");
-
-      if (
-        !loginScreen ||
-        !appShell ||
-        !loginForm ||
-        !usernameInput ||
-        !passwordInput ||
-        !errorMessage
-      ) {
-        console.error("No se pudo inicializar el acceso.");
-        return;
-      }
-
-      loginForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value;
-
-        if (username === LOGIN_USERNAME && password === LOGIN_PASSWORD) {
-          errorMessage.textContent = "";
-          loginScreen.hidden = true;
-          appShell.hidden = false;
-          initializeApp();
-          return;
-        }
-
-        errorMessage.textContent = "Usuario o contrasena incorrectos.";
-        passwordInput.value = "";
-        passwordInput.focus();
-      });
-
-      usernameInput.focus();
-    }
-
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeLogin, { once: true });
+      document.addEventListener("DOMContentLoaded", initializeApp, { once: true });
     } else {
-      initializeLogin();
+      initializeApp();
     }
   </script>
 </body>
