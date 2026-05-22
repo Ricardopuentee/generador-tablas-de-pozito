@@ -1045,7 +1045,7 @@
       display: flex;
       position: relative;
       width: 2cm;
-      height: 10.78cm;
+      height: 10cm;
     }
 
     .model17-column {
@@ -1122,14 +1122,11 @@
     .model17-grid-v-line-4 { left: 66.666%; }
     .model17-grid-v-line-5 { left: 83.333%; }
     .model17-grid-v-line-6 { right: 0; left: auto; }
-    .model17-grid-h-line-0 {
-      top: 0;
-      transform: translateY(-100%);
-    }
-    .model17-grid-h-line-1 { top: calc(20% - 4px); }
-    .model17-grid-h-line-2 { top: calc(40% - 4px); }
-    .model17-grid-h-line-3 { top: calc(60% - 4px); }
-    .model17-grid-h-line-4 { top: calc(80% - 4px); }
+    .model17-grid-h-line-0 { top: 0; }
+    .model17-grid-h-line-1 { top: 20%; }
+    .model17-grid-h-line-2 { top: 40%; }
+    .model17-grid-h-line-3 { top: 60%; }
+    .model17-grid-h-line-4 { top: 80%; }
     .model17-grid-h-line-5 { bottom: 0; }
 
     .model12-triples-layout {
@@ -1376,6 +1373,181 @@
     .vertical-con-grande-mid-v-line-13 { left: 86.666%; }
     .vertical-con-grande-mid-v-line-14 { left: 93.333%; }
     .vertical-con-grande-mid-v-line-15 { right: 0; left: auto; }
+
+    .piramide-layout {
+      --piramide-cell-width: 1.08cm;
+      --piramide-unit-height: 0.86cm;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      width: max-content;
+      height: calc(var(--piramide-unit-height) * 14);
+      background: #fff;
+    }
+
+    .piramide-column {
+      display: flex;
+      flex-direction: column;
+      width: var(--piramide-cell-width);
+      flex-shrink: 0;
+    }
+
+    .piramide-column-1,
+    .piramide-column-2,
+    .piramide-column-11,
+    .piramide-column-12 {
+      margin-top: calc(var(--piramide-unit-height) * 4);
+    }
+
+    .piramide-column-3,
+    .piramide-column-4,
+    .piramide-column-9,
+    .piramide-column-10 {
+      margin-top: calc(var(--piramide-unit-height) * 2);
+    }
+
+    .piramide-column-5,
+    .piramide-column-6,
+    .piramide-column-7,
+    .piramide-column-8 {
+      margin-top: 0;
+    }
+
+    .piramide-box {
+      position: relative;
+      width: var(--piramide-cell-width);
+      border: none;
+      background: #fff;
+      box-shadow: none;
+    }
+
+    .piramide-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      display: block;
+      padding: 0;
+    }
+
+    .piramide-tall {
+      height: calc(var(--piramide-unit-height) * 2);
+    }
+
+    .piramide-small {
+      height: var(--piramide-unit-height);
+    }
+
+    .piramide-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      clip-path: polygon(
+        33.333% 0,
+        66.667% 0,
+        66.667% 14.286%,
+        83.333% 14.286%,
+        83.333% 28.571%,
+        100% 28.571%,
+        100% 71.429%,
+        83.333% 71.429%,
+        83.333% 85.714%,
+        66.667% 85.714%,
+        66.667% 100%,
+        33.333% 100%,
+        33.333% 85.714%,
+        16.667% 85.714%,
+        16.667% 71.429%,
+        0 71.429%,
+        0 28.571%,
+        16.667% 28.571%,
+        16.667% 14.286%,
+        33.333% 14.286%
+      );
+    }
+
+    .piramide-h-line-6-wrap,
+    .piramide-h-line-7-wrap,
+    .piramide-v-line-5-wrap,
+    .piramide-v-line-6-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 21;
+      pointer-events: none;
+    }
+
+    .piramide-h-line,
+    .piramide-v-line {
+      position: absolute;
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .piramide-h-line {
+      left: 0;
+      right: 0;
+      height: var(--line-size);
+    }
+
+    .piramide-v-line {
+      top: 0;
+      bottom: 0;
+      width: var(--line-size);
+    }
+
+    .piramide-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .piramide-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .piramide-h-line-1 { top: 0; }
+    .piramide-h-line-2 { top: 14.286%; }
+    .piramide-h-line-3 { top: 28.571%; }
+    .piramide-h-line-4 { top: 42.857%; }
+    .piramide-h-line-5 { top: 57.143%; }
+    .piramide-h-line-6 { top: 71.429%; }
+    .piramide-h-line-6-wrap .piramide-h-line-6 {
+      left: 0;
+      right: 0;
+    }
+    .piramide-h-line-7 { top: 85.714%; }
+    .piramide-h-line-7-wrap .piramide-h-line-7 {
+      left: 16.667%;
+      right: 14.8%;
+    }
+    .piramide-h-line-8 { bottom: 0; }
+    .piramide-v-line-1 { left: 0; }
+    .piramide-v-line-2 { left: 16.667%; }
+    .piramide-v-line-3 { left: 33.333%; }
+    .piramide-v-line-4 { left: 50%; }
+    .piramide-v-line-5 { left: 66.667%; }
+    .piramide-v-line-5-wrap .piramide-v-line-5 {
+      top: 0;
+      bottom: 0;
+    }
+    .piramide-v-line-6 { left: 83.333%; }
+    .piramide-v-line-6-wrap .piramide-v-line-6 {
+      top: 14.286%;
+      bottom: 14.286%;
+    }
+    .piramide-v-line-7 { right: 0; left: auto; }
 
     .modelo10-layout {
       position: relative;
@@ -1665,6 +1837,7 @@
     .model16-h-line,
     .model17-grid-h-line,
     .model12-triples-h-line,
+    .piramide-h-line,
     .vertical-con-grande-center-h-line,
     .vertical-con-grande-h-line,
     .modelo10-global-h-line,
@@ -1681,6 +1854,7 @@
     .model16-v-line,
     .model17-grid-v-line,
     .model12-triples-v-line,
+    .piramide-v-line,
     .vertical-con-grande-wide-v-line,
     .vertical-con-grande-mid-v-line,
     .modelo10-v-line,
@@ -1699,6 +1873,7 @@
     .model16-h-line::after,
     .model17-grid-h-line::after,
     .model12-triples-h-line::after,
+    .piramide-h-line::after,
     .vertical-con-grande-center-h-line::after,
     .vertical-con-grande-h-line::after,
     .modelo10-global-h-line::after,
@@ -1716,6 +1891,7 @@
     .model16-v-line::after,
     .model17-grid-v-line::after,
     .model12-triples-v-line::after,
+    .piramide-v-line::after,
     .vertical-con-grande-wide-v-line::after,
     .vertical-con-grande-mid-v-line::after,
     .modelo10-v-line::after,
@@ -2179,6 +2355,7 @@
           <option value="tercias-crossed">Tercias cruzadas</option>
           <option value="larguitas-crossed">Larguitas cruzadas</option>
           <option value="vertical-con-grande">Vertical con grande</option>
+          <option value="piramide">Piramide</option>
           <option value="modelo-10">Modelo 10</option>
           <option value="modelo-12-triples">Modelo 12 triples</option>
           <option value="modelo-16">Modelo 16</option>
@@ -3321,6 +3498,126 @@
         </div>
       </div>
 
+      <div class="layout piramide-layout" aria-label="Tabla piramide" id="piramide-layout" hidden>
+        <div class="piramide-grid">
+          <div class="piramide-h-line piramide-h-line-1"></div>
+          <div class="piramide-h-line piramide-h-line-2"></div>
+          <div class="piramide-h-line piramide-h-line-3"></div>
+          <div class="piramide-h-line piramide-h-line-4"></div>
+          <div class="piramide-h-line piramide-h-line-5"></div>
+          <div class="piramide-h-line piramide-h-line-8"></div>
+          <div class="piramide-v-line piramide-v-line-1"></div>
+          <div class="piramide-v-line piramide-v-line-2"></div>
+          <div class="piramide-v-line piramide-v-line-3"></div>
+          <div class="piramide-v-line piramide-v-line-4"></div>
+          <div class="piramide-v-line piramide-v-line-7"></div>
+        </div>
+        <div class="piramide-h-line-6-wrap">
+          <div class="piramide-h-line piramide-h-line-6"></div>
+        </div>
+        <div class="piramide-h-line-7-wrap">
+          <div class="piramide-h-line piramide-h-line-7"></div>
+        </div>
+        <div class="piramide-v-line-5-wrap">
+          <div class="piramide-v-line piramide-v-line-5"></div>
+        </div>
+        <div class="piramide-v-line-6-wrap">
+          <div class="piramide-v-line piramide-v-line-6"></div>
+        </div>
+        <div class="piramide-column piramide-column-1">
+          <div class="box piramide-box piramide-tall" data-piramide-id="1">1</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="2">2</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="3">3</div>
+        </div>
+        <div class="piramide-column piramide-column-2">
+          <div class="box piramide-box piramide-small" data-piramide-id="43">43</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="44">44</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="45">45</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="43">43</div>
+        </div>
+        <div class="piramide-column piramide-column-3">
+          <div class="box piramide-box piramide-tall" data-piramide-id="4">4</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="5">5</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="6">6</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="7">7</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="8">8</div>
+        </div>
+        <div class="piramide-column piramide-column-4">
+          <div class="box piramide-box piramide-small" data-piramide-id="31">31</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="46">46</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="32">32</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="31">31</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="47">47</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="32">32</div>
+        </div>
+        <div class="piramide-column piramide-column-5">
+          <div class="box piramide-box piramide-tall" data-piramide-id="9">9</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="10">10</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="11">11</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="12">12</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="13">13</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="14">14</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="15">15</div>
+        </div>
+        <div class="piramide-column piramide-column-6">
+          <div class="box piramide-box piramide-small" data-piramide-id="34">34</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="33">33</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="36">36</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="35">35</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="36">36</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="34">34</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="35">35</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="48">48</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="33">33</div>
+        </div>
+        <div class="piramide-column piramide-column-7">
+          <div class="box piramide-box piramide-tall" data-piramide-id="16">16</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="17">17</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="18">18</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="19">19</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="20">20</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="21">21</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="22">22</div>
+        </div>
+        <div class="piramide-column piramide-column-8">
+          <div class="box piramide-box piramide-small" data-piramide-id="37">37</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="38">38</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="39">39</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="40">40</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="39">39</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="37">37</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="40">40</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="49">49</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="38">38</div>
+        </div>
+        <div class="piramide-column piramide-column-9">
+          <div class="box piramide-box piramide-tall" data-piramide-id="23">23</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="24">24</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="25">25</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="26">26</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="27">27</div>
+        </div>
+        <div class="piramide-column piramide-column-10">
+          <div class="box piramide-box piramide-small" data-piramide-id="41">41</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="50">50</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="42">42</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="41">41</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="51">51</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="42">42</div>
+        </div>
+        <div class="piramide-column piramide-column-11">
+          <div class="box piramide-box piramide-tall" data-piramide-id="28">28</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="29">29</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="30">30</div>
+        </div>
+        <div class="piramide-column piramide-column-12">
+          <div class="box piramide-box piramide-small" data-piramide-id="52">52</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="53">53</div>
+          <div class="box piramide-box piramide-tall" data-piramide-id="54">54</div>
+          <div class="box piramide-box piramide-small" data-piramide-id="52">52</div>
+        </div>
+      </div>
+
       <div class="layout model17-layout" aria-label="Tabla Modelo 17" id="modelo17-layout" hidden>
         <div class="model17-grid-v-line model17-grid-v-line-0"></div>
         <div class="model17-grid-v-line model17-grid-v-line-1"></div>
@@ -3335,7 +3632,6 @@
         <div class="model17-grid-h-line model17-grid-h-line-3"></div>
         <div class="model17-grid-h-line model17-grid-h-line-4"></div>
         <div class="model17-grid-h-line model17-grid-h-line-5"></div>
-
         <div class="model17-block">
           <div class="model17-column">
             <div class="box model17-box" data-model17-id="1">1</div>
@@ -3908,6 +4204,10 @@
       setImageByAttribute("data-vertical-con-grande-id", id, imagePath);
     }
 
+    function setImageByPiramideId(id, imagePath) {
+      setImageByAttribute("data-piramide-id", id, imagePath);
+    }
+
     function setImageBySevenLokoId(id, imagePath) {
       setImageByAttribute("data-seven-loko-id", id, imagePath);
     }
@@ -4262,6 +4562,23 @@
       });
     }
 
+    function createPiramideTableAssignment() {
+      const imagePaths = shuffle(getSelectedDeckImagePaths());
+      const assignment = {};
+
+      for (let id = 1; id <= 54; id += 1) {
+        assignment[id] = imagePaths[(id - 1) % imagePaths.length];
+      }
+
+      return assignment;
+    }
+
+    function applyPiramideAssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByPiramideId(id, imagePath);
+      });
+    }
+
     function createModel12TriplesTableAssignment() {
       const imagePaths = shuffle(getSelectedDeckImagePaths());
       const assignment = {};
@@ -4336,6 +4653,12 @@
         return;
       }
 
+      if (selectedLayout === "piramide") {
+        applyPiramideAssignmentToDocument(createPiramideTableAssignment());
+        updateTableScale();
+        return;
+      }
+
       if (selectedLayout === "modelo-10") {
         applyAssignmentToDocument(createTableAssignment());
         updateTableScale();
@@ -4398,6 +4721,7 @@
       const terciasCrossedLayout = document.getElementById("tercias-crossed-layout");
       const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
       const verticalConGrandeLayout = document.getElementById("vertical-con-grande-layout");
+      const piramideLayout = document.getElementById("piramide-layout");
       const modelo16Layout = document.getElementById("modelo16-layout");
       const modelo10Layout = document.getElementById("modelo10-layout");
       const modelo12TriplesLayout = document.getElementById("modelo12-triples-layout");
@@ -4412,6 +4736,7 @@
       const isTerciasCrossed = layoutType === "tercias-crossed";
       const isLarguitasCrossed = layoutType === "larguitas-crossed";
       const isVerticalConGrande = layoutType === "vertical-con-grande";
+      const isPiramide = layoutType === "piramide";
       const isModelo16 = layoutType === "modelo-16";
       const isModelo10 = layoutType === "modelo-10";
       const isModelo12Triples = layoutType === "modelo-12-triples";
@@ -4425,6 +4750,7 @@
       terciasCrossedLayout.hidden = !isTerciasCrossed;
       larguitasCrossedLayout.hidden = !isLarguitasCrossed;
       verticalConGrandeLayout.hidden = !isVerticalConGrande;
+      piramideLayout.hidden = !isPiramide;
       modelo16Layout.hidden = !isModelo16;
       modelo10Layout.hidden = !isModelo10;
       modelo12TriplesLayout.hidden = !isModelo12Triples;
@@ -4597,7 +4923,7 @@
     }
 
     function populateLayoutClone(layoutClone, assignment) {
-      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id], [data-vertical-con-grande-id], [data-seven-loko-id], [data-model12-triples-id], [data-model17-id]");
+      const boxes = layoutClone.querySelectorAll("[data-id], [data-horizontal-id], [data-six-by-five-id], [data-tercias-below-id], [data-tercias-crossed-id], [data-larguitas-crossed-id], [data-vertical-con-grande-id], [data-piramide-id], [data-seven-loko-id], [data-model12-triples-id], [data-model17-id]");
       boxes.forEach((box) => {
         const id = box.getAttribute("data-id")
           || box.getAttribute("data-horizontal-id")
@@ -4606,6 +4932,7 @@
           || box.getAttribute("data-tercias-crossed-id")
           || box.getAttribute("data-larguitas-crossed-id")
           || box.getAttribute("data-vertical-con-grande-id")
+          || box.getAttribute("data-piramide-id")
           || box.getAttribute("data-seven-loko-id")
           || box.getAttribute("data-model12-triples-id")
           || box.getAttribute("data-model17-id");
@@ -4628,6 +4955,7 @@
         "tercias-crossed": document.getElementById("tercias-crossed-layout"),
         "larguitas-crossed": document.getElementById("larguitas-crossed-layout"),
         "vertical-con-grande": document.getElementById("vertical-con-grande-layout"),
+        piramide: document.getElementById("piramide-layout"),
         "modelo-16": document.getElementById("modelo16-layout"),
         "modelo-10": document.getElementById("modelo10-layout"),
         "modelo-12-triples": document.getElementById("modelo12-triples-layout"),
@@ -4704,6 +5032,8 @@
       const selectedLayout = getSelectedLayoutType();
       const assignments = selectedLayout === "vertical-con-grande"
         ? Array.from({ length: 6 }, () => createVerticalConGrandeTableAssignment())
+        : selectedLayout === "piramide"
+        ? Array.from({ length: 6 }, () => createPiramideTableAssignment())
         : selectedLayout === "modelo-12-triples"
         ? Array.from({ length: 6 }, () => createModel12TriplesTableAssignment())
         : selectedLayout === "modelo-17"
