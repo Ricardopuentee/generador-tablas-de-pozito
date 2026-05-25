@@ -293,7 +293,7 @@
       padding: 0;
       border: 1px solid rgba(26, 42, 74, 0.18);
       border-radius: 10px;
-      background: #fff;
+      background: transparent;
       overflow: hidden;
     }
 
@@ -730,6 +730,190 @@
     .seven-loko-small img {
       border-radius: 0;
     }
+
+    .matrix-layout {
+      display: grid;
+      grid-template-columns: repeat(10, 1cm);
+      grid-auto-rows: 1.65cm;
+      gap: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      width: max-content;
+    }
+
+    .matrix-cell {
+      width: 1cm;
+      height: 1.65cm;
+      border: none;
+      box-shadow: none;
+    }
+
+    .matrix-cell img {
+      border-radius: 0;
+    }
+
+    .modelo18-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo18-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--inner-line-frame-size);
+      right: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo18-v-line-0,
+    .modelo18-v-line-10 {
+      width: var(--outer-line-size);
+    }
+
+    .modelo18-v-line-0::after,
+    .modelo18-v-line-10::after {
+      left: var(--outer-line-frame-size);
+      right: var(--outer-line-frame-size);
+    }
+
+    .modelo18-v-line-0 { left: 0; }
+    .modelo18-v-line-1 { left: 10%; }
+    .modelo18-v-line-2 { left: 20%; }
+    .modelo18-v-line-3 { left: 30%; }
+    .modelo18-v-line-4 { left: 40%; }
+    .modelo18-v-line-5 { left: 50%; }
+    .modelo18-v-line-6 { left: 60%; }
+    .modelo18-v-line-7 { left: 70%; }
+    .modelo18-v-line-8 { left: 80%; }
+    .modelo18-v-line-9 { left: 90%; }
+    .modelo18-v-line-10 { right: 0; left: auto; }
+
+    .modelo19-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo19-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--inner-line-frame-size);
+      right: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo19-v-line-0,
+    .modelo19-v-line-10 {
+      width: var(--outer-line-size);
+    }
+
+    .modelo19-v-line-0::after,
+    .modelo19-v-line-10::after {
+      left: var(--outer-line-frame-size);
+      right: var(--outer-line-frame-size);
+    }
+
+    .modelo19-v-line-0 { left: 0; }
+    .modelo19-v-line-1 { left: 10%; }
+    .modelo19-v-line-2 { left: 20%; }
+    .modelo19-v-line-3 { left: 30%; }
+    .modelo19-v-line-4 { left: 40%; }
+    .modelo19-v-line-5 { left: 50%; }
+    .modelo19-v-line-6 { left: 60%; }
+    .modelo19-v-line-7 { left: 70%; }
+    .modelo19-v-line-8 { left: 80%; }
+    .modelo19-v-line-9 { left: 90%; }
+    .modelo19-v-line-10 { right: 0; left: auto; }
+
+    .modelo19-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo19-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--inner-line-frame-size);
+      bottom: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo19-h-line-0,
+    .modelo19-h-line-3 {
+      height: var(--outer-line-size);
+    }
+
+    .modelo19-h-line-0::after,
+    .modelo19-h-line-3::after {
+      top: var(--outer-line-frame-size);
+      bottom: var(--outer-line-frame-size);
+    }
+
+    .modelo19-h-line-0 { top: 0; }
+    .modelo19-h-line-1 { top: 33.333%; }
+    .modelo19-h-line-2 { top: 66.666%; }
+    .modelo19-h-line-3 { bottom: 0; }
+
+    .modelo18-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo18-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--inner-line-frame-size);
+      bottom: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo18-h-line-0,
+    .modelo18-h-line-3 {
+      height: var(--outer-line-size);
+    }
+
+    .modelo18-h-line-0::after,
+    .modelo18-h-line-3::after {
+      top: var(--outer-line-frame-size);
+      bottom: var(--outer-line-frame-size);
+    }
+
+    .modelo18-h-line-0 { top: 0; }
+    .modelo18-h-line-1 { top: 33.333%; }
+    .modelo18-h-line-2 { top: 64.8%; }
+    .modelo18-h-line-3 { bottom: 0; }
 
     .tercias-cruzadas-layout {
       position: relative;
@@ -1382,7 +1566,17 @@
       position: relative;
       width: max-content;
       height: calc(var(--piramide-unit-height) * 14);
-      background: #fff;
+      background: transparent;
+      border-collapse: collapse;
+    }
+
+    .celda-vacia,
+    .empty-cell {
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      pointer-events: none;
     }
 
     .piramide-column {
@@ -1466,18 +1660,9 @@
       );
     }
 
-    .piramide-h-line-6-wrap,
-    .piramide-h-line-7-wrap,
-    .piramide-v-line-5-wrap,
-    .piramide-v-line-6-wrap {
-      position: absolute;
-      inset: 0;
-      z-index: 21;
-      pointer-events: none;
-    }
-
     .piramide-h-line,
-    .piramide-v-line {
+    .piramide-v-line,
+    .piramide-edge-line {
       position: absolute;
       background: var(--line-frame-color);
       overflow: hidden;
@@ -1497,7 +1682,18 @@
       width: var(--line-size);
     }
 
-    .piramide-h-line::after {
+    .piramide-edge-h,
+    .piramide-h-line {
+      height: var(--line-size);
+    }
+
+    .piramide-edge-v,
+    .piramide-v-line {
+      width: var(--line-size);
+    }
+
+    .piramide-h-line::after,
+    .piramide-edge-h::after {
       content: "";
       position: absolute;
       left: 0;
@@ -1507,7 +1703,8 @@
       background: var(--line-color);
     }
 
-    .piramide-v-line::after {
+    .piramide-v-line::after,
+    .piramide-edge-v::after {
       content: "";
       position: absolute;
       top: 0;
@@ -1523,31 +1720,33 @@
     .piramide-h-line-4 { top: 42.857%; }
     .piramide-h-line-5 { top: 57.143%; }
     .piramide-h-line-6 { top: 71.429%; }
-    .piramide-h-line-6-wrap .piramide-h-line-6 {
-      left: 0;
-      right: 0;
-    }
     .piramide-h-line-7 { top: 85.714%; }
-    .piramide-h-line-7-wrap .piramide-h-line-7 {
-      left: 16.667%;
-      right: 14.8%;
-    }
     .piramide-h-line-8 { bottom: 0; }
     .piramide-v-line-1 { left: 0; }
     .piramide-v-line-2 { left: 16.667%; }
     .piramide-v-line-3 { left: 33.333%; }
     .piramide-v-line-4 { left: 50%; }
     .piramide-v-line-5 { left: 66.667%; }
-    .piramide-v-line-5-wrap .piramide-v-line-5 {
-      top: 0;
-      bottom: 0;
-    }
     .piramide-v-line-6 { left: 83.333%; }
-    .piramide-v-line-6-wrap .piramide-v-line-6 {
-      top: 14.286%;
-      bottom: 14.286%;
-    }
     .piramide-v-line-7 { right: 0; left: auto; }
+    .piramide-edge-top-right { left: 66.667%; top: 0; height: 14.286%; }
+    .piramide-edge-upper-right { left: 83.333%; top: 14.286%; height: 14.286%; }
+    .piramide-edge-mid-right { right: 0; top: 28.571%; height: 42.858%; }
+    .piramide-edge-lower-right { left: 83.333%; top: 71.429%; height: 14.285%; }
+    .piramide-edge-bottom-right { left: 66.667%; top: 85.714%; height: 14.286%; }
+    .piramide-edge-top-left { left: 33.333%; top: 0; height: 14.286%; }
+    .piramide-edge-upper-left { left: 16.667%; top: 14.286%; height: 14.286%; }
+    .piramide-edge-mid-left { left: 0; top: 28.571%; height: 42.858%; }
+    .piramide-edge-lower-left { left: 16.667%; top: 71.429%; height: 14.285%; }
+    .piramide-edge-bottom-left { left: 33.333%; top: 85.714%; height: 14.286%; }
+    .piramide-edge-upper-step-right { left: 66.667%; right: 16.667%; top: 14.286%; }
+    .piramide-edge-mid-step-right { left: 83.333%; right: 0; top: 28.571%; }
+    .piramide-edge-lower-step-right { left: 83.333%; right: 0; top: 71.429%; }
+    .piramide-edge-bottom-step-right { left: 66.667%; right: 16.667%; top: 85.714%; }
+    .piramide-edge-upper-step-left { left: 16.667%; right: 66.667%; top: 14.286%; }
+    .piramide-edge-mid-step-left { left: 0; right: 83.333%; top: 28.571%; }
+    .piramide-edge-lower-step-left { left: 0; right: 83.333%; top: 71.429%; }
+    .piramide-edge-bottom-step-left { left: 16.667%; right: 66.667%; top: 85.714%; }
 
     .modelo10-layout {
       position: relative;
@@ -2361,6 +2560,8 @@
           <option value="modelo-16">Modelo 16</option>
           <option value="modelo-17">Modelo 17</option>
           <option value="seven-loko">7 LOKO</option>
+          <option value="modelo-18">Modelo 18</option>
+          <option value="modelo-19">Modelo 19</option>
         </select>
         <label class="color-control" for="line-color-picker">
           <span class="color-control-label">Color de lineas</span>
@@ -3505,24 +3706,34 @@
           <div class="piramide-h-line piramide-h-line-3"></div>
           <div class="piramide-h-line piramide-h-line-4"></div>
           <div class="piramide-h-line piramide-h-line-5"></div>
+          <div class="piramide-h-line piramide-h-line-6"></div>
+          <div class="piramide-h-line piramide-h-line-7"></div>
           <div class="piramide-h-line piramide-h-line-8"></div>
           <div class="piramide-v-line piramide-v-line-1"></div>
           <div class="piramide-v-line piramide-v-line-2"></div>
           <div class="piramide-v-line piramide-v-line-3"></div>
           <div class="piramide-v-line piramide-v-line-4"></div>
-          <div class="piramide-v-line piramide-v-line-7"></div>
-        </div>
-        <div class="piramide-h-line-6-wrap">
-          <div class="piramide-h-line piramide-h-line-6"></div>
-        </div>
-        <div class="piramide-h-line-7-wrap">
-          <div class="piramide-h-line piramide-h-line-7"></div>
-        </div>
-        <div class="piramide-v-line-5-wrap">
           <div class="piramide-v-line piramide-v-line-5"></div>
-        </div>
-        <div class="piramide-v-line-6-wrap">
           <div class="piramide-v-line piramide-v-line-6"></div>
+          <div class="piramide-v-line piramide-v-line-7"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-top-right"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-upper-right"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-mid-right"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-lower-right"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-bottom-right"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-top-left"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-upper-left"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-mid-left"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-lower-left"></div>
+          <div class="piramide-edge-line piramide-edge-v piramide-edge-bottom-left"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-upper-step-right"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-mid-step-right"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-lower-step-right"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-bottom-step-right"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-upper-step-left"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-mid-step-left"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-lower-step-left"></div>
+          <div class="piramide-edge-line piramide-edge-h piramide-edge-bottom-step-left"></div>
         </div>
         <div class="piramide-column piramide-column-1">
           <div class="box piramide-box piramide-tall" data-piramide-id="1">1</div>
@@ -3997,6 +4208,10 @@
           <div class="box seven-loko-small" data-seven-loko-id="51">51</div>
         </div>
       </div>
+
+      <div class="layout matrix-layout" aria-label="Tabla Modelo 18" id="modelo18-layout" data-matrix-layout="modelo-18" hidden></div>
+
+      <div class="layout matrix-layout" aria-label="Tabla Modelo 19" id="modelo19-layout" data-matrix-layout="modelo-19" hidden></div>
     </div>
       </div>
     </section>
@@ -4127,6 +4342,28 @@
     const larguitasCrossedSecondaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 31);
     const larguitasCrossedTertiaryTargetIds = Array.from({ length: 12 }, (_, index) => index + 43);
     const sevenLokoTargetIds = Array.from({ length: 73 }, (_, index) => index + 1);
+    const matrixLayoutPatterns = {
+      "modelo-18": [
+        [31, 43, 31, 43, 31, 32, 44, 32, 44, 32],
+        [1, 33, 2, 34, 3, 35, 4, 36, 5, 37],
+        [33, 16, 34, 17, 35, 18, 36, 19, 37, 20],
+        [6, 38, 7, 39, 8, 40, 9, 41, 10, 42],
+        [38, 45, 39, 46, 40, 47, 41, 48, 42, 49],
+        [11, 50, 12, 51, 13, 52, 14, 53, 15, 54],
+        [30, 29, 28, 27, 26, 25, 24, 23, 22, 21]
+      ],
+      "modelo-19": [
+        [31, 39, 40, 31, 32, 41, 32, 38, 31, 32],
+        [42, 33, 42, 33, 42, 34, 35, 34, 35, 34],
+        [38, 38, 33, 41, 41, 39, 39, 35, 40, 40],
+        [36, 43, 36, 43, 36, 37, 44, 37, 44, 37],
+        [45, 45, 46, 46, 47, 47, 48, 48, 49, 49],
+        [50, 51, 51, 52, 52, 53, 53, 54, 54, 50],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+      ]
+    };
     const TERCIA_FILTER_MAX = 5;
     const forcedTerciaCardIds = new Set();
 
@@ -4613,6 +4850,67 @@
       });
     }
 
+    function appendModelo18VerticalLines(layout) {
+      for (let index = 0; index <= 10; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo18-v-line modelo18-v-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function appendModelo19VerticalLines(layout) {
+      for (let index = 0; index <= 10; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo19-v-line modelo19-v-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function appendModelo19HorizontalLines(layout) {
+      for (let index = 0; index <= 3; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo19-h-line modelo19-h-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function appendModelo18HorizontalLines(layout) {
+      for (let index = 0; index <= 3; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo18-h-line modelo18-h-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function initializeMatrixLayouts() {
+      Object.entries(matrixLayoutPatterns).forEach(([layoutType, rows]) => {
+        const layout = document.querySelector(`[data-matrix-layout="${layoutType}"]`);
+        if (!layout || layout.dataset.matrixInitialized === "true") {
+          return;
+        }
+
+        rows.flat().forEach((id) => {
+          const cell = document.createElement("div");
+          cell.className = "box matrix-cell";
+          cell.dataset.id = String(id);
+          cell.textContent = String(id);
+          layout.appendChild(cell);
+        });
+
+        if (layoutType === "modelo-18") {
+          appendModelo18VerticalLines(layout);
+          appendModelo18HorizontalLines(layout);
+        }
+
+        if (layoutType === "modelo-19") {
+          appendModelo19VerticalLines(layout);
+          appendModelo19HorizontalLines(layout);
+        }
+
+        layout.dataset.matrixInitialized = "true";
+      });
+    }
+
     function generateNewTable() {
       const selectedLayout = document.getElementById("layout-select").value;
       showMainTableView(false);
@@ -4683,6 +4981,12 @@
         return;
       }
 
+      if (selectedLayout === "modelo-18" || selectedLayout === "modelo-19") {
+        applyAssignmentToDocument(createTableAssignment());
+        updateTableScale();
+        return;
+      }
+
       applyAssignmentToDocument(createTableAssignment());
       updateTableScale();
     }
@@ -4727,6 +5031,8 @@
       const modelo12TriplesLayout = document.getElementById("modelo12-triples-layout");
       const modelo17Layout = document.getElementById("modelo17-layout");
       const sevenLokoLayout = document.getElementById("seven-loko-layout");
+      const modelo18Layout = document.getElementById("modelo18-layout");
+      const modelo19Layout = document.getElementById("modelo19-layout");
       const generateButton = document.getElementById("generate-table-button");
 
       const isSquare = layoutType === "square";
@@ -4742,6 +5048,8 @@
       const isModelo12Triples = layoutType === "modelo-12-triples";
       const isModelo17 = layoutType === "modelo-17";
       const isSevenLoko = layoutType === "seven-loko";
+      const isModelo18 = layoutType === "modelo-18";
+      const isModelo19 = layoutType === "modelo-19";
 
       tableLayout.hidden = !isSquare;
       horizontalLayout.hidden = !isHorizontal;
@@ -4756,6 +5064,8 @@
       modelo12TriplesLayout.hidden = !isModelo12Triples;
       modelo17Layout.hidden = !isModelo17;
       sevenLokoLayout.hidden = !isSevenLoko;
+      modelo18Layout.hidden = !isModelo18;
+      modelo19Layout.hidden = !isModelo19;
       generateButton.disabled = false;
       generateButton.style.opacity = "1";
       generateButton.style.cursor = "pointer";
@@ -4960,7 +5270,9 @@
         "modelo-10": document.getElementById("modelo10-layout"),
         "modelo-12-triples": document.getElementById("modelo12-triples-layout"),
         "modelo-17": document.getElementById("modelo17-layout"),
-        "seven-loko": document.getElementById("seven-loko-layout")
+        "seven-loko": document.getElementById("seven-loko-layout"),
+        "modelo-18": document.getElementById("modelo18-layout"),
+        "modelo-19": document.getElementById("modelo19-layout")
       };
       const sourceLayout = layoutMap[layoutType] || layoutMap.square;
       const game6View = document.getElementById("game6-view");
@@ -5192,6 +5504,46 @@
       });
     }
 
+    function preparePiramideForExport(root) {
+      // 1. Ocultar el grid overlay (clip-path no funciona en html2canvas)
+      root.querySelectorAll(".piramide-grid").forEach(grid => {
+        grid.style.display = "none";
+      });
+
+      // 2. Poner borde directamente en cada carta
+      const lineColor = getComputedStyle(document.documentElement)
+        .getPropertyValue("--line-color").trim() || "#d62828";
+      const frameColor = getComputedStyle(document.documentElement)
+        .getPropertyValue("--line-frame-color").trim() || "#000000";
+      const borderSize = 2; // px, ajusta si quieres más grueso
+      const frameSize = 1; // px
+
+      root.querySelectorAll(".piramide-box").forEach(box => {
+        box.style.border = `${frameSize}px solid ${frameColor}`;
+        box.style.outline = `${borderSize}px solid ${lineColor}`;
+        box.style.outlineOffset = `-${frameSize + borderSize}px`;
+        box.style.boxSizing = "border-box";
+        // Las imágenes deben seguir llenando el box
+        const img = box.querySelector("img");
+        if (img) {
+          img.style.width = "100%";
+          img.style.height = "100%";
+          img.style.display = "block";
+        }
+      });
+
+      // 3. Recortar el contenedor de la pirámide al tamaño real de las cartas
+      root.querySelectorAll(".piramide-layout").forEach(layout => {
+        layout.style.overflow = "hidden";
+        layout.style.background = "transparent";
+      });
+
+      // 4. Hacer transparente el fondo de las columnas para que no haya blancos
+      root.querySelectorAll(".piramide-column").forEach(col => {
+        col.style.background = "transparent";
+      });
+    }
+
     function applyOuterBorderScale(value) {
       const normalizedValue = Number.parseInt(value, 10);
       const nextValue = Number.isFinite(normalizedValue)
@@ -5254,6 +5606,33 @@
       applyInnerLineScale(slider.value);
     }
 
+    function isEmptyCaptureCell(element) {
+      return Boolean(
+        element
+        && element.classList
+        && (
+          element.classList.contains("celda-vacia")
+          || element.classList.contains("empty-cell")
+        )
+      );
+    }
+
+    function hideEmptyCellsForCapture(root) {
+      const hiddenCells = Array.from(root.querySelectorAll(".celda-vacia, .empty-cell"));
+
+      hiddenCells.forEach((cell) => {
+        cell.dataset.previousCaptureDisplay = cell.style.display;
+        cell.style.display = "none";
+      });
+
+      return () => {
+        hiddenCells.forEach((cell) => {
+          cell.style.display = cell.dataset.previousCaptureDisplay || "";
+          delete cell.dataset.previousCaptureDisplay;
+        });
+      };
+    }
+
     async function downloadTableAsImage() {
       const downloadButton = document.getElementById("download-image-button");
       const activeLayout = getActiveLayout();
@@ -5274,6 +5653,7 @@
       layoutClone.removeAttribute("id");
       layoutClone.hidden = false;
       prepareTopLinesForExport(layoutClone);
+      preparePiramideForExport(layoutClone);
 
       exportWrapper.style.position = "fixed";
       exportWrapper.style.left = "-10000px";
@@ -5519,10 +5899,23 @@
       });
 
       grid.querySelectorAll(".layout, .layout *").forEach((node) => {
+        if (layoutType === "piramide" && node.classList && node.classList.contains("piramide-column")) {
+          return;
+        }
+
         node.style.margin = "0";
         node.style.padding = "0";
         node.style.borderRadius = "0";
       });
+
+      if (layoutType === "piramide") {
+        grid.querySelectorAll(".piramide-layout").forEach((layout) => {
+          layout.style.width = "max-content";
+          layout.style.height = "calc(var(--piramide-unit-height) * 14)";
+          layout.style.overflow = "hidden";
+          layout.style.position = "relative";
+        });
+      }
     }
 
     async function downloadGame6AsImage() {
@@ -5567,6 +5960,7 @@
 
         applyCompactStylesToGame6Clone(game6Clone);
         prepareTopLinesForExport(game6Clone);
+        preparePiramideForExport(game6Clone);
         await waitForImagesInElement(game6Clone);
 
         const cloneWidth = Math.ceil(Math.max(game6Clone.scrollWidth, game6Clone.offsetWidth, game6Clone.getBoundingClientRect().width));
@@ -5695,12 +6089,26 @@
           });
 
           tableClone.querySelectorAll(".layout, .layout *").forEach((node) => {
+            if (layoutType === "piramide" && node.classList && node.classList.contains("piramide-column")) {
+              return;
+            }
+
             node.style.margin = "0";
             node.style.padding = "0";
             node.style.borderRadius = "0";
           });
 
+          if (layoutType === "piramide") {
+            tableClone.querySelectorAll(".piramide-layout").forEach((layout) => {
+              layout.style.width = "max-content";
+              layout.style.height = "calc(var(--piramide-unit-height) * 14)";
+              layout.style.overflow = "hidden";
+              layout.style.position = "relative";
+            });
+          }
+
           prepareTopLinesForExport(tableClone);
+          preparePiramideForExport(tableClone);
           await waitForImagesInElement(tableClone);
 
           const cloneWidth = Math.ceil(Math.max(tableClone.scrollWidth, tableClone.offsetWidth, tableClone.getBoundingClientRect().width));
@@ -5813,6 +6221,7 @@
       downloadGame6IndividualImagesButton.addEventListener("click", downloadGame6AsIndividualImages);
       backFromGame6Button.addEventListener("click", showMainTableView);
       initializeTerciaFilterControls();
+      initializeMatrixLayouts();
 
       setActiveLayout(layoutSelect.value);
       applyLineColor(lineColorPicker.value);
