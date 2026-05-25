@@ -2582,11 +2582,11 @@
           <span class="range-control-value" id="inner-line-size-value">100</span>
         </label>
         <details class="tercia-filter-menu" id="tercia-filter-menu">
-          <summary id="tercia-filter-summary">Filtro de tercias (0/5)</summary>
+          <summary id="tercia-filter-summary">Filtro de tercias (0/12)</summary>
           <div class="tercia-filter-panel">
-            <p class="tercia-filter-help">Selecciona hasta 5 cartas: siempre saldran como tercias al generar 1 tabla o juego de 6.</p>
+            <p class="tercia-filter-help">Selecciona hasta 12 cartas: siempre saldran como tercias al generar 1 tabla o juego de 6.</p>
             <div class="tercia-filter-actions">
-              <span class="tercia-filter-count" id="tercia-filter-count">0 / 5 seleccionadas</span>
+              <span class="tercia-filter-count" id="tercia-filter-count">0 / 12 seleccionadas</span>
               <button type="button" class="print-button" id="clear-tercia-filter-button">Limpiar filtro</button>
             </div>
             <div class="tercia-filter-grid" id="tercia-filter-grid" aria-label="Seleccion de cartas tercia"></div>
@@ -4364,7 +4364,7 @@
         [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
       ]
     };
-    const TERCIA_FILTER_MAX = 5;
+    const TERCIA_FILTER_MAX = 12;
     const forcedTerciaCardIds = new Set();
 
     function shuffle(array) {
@@ -4568,7 +4568,7 @@
         if (target.checked) {
           if (forcedTerciaCardIds.size >= TERCIA_FILTER_MAX) {
             target.checked = false;
-            alert("Solo puedes seleccionar hasta 5 cartas como tercias obligatorias.");
+            alert("Solo puedes seleccionar hasta 12 cartas como tercias obligatorias.");
             return;
           }
 
