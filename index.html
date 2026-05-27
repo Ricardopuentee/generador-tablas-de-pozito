@@ -11,6 +11,7 @@
     :root {
       --line-color: #d62828;
       --line-frame-color: #000000;
+      --card-bg: #ffffff;
       --line-size: 8px;
       --line-size-double: 14px;
       --line-frame-size: 2px;
@@ -594,7 +595,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      background: #fff;
+      background: var(--card-bg);
       border-radius: 0;
     }
 
@@ -644,7 +645,7 @@
 
     .seven-loko-layout {
       position: relative;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .seven-loko-v-line {
@@ -917,7 +918,7 @@
 
     .tercias-cruzadas-layout {
       position: relative;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .tercias-cruzadas-column {
@@ -1134,7 +1135,7 @@
 
     .model16-layout {
       position: relative;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .model16-column {
@@ -1222,7 +1223,7 @@
 
     .model17-layout {
       position: relative;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .model17-block {
@@ -1315,7 +1316,7 @@
 
     .model12-triples-layout {
       position: relative;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .model12-triples-block {
@@ -1408,7 +1409,7 @@
       flex-direction: column;
       width: 15cm;
       height: 10.78cm;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .vertical-con-grande-row {
@@ -1611,7 +1612,7 @@
       position: relative;
       width: var(--piramide-cell-width);
       border: none;
-      background: #fff;
+      background: var(--card-bg);
       box-shadow: none;
     }
 
@@ -1750,7 +1751,7 @@
 
     .modelo10-layout {
       position: relative;
-      background: #fff;
+      background: var(--card-bg);
     }
 
     .modelo10-column {
@@ -1842,6 +1843,102 @@
       object-fit: fill;
       display: block;
       border-radius: 0;
+    }
+
+    body[data-card-shape="oval"] .tall,
+    body[data-card-shape="oval"] .horizontal-box,
+    body[data-card-shape="oval"] .six-by-five-box,
+    body[data-card-shape="oval"] .tercias-abajo-box,
+    body[data-card-shape="oval"] .tercias-cruzadas-box,
+    body[data-card-shape="oval"] .larguitas-crossed-box,
+    body[data-card-shape="oval"] .model16-box,
+    body[data-card-shape="oval"] .model17-box,
+    body[data-card-shape="oval"] .model12-triples-box,
+    body[data-card-shape="oval"] .vertical-con-grande-small,
+    body[data-card-shape="oval"] .vertical-con-grande-half,
+    body[data-card-shape="oval"] .piramide-tall,
+    body[data-card-shape="oval"] .modelo10-box,
+    body[data-card-shape="oval"] .seven-loko-box,
+    body[data-card-shape="oval"] .matrix-cell,
+    body[data-card-shape="oval"] .tall img,
+    body[data-card-shape="oval"] .horizontal-box img,
+    body[data-card-shape="oval"] .six-by-five-box img,
+    body[data-card-shape="oval"] .tercias-abajo-box img,
+    body[data-card-shape="oval"] .tercias-cruzadas-box img,
+    body[data-card-shape="oval"] .larguitas-crossed-box img,
+    body[data-card-shape="oval"] .model16-box img,
+    body[data-card-shape="oval"] .model17-box img,
+    body[data-card-shape="oval"] .model12-triples-box img,
+    body[data-card-shape="oval"] .vertical-con-grande-small img,
+    body[data-card-shape="oval"] .vertical-con-grande-half img,
+    body[data-card-shape="oval"] .piramide-tall img,
+    body[data-card-shape="oval"] .modelo10-box img,
+    body[data-card-shape="oval"] .seven-loko-box img,
+    body[data-card-shape="oval"] .matrix-cell img {
+      border-radius: 999px / 50% !important;
+      clip-path: ellipse(50% 50% at 50% 50%);
+    }
+
+    body[data-card-shape="oval"] .small,
+    body[data-card-shape="oval"] .horizontal-small-box,
+    body[data-card-shape="oval"] .six-by-five-small,
+    body[data-card-shape="oval"] .tercias-abajo-small,
+    body[data-card-shape="oval"] .tercias-cruzadas-small,
+    body[data-card-shape="oval"] .larguitas-crossed-small,
+    body[data-card-shape="oval"] .model16-small,
+    body[data-card-shape="oval"] .model17-small,
+    body[data-card-shape="oval"] .model12-triples-small,
+    body[data-card-shape="oval"] .vertical-con-grande-wide,
+    body[data-card-shape="oval"] .piramide-small,
+    body[data-card-shape="oval"] .modelo10-small,
+    body[data-card-shape="oval"] .seven-loko-small,
+    body[data-card-shape="oval"] .small img,
+    body[data-card-shape="oval"] .horizontal-small-box img,
+    body[data-card-shape="oval"] .six-by-five-small img,
+    body[data-card-shape="oval"] .tercias-abajo-small img,
+    body[data-card-shape="oval"] .tercias-cruzadas-small img,
+    body[data-card-shape="oval"] .larguitas-crossed-small img,
+    body[data-card-shape="oval"] .model16-small img,
+    body[data-card-shape="oval"] .model17-small img,
+    body[data-card-shape="oval"] .model12-triples-small img,
+    body[data-card-shape="oval"] .vertical-con-grande-wide img,
+    body[data-card-shape="oval"] .piramide-small img,
+    body[data-card-shape="oval"] .modelo10-small img,
+    body[data-card-shape="oval"] .seven-loko-small img {
+      border-radius: 50% !important;
+      clip-path: circle(50% at 50% 50%);
+    }
+
+    body[data-card-shape="oval"] .tall,
+    body[data-card-shape="oval"] .horizontal-box,
+    body[data-card-shape="oval"] .six-by-five-box,
+    body[data-card-shape="oval"] .tercias-abajo-box,
+    body[data-card-shape="oval"] .tercias-cruzadas-box,
+    body[data-card-shape="oval"] .larguitas-crossed-box,
+    body[data-card-shape="oval"] .model16-box,
+    body[data-card-shape="oval"] .model17-box,
+    body[data-card-shape="oval"] .model12-triples-box,
+    body[data-card-shape="oval"] .vertical-con-grande-small,
+    body[data-card-shape="oval"] .vertical-con-grande-half,
+    body[data-card-shape="oval"] .piramide-tall,
+    body[data-card-shape="oval"] .modelo10-box,
+    body[data-card-shape="oval"] .seven-loko-box,
+    body[data-card-shape="oval"] .matrix-cell,
+    body[data-card-shape="oval"] .small,
+    body[data-card-shape="oval"] .horizontal-small-box,
+    body[data-card-shape="oval"] .six-by-five-small,
+    body[data-card-shape="oval"] .tercias-abajo-small,
+    body[data-card-shape="oval"] .tercias-cruzadas-small,
+    body[data-card-shape="oval"] .larguitas-crossed-small,
+    body[data-card-shape="oval"] .model16-small,
+    body[data-card-shape="oval"] .model17-small,
+    body[data-card-shape="oval"] .model12-triples-small,
+    body[data-card-shape="oval"] .vertical-con-grande-wide,
+    body[data-card-shape="oval"] .piramide-small,
+    body[data-card-shape="oval"] .modelo10-small,
+    body[data-card-shape="oval"] .seven-loko-small {
+      border-radius: 0 !important;
+      clip-path: none;
     }
 
     .vertical-con-grande-wide img {
@@ -2445,7 +2542,7 @@
         height: 432mm;
         max-width: none;
         overflow: hidden;
-        background: #ffffff;
+        background: var(--card-bg);
         box-shadow: none;
         border: none;
       }
@@ -2534,6 +2631,30 @@
         border-spacing: 0;
         border-radius: 0 !important;
       }
+
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .horizontal-box,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-box,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .horizontal-box img,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-box img {
+        border-radius: 999px / 50% !important;
+        clip-path: ellipse(50% 50% at 50% 50%);
+      }
+
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .horizontal-small-box,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-small,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .horizontal-small-box img,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-small img {
+        border-radius: 50% !important;
+        clip-path: circle(50% at 50% 50%);
+      }
+
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .horizontal-box,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-box,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .horizontal-small-box,
+      body[data-card-shape="oval"] #game6-view.print-sheet-active .print-sheet-cell .larguitas-crossed-small {
+        border-radius: 0 !important;
+        clip-path: none;
+      }
     }
   </style>
 </head>
@@ -2563,6 +2684,10 @@
           <option value="modelo-18">Modelo 18</option>
           <option value="modelo-19">Modelo 19</option>
         </select>
+        <select id="card-shape-select" class="layout-select" aria-label="Seleccionar forma de las cartas">
+          <option value="square">Cartas cuadradas</option>
+          <option value="oval">Cartas ovaladas</option>
+        </select>
         <label class="color-control" for="line-color-picker">
           <span class="color-control-label">Color de lineas</span>
           <input id="line-color-picker" class="color-picker-input" type="color" value="#d62828" aria-label="Elegir color personalizado para las lineas">
@@ -2570,6 +2695,10 @@
         <label class="color-control" for="line-frame-color-picker">
           <span class="color-control-label">Color del marquito</span>
           <input id="line-frame-color-picker" class="color-picker-input" type="color" value="#000000" aria-label="Elegir color del marquito de las lineas">
+        </label>
+        <label class="color-control" for="card-bg-color-picker">
+          <span class="color-control-label">Fondo de cartas</span>
+          <input id="card-bg-color-picker" class="color-picker-input" type="color" value="#ffffff" aria-label="Elegir color del fondo de las cartas">
         </label>
         <label class="range-control" for="outer-border-size-slider">
           <span class="color-control-label">Bordes exteriores</span>
@@ -4817,12 +4946,24 @@
     }
 
     function createModel12TriplesTableAssignment() {
-      const imagePaths = shuffle(getSelectedDeckImagePaths());
+      const imagePaths = getSelectedDeckImagePaths();
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
       const assignment = {};
+      const tripleTargetIds = Array.from({ length: 24 }, (_, index) => index + 31);
+      const forcedTargetIds = tripleTargetIds.slice(0, TERCIA_FILTER_MAX);
+      const remainingTripleTargetIds = tripleTargetIds.slice(TERCIA_FILTER_MAX);
+      let remainingOptionalImages = optionalImages.slice(30);
 
-      for (let id = 1; id <= 54; id += 1) {
-        assignment[id] = imagePaths[(id - 1) % imagePaths.length];
-      }
+      primaryTargetIds.forEach((id, index) => {
+        assignment[id] = optionalImages[index];
+      });
+
+      assignSecondaryIdsWithForced(assignment, forcedTargetIds, remainingOptionalImages, forcedImages);
+
+      remainingOptionalImages = shuffle(remainingOptionalImages);
+      remainingTripleTargetIds.forEach((id, index) => {
+        assignment[id] = remainingOptionalImages[index];
+      });
 
       return assignment;
     }
@@ -5014,6 +5155,19 @@
       const lineFrameColorPicker = document.getElementById("line-frame-color-picker");
       if (lineFrameColorPicker && normalizeHexColor(lineFrameColorPicker.value) !== nextColor) {
         lineFrameColorPicker.value = nextColor;
+      }
+    }
+
+    function getCardBackgroundColor() {
+      return getComputedStyle(document.documentElement).getPropertyValue("--card-bg").trim() || "#ffffff";
+    }
+
+    function applyCardBackgroundColor(color) {
+      const nextColor = normalizeHexColor(color) || "#ffffff";
+      document.documentElement.style.setProperty("--card-bg", nextColor);
+      const cardBgColorPicker = document.getElementById("card-bg-color-picker");
+      if (cardBgColorPicker && normalizeHexColor(cardBgColorPicker.value) !== nextColor) {
+        cardBgColorPicker.value = nextColor;
       }
     }
 
@@ -5384,7 +5538,7 @@
       game6View.style.overflow = "visible";
       game6View.style.margin = "0";
       game6View.style.padding = "0";
-      game6View.style.background = "#ffffff";
+      game6View.style.background = getCardBackgroundColor();
 
       game6Grid.style.position = "static";
       game6Grid.style.display = "grid";
@@ -5586,6 +5740,17 @@
       updateTableScale();
     }
 
+    function applyCardShape(value) {
+      const nextShape = value === "oval" ? "oval" : "square";
+      const cardShapeSelect = document.getElementById("card-shape-select");
+
+      document.body.dataset.cardShape = nextShape;
+
+      if (cardShapeSelect && cardShapeSelect.value !== nextShape) {
+        cardShapeSelect.value = nextShape;
+      }
+    }
+
     function initializeOuterBorderControls() {
       const slider = document.getElementById("outer-border-size-slider");
 
@@ -5650,6 +5815,7 @@
 
       const exportWrapper = document.createElement("div");
       const layoutClone = activeLayout.cloneNode(true);
+      const cardBackgroundColor = getCardBackgroundColor();
       layoutClone.removeAttribute("id");
       layoutClone.hidden = false;
       prepareTopLinesForExport(layoutClone);
@@ -5660,7 +5826,7 @@
       exportWrapper.style.top = "0";
       exportWrapper.style.padding = "0";
       exportWrapper.style.margin = "0";
-      exportWrapper.style.background = "#ffffff";
+      exportWrapper.style.background = cardBackgroundColor;
       exportWrapper.style.display = "inline-block";
       exportWrapper.style.width = "max-content";
       exportWrapper.style.overflow = "visible";
@@ -5687,7 +5853,7 @@
         const exportHeight = layoutHeight + (EXPORT_PADDING * 2);
 
         const canvas = await window.html2canvas(exportWrapper, {
-          backgroundColor: "#ffffff",
+          backgroundColor: cardBackgroundColor,
           scale: 3,
           width: exportWidth,
           height: exportHeight,
@@ -5729,6 +5895,7 @@
 
     function applyPrintLikeStylesToGame6Clone(game6Clone) {
       const layoutType = game6Clone.dataset.layoutType || "square";
+      const cardBackgroundColor = getCardBackgroundColor();
       const grid = game6Clone.querySelector("#game6-grid");
       const printSheet = game6Clone.querySelector("#game6-print-sheet");
 
@@ -5751,7 +5918,7 @@
       if (layoutType === "horizontal" || layoutType === "larguitas-crossed") {
         game6Clone.style.margin = "0";
         game6Clone.style.padding = "0";
-        game6Clone.style.background = "#ffffff";
+        game6Clone.style.background = cardBackgroundColor;
         game6Clone.style.width = "278mm";
         game6Clone.style.height = "432mm";
         game6Clone.style.overflow = "hidden";
@@ -5809,7 +5976,7 @@
       game6Clone.style.overflow = "visible";
       game6Clone.style.padding = "0";
       game6Clone.style.margin = "0";
-      game6Clone.style.background = "#ffffff";
+      game6Clone.style.background = cardBackgroundColor;
 
       if (layoutType === "six-by-five" || layoutType === "tercias-below") {
         grid.querySelectorAll(".table-wrapper").forEach((wrapper) => {
@@ -5935,6 +6102,7 @@
 
       const exportWrapper = document.createElement("div");
       const game6Clone = game6View.cloneNode(true);
+      const cardBackgroundColor = getCardBackgroundColor();
       game6Clone.removeAttribute("id");
 
       exportWrapper.style.position = "fixed";
@@ -5942,7 +6110,7 @@
       exportWrapper.style.top = "0";
       exportWrapper.style.padding = "0";
       exportWrapper.style.margin = "0";
-      exportWrapper.style.background = "#ffffff";
+      exportWrapper.style.background = cardBackgroundColor;
       exportWrapper.style.display = "inline-block";
       exportWrapper.style.width = "max-content";
       exportWrapper.style.overflow = "visible";
@@ -5972,7 +6140,7 @@
         const exportHeight = cloneHeight + (EXPORT_PADDING * 2);
 
         const canvas = await window.html2canvas(exportWrapper, {
-          backgroundColor: "#ffffff",
+          backgroundColor: cardBackgroundColor,
           scale: 2,
           width: exportWidth,
           height: exportHeight,
@@ -6043,12 +6211,13 @@
       }
 
       const exportWrapper = document.createElement("div");
+      const cardBackgroundColor = getCardBackgroundColor();
       exportWrapper.style.position = "fixed";
       exportWrapper.style.left = "-10000px";
       exportWrapper.style.top = "0";
       exportWrapper.style.padding = "0";
       exportWrapper.style.margin = "0";
-      exportWrapper.style.background = "#ffffff";
+      exportWrapper.style.background = cardBackgroundColor;
       exportWrapper.style.display = "inline-block";
       exportWrapper.style.width = "max-content";
       exportWrapper.style.overflow = "visible";
@@ -6078,7 +6247,7 @@
           tableClone.style.padding = "0";
           tableClone.style.width = "max-content";
           tableClone.style.height = "auto";
-          tableClone.style.background = "#ffffff";
+          tableClone.style.background = cardBackgroundColor;
           tableClone.style.border = "none";
           tableClone.style.borderRadius = "0";
           tableClone.style.boxShadow = "none";
@@ -6117,7 +6286,7 @@
           exportWrapper.style.width = `${cloneWidth}px`;
 
           const canvas = await window.html2canvas(exportWrapper, {
-            backgroundColor: "#ffffff",
+            backgroundColor: cardBackgroundColor,
             scale: 2,
             width: cloneWidth,
             height: cloneHeight,
@@ -6161,9 +6330,11 @@
       const printButton = document.getElementById("print-table-button");
       const downloadImageButton = document.getElementById("download-image-button");
       const layoutSelect = document.getElementById("layout-select");
+      const cardShapeSelect = document.getElementById("card-shape-select");
       const deckSelect = document.getElementById("deck-select");
       const lineColorPicker = document.getElementById("line-color-picker");
       const lineFrameColorPicker = document.getElementById("line-frame-color-picker");
+      const cardBgColorPicker = document.getElementById("card-bg-color-picker");
       const outerBorderSizeSlider = document.getElementById("outer-border-size-slider");
       const innerLineSizeSlider = document.getElementById("inner-line-size-slider");
       const terciaFilterMenu = document.getElementById("tercia-filter-menu");
@@ -6178,9 +6349,11 @@
         !printButton ||
         !downloadImageButton ||
         !layoutSelect ||
+        !cardShapeSelect ||
         !deckSelect ||
         !lineColorPicker ||
         !lineFrameColorPicker ||
+        !cardBgColorPicker ||
         !outerBorderSizeSlider ||
         !innerLineSizeSlider ||
         !terciaFilterMenu ||
@@ -6204,12 +6377,14 @@
         setActiveLayout(event.target.value);
         generateNewTable();
       });
+      cardShapeSelect.addEventListener("change", (event) => applyCardShape(event.target.value));
       deckSelect.addEventListener("change", () => {
         renderTerciaFilterGrid();
         generateNewTable();
       });
       lineColorPicker.addEventListener("input", (event) => applyLineColor(event.target.value));
       lineFrameColorPicker.addEventListener("input", (event) => applyLineFrameColor(event.target.value));
+      cardBgColorPicker.addEventListener("input", (event) => applyCardBackgroundColor(event.target.value));
       outerBorderSizeSlider.addEventListener("input", (event) => applyOuterBorderScale(event.target.value));
       innerLineSizeSlider.addEventListener("input", (event) => applyInnerLineScale(event.target.value));
       game6Button.addEventListener("click", generateGameOf6);
@@ -6224,8 +6399,10 @@
       initializeMatrixLayouts();
 
       setActiveLayout(layoutSelect.value);
+      applyCardShape(cardShapeSelect.value);
       applyLineColor(lineColorPicker.value);
       applyLineFrameColor(lineFrameColorPicker.value);
+      applyCardBackgroundColor(cardBgColorPicker.value);
       initializeOuterBorderControls();
       initializeInnerLineControls();
       generateNewTable();
