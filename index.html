@@ -2667,6 +2667,8 @@
           <option value="carpeta-sin-titulo">Carpeta sin titulo</option>
           <option value="baraja-animada">Baraja animada</option>
         </select>
+        <button type="button" class="print-button" id="add-custom-deck-button">Agregar mi baraja</button>
+        <input id="custom-deck-folder-input" type="file" accept="image/*" webkitdirectory directory multiple hidden>
         <select id="layout-select" class="layout-select" aria-label="Seleccionar tipo de tabla">
           <option value="square">Tabla cuadrada (5x6)</option>
           <option value="horizontal">Tabla horizontal</option>
@@ -4443,6 +4445,14 @@
         return `Baraja estilizada/unnamed-${index + 1}.jpg`;
       })
     };
+    const deckMetadataByDeck = {
+      traditional: { transparent: false },
+      "carpeta-sin-titulo": { transparent: false },
+      "baraja-animada": { transparent: false },
+      stylized: { transparent: false }
+    };
+    const customDeckObjectUrlsByDeck = {};
+    const imageFileExtensions = new Set([".apng", ".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
 
     const primaryTargetIds = Array.from({ length: 30 }, (_, index) => index + 1);
     const secondaryTargetGroups = [
@@ -4510,6 +4520,25 @@
     function getSelectedDeckImagePaths() {
       const selectedDeck = document.getElementById("deck-select").value;
       return deckImagePathsByDeck[selectedDeck] || deckImagePathsByDeck.traditional;
+    }
+
+    function getSelectedDeckMetadata() {
+      const selectedDeck = document.getElementById("deck-select").value;
+      return deckMetadataByDeck[selectedDeck] || deckMetadataByDeck.traditional;
+    }
+
+    function selectedDeckUsesTransparentCards() {
+      return Boolean(getSelectedDeckMetadata().transparent);
+    }
+
+    function applySelectedDeckBackground() {
+      if (selectedDeckUsesTransparentCards()) {
+        document.documentElement.style.setProperty("--card-bg", "transparent");
+        return;
+      }
+
+      const cardBgColorPicker = document.getElementById("card-bg-color-picker");
+      applyCardBackgroundColor(cardBgColorPicker ? cardBgColorPicker.value : "#ffffff");
     }
 
     function escapeHtmlAttribute(value) {
@@ -5162,6 +5191,10 @@
       return getComputedStyle(document.documentElement).getPropertyValue("--card-bg").trim() || "#ffffff";
     }
 
+    function getCanvasBackgroundColor() {
+      return selectedDeckUsesTransparentCards() ? null : getCardBackgroundColor();
+    }
+
     function applyCardBackgroundColor(color) {
       const nextColor = normalizeHexColor(color) || "#ffffff";
       document.documentElement.style.setProperty("--card-bg", nextColor);
@@ -5169,6 +5202,137 @@
       if (cardBgColorPicker && normalizeHexColor(cardBgColorPicker.value) !== nextColor) {
         cardBgColorPicker.value = nextColor;
       }
+    }
+
+    function getImageFileExtension(fileName) {
+      const dotIndex = fileName.lastIndexOf(".");
+      return dotIndex >= 0 ? fileName.slice(dotIndex).toLowerCase() : "";
+    }
+
+    function getNaturalSortKey(fileName) {
+      const numberMatch = fileName.match(/\d+/);
+      return {
+        number: numberMatch ? Number.parseInt(numberMatch[0], 10) : Number.POSITIVE_INFINITY,
+        name: fileName
+      };
+    }
+
+    function sortImageFiles(files) {
+      return [...files].sort((a, b) => {
+        const aName = a.name || "";
+        const bName = b.name || "";
+        const aKey = getNaturalSortKey(aName);
+        const bKey = getNaturalSortKey(bName);
+
+        if (aKey.number !== bKey.number) {
+          return aKey.number - bKey.number;
+        }
+
+        return aKey.name.localeCompare(bKey.name, undefined, { numeric: true, sensitivity: "base" });
+      });
+    }
+
+    function getDeckNameFromFiles(files) {
+      const firstRelativePath = files[0] && files[0].webkitRelativePath;
+
+      if (firstRelativePath && firstRelativePath.includes("/")) {
+        return firstRelativePath.split("/")[0] || "Baraja personalizada";
+      }
+
+      return "Baraja personalizada";
+    }
+
+    function registerCustomDeck(deck) {
+      const deckSelect = document.getElementById("deck-select");
+      const deckId = `custom-${Date.now()}`;
+      const option = document.createElement("option");
+      option.value = deckId;
+      option.textContent = deck.transparent ? `${deck.name} (sin fondo)` : deck.name;
+
+      deckImagePathsByDeck[deckId] = deck.imagePaths;
+      deckMetadataByDeck[deckId] = { transparent: Boolean(deck.transparent) };
+
+      if (Array.isArray(deck.objectUrls)) {
+        customDeckObjectUrlsByDeck[deckId] = deck.objectUrls;
+      }
+
+      deckSelect.appendChild(option);
+      deckSelect.value = deckId;
+
+      applySelectedDeckBackground();
+      renderTerciaFilterGrid();
+      generateNewTable();
+    }
+
+    function buildCustomDeckFromBrowserFiles(fileList) {
+      const allFiles = Array.from(fileList || []);
+      const imageFiles = sortImageFiles(
+        allFiles.filter((file) => imageFileExtensions.has(getImageFileExtension(file.name || "")))
+      );
+
+      if (imageFiles.length !== 54) {
+        alert(`La carpeta seleccionada tiene ${imageFiles.length} imagenes. Debe tener exactamente 54.`);
+        return null;
+      }
+
+      const deckName = getDeckNameFromFiles(imageFiles);
+      const objectUrls = imageFiles.map((file) => URL.createObjectURL(file));
+
+      return {
+        name: deckName,
+        transparent: deckName.toLowerCase().includes("sin fondo"),
+        imagePaths: objectUrls,
+        objectUrls
+      };
+    }
+
+    function addCustomDeckFromBrowserFolder() {
+      const folderInput = document.getElementById("custom-deck-folder-input");
+
+      if (!folderInput) {
+        alert("No se pudo abrir el selector de carpeta.");
+        return;
+      }
+
+      folderInput.value = "";
+      folderInput.click();
+    }
+
+    function handleCustomDeckBrowserFiles(event) {
+      const deck = buildCustomDeckFromBrowserFiles(event.target.files);
+
+      if (deck) {
+        registerCustomDeck(deck);
+      }
+
+      event.target.value = "";
+    }
+
+    async function addCustomDeckFromFolder() {
+      if (!window.customDeckApi || typeof window.customDeckApi.selectFolder !== "function") {
+        addCustomDeckFromBrowserFolder();
+        return;
+      }
+
+      const result = await window.customDeckApi.selectFolder();
+
+      if (!result || result.canceled) {
+        return;
+      }
+
+      if (result.error) {
+        alert(result.error);
+        return;
+      }
+
+      const deck = result.deck;
+
+      if (!deck || !Array.isArray(deck.imagePaths) || deck.imagePaths.length !== 54) {
+        alert("La carpeta debe tener exactamente 54 imagenes.");
+        return;
+      }
+
+      registerCustomDeck(deck);
     }
 
     function setActiveLayout(layoutType) {
@@ -5798,6 +5962,57 @@
       };
     }
 
+    function applyRoundedCardsToExport(root) {
+      if (document.body.dataset.cardShape !== "oval") {
+        return;
+      }
+
+      const ovalCardSelectors = [
+        ".tall img",
+        ".horizontal-box img",
+        ".six-by-five-box img",
+        ".tercias-abajo-box img",
+        ".tercias-cruzadas-box img",
+        ".larguitas-crossed-box img",
+        ".model16-box img",
+        ".model17-box img",
+        ".model12-triples-box img",
+        ".vertical-con-grande-small img",
+        ".vertical-con-grande-half img",
+        ".piramide-tall img",
+        ".modelo10-box img",
+        ".seven-loko-box img",
+        ".matrix-cell img"
+      ];
+      const roundCardSelectors = [
+        ".small img",
+        ".horizontal-small-box img",
+        ".six-by-five-small img",
+        ".tercias-abajo-small img",
+        ".tercias-cruzadas-small img",
+        ".larguitas-crossed-small img",
+        ".model16-small img",
+        ".model17-small img",
+        ".model12-triples-small img",
+        ".vertical-con-grande-wide img",
+        ".piramide-small img",
+        ".modelo10-small img",
+        ".seven-loko-small img"
+      ];
+
+      const applyImageShape = (selector, borderRadius, clipPath) => {
+        root.querySelectorAll(selector).forEach((image) => {
+          image.style.setProperty("border-radius", borderRadius, "important");
+          image.style.setProperty("clip-path", clipPath, "important");
+          image.style.setProperty("-webkit-clip-path", clipPath, "important");
+          image.style.setProperty("overflow", "hidden", "important");
+        });
+      };
+
+      applyImageShape(ovalCardSelectors.join(","), "50%", "ellipse(50% 50% at 50% 50%)");
+      applyImageShape(roundCardSelectors.join(","), "50%", "circle(50% at 50% 50%)");
+    }
+
     async function downloadTableAsImage() {
       const downloadButton = document.getElementById("download-image-button");
       const activeLayout = getActiveLayout();
@@ -5816,10 +6031,12 @@
       const exportWrapper = document.createElement("div");
       const layoutClone = activeLayout.cloneNode(true);
       const cardBackgroundColor = getCardBackgroundColor();
+      const canvasBackgroundColor = getCanvasBackgroundColor();
       layoutClone.removeAttribute("id");
       layoutClone.hidden = false;
       prepareTopLinesForExport(layoutClone);
       preparePiramideForExport(layoutClone);
+      applyRoundedCardsToExport(layoutClone);
 
       exportWrapper.style.position = "fixed";
       exportWrapper.style.left = "-10000px";
@@ -5853,7 +6070,7 @@
         const exportHeight = layoutHeight + (EXPORT_PADDING * 2);
 
         const canvas = await window.html2canvas(exportWrapper, {
-          backgroundColor: cardBackgroundColor,
+          backgroundColor: canvasBackgroundColor,
           scale: 3,
           width: exportWidth,
           height: exportHeight,
@@ -6103,6 +6320,7 @@
       const exportWrapper = document.createElement("div");
       const game6Clone = game6View.cloneNode(true);
       const cardBackgroundColor = getCardBackgroundColor();
+      const canvasBackgroundColor = getCanvasBackgroundColor();
       game6Clone.removeAttribute("id");
 
       exportWrapper.style.position = "fixed";
@@ -6129,6 +6347,7 @@
         applyCompactStylesToGame6Clone(game6Clone);
         prepareTopLinesForExport(game6Clone);
         preparePiramideForExport(game6Clone);
+        applyRoundedCardsToExport(game6Clone);
         await waitForImagesInElement(game6Clone);
 
         const cloneWidth = Math.ceil(Math.max(game6Clone.scrollWidth, game6Clone.offsetWidth, game6Clone.getBoundingClientRect().width));
@@ -6140,7 +6359,7 @@
         const exportHeight = cloneHeight + (EXPORT_PADDING * 2);
 
         const canvas = await window.html2canvas(exportWrapper, {
-          backgroundColor: cardBackgroundColor,
+          backgroundColor: canvasBackgroundColor,
           scale: 2,
           width: exportWidth,
           height: exportHeight,
@@ -6212,6 +6431,7 @@
 
       const exportWrapper = document.createElement("div");
       const cardBackgroundColor = getCardBackgroundColor();
+      const canvasBackgroundColor = getCanvasBackgroundColor();
       exportWrapper.style.position = "fixed";
       exportWrapper.style.left = "-10000px";
       exportWrapper.style.top = "0";
@@ -6278,6 +6498,7 @@
 
           prepareTopLinesForExport(tableClone);
           preparePiramideForExport(tableClone);
+          applyRoundedCardsToExport(tableClone);
           await waitForImagesInElement(tableClone);
 
           const cloneWidth = Math.ceil(Math.max(tableClone.scrollWidth, tableClone.offsetWidth, tableClone.getBoundingClientRect().width));
@@ -6286,7 +6507,7 @@
           exportWrapper.style.width = `${cloneWidth}px`;
 
           const canvas = await window.html2canvas(exportWrapper, {
-            backgroundColor: cardBackgroundColor,
+            backgroundColor: canvasBackgroundColor,
             scale: 2,
             width: cloneWidth,
             height: cloneHeight,
@@ -6332,6 +6553,8 @@
       const layoutSelect = document.getElementById("layout-select");
       const cardShapeSelect = document.getElementById("card-shape-select");
       const deckSelect = document.getElementById("deck-select");
+      const addCustomDeckButton = document.getElementById("add-custom-deck-button");
+      const customDeckFolderInput = document.getElementById("custom-deck-folder-input");
       const lineColorPicker = document.getElementById("line-color-picker");
       const lineFrameColorPicker = document.getElementById("line-frame-color-picker");
       const cardBgColorPicker = document.getElementById("card-bg-color-picker");
@@ -6351,6 +6574,8 @@
         !layoutSelect ||
         !cardShapeSelect ||
         !deckSelect ||
+        !addCustomDeckButton ||
+        !customDeckFolderInput ||
         !lineColorPicker ||
         !lineFrameColorPicker ||
         !cardBgColorPicker ||
@@ -6379,12 +6604,22 @@
       });
       cardShapeSelect.addEventListener("change", (event) => applyCardShape(event.target.value));
       deckSelect.addEventListener("change", () => {
+        applySelectedDeckBackground();
         renderTerciaFilterGrid();
         generateNewTable();
       });
+      addCustomDeckButton.addEventListener("click", addCustomDeckFromFolder);
+      customDeckFolderInput.addEventListener("change", handleCustomDeckBrowserFiles);
       lineColorPicker.addEventListener("input", (event) => applyLineColor(event.target.value));
       lineFrameColorPicker.addEventListener("input", (event) => applyLineFrameColor(event.target.value));
-      cardBgColorPicker.addEventListener("input", (event) => applyCardBackgroundColor(event.target.value));
+      cardBgColorPicker.addEventListener("input", (event) => {
+        if (selectedDeckUsesTransparentCards()) {
+          document.documentElement.style.setProperty("--card-bg", "transparent");
+          return;
+        }
+
+        applyCardBackgroundColor(event.target.value);
+      });
       outerBorderSizeSlider.addEventListener("input", (event) => applyOuterBorderScale(event.target.value));
       innerLineSizeSlider.addEventListener("input", (event) => applyInnerLineScale(event.target.value));
       game6Button.addEventListener("click", generateGameOf6);
@@ -6403,6 +6638,7 @@
       applyLineColor(lineColorPicker.value);
       applyLineFrameColor(lineFrameColorPicker.value);
       applyCardBackgroundColor(cardBgColorPicker.value);
+      applySelectedDeckBackground();
       initializeOuterBorderControls();
       initializeInnerLineControls();
       generateNewTable();
