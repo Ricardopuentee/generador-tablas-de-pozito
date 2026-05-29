@@ -1560,8 +1560,8 @@
     .vertical-con-grande-mid-v-line-15 { right: 0; left: auto; }
 
     .piramide-layout {
-      --piramide-cell-width: 1.08cm;
-      --piramide-unit-height: 0.86cm;
+      --piramide-cell-width: 1cm;
+      --piramide-unit-height: 1cm;
       display: flex;
       align-items: flex-start;
       position: relative;
@@ -1616,6 +1616,40 @@
       box-shadow: none;
     }
 
+    .piramide-primary-box {
+      overflow: visible;
+      z-index: 5;
+    }
+
+    .piramide-cell-frame {
+      --piramide-frame-stroke: max(0px, calc(var(--inner-line-size) - (var(--inner-line-frame-size) * 2)));
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(var(--piramide-cell-width) * 2);
+      height: calc(var(--piramide-unit-height) * 2);
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .piramide-cell-frame::before,
+    .piramide-cell-frame::after {
+      content: "";
+      position: absolute;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    .piramide-cell-frame::before {
+      inset: 0;
+      border: var(--inner-line-size) solid var(--line-frame-color);
+    }
+
+    .piramide-cell-frame::after {
+      inset: var(--inner-line-frame-size);
+      border: var(--piramide-frame-stroke) solid var(--line-color);
+    }
+
     .piramide-box img {
       width: 100%;
       height: 100%;
@@ -1633,32 +1667,7 @@
     }
 
     .piramide-grid {
-      position: absolute;
-      inset: 0;
-      z-index: 20;
-      pointer-events: none;
-      clip-path: polygon(
-        33.333% 0,
-        66.667% 0,
-        66.667% 14.286%,
-        83.333% 14.286%,
-        83.333% 28.571%,
-        100% 28.571%,
-        100% 71.429%,
-        83.333% 71.429%,
-        83.333% 85.714%,
-        66.667% 85.714%,
-        66.667% 100%,
-        33.333% 100%,
-        33.333% 85.714%,
-        16.667% 85.714%,
-        16.667% 71.429%,
-        0 71.429%,
-        0 28.571%,
-        16.667% 28.571%,
-        16.667% 14.286%,
-        33.333% 14.286%
-      );
+      display: none;
     }
 
     .piramide-h-line,
@@ -4603,6 +4612,32 @@
       setImageByAttribute("data-piramide-id", id, imagePath);
     }
 
+    function applyPiramidePrimaryFrames(root = document) {
+      root.querySelectorAll(".piramide-box[data-piramide-id]").forEach((box) => {
+        const cardId = Number.parseInt(box.getAttribute("data-piramide-id"), 10);
+        const isPrimaryCard = Number.isFinite(cardId) && cardId >= 1 && cardId <= 30;
+
+        box.classList.toggle("piramide-primary-box", isPrimaryCard);
+
+        const existingFrame = box.querySelector(":scope > .piramide-cell-frame");
+
+        if (!isPrimaryCard) {
+          if (existingFrame) {
+            existingFrame.remove();
+          }
+
+          return;
+        }
+
+        const frame = existingFrame || document.createElement("div");
+        frame.className = "piramide-cell-frame";
+
+        if (!existingFrame) {
+          box.appendChild(frame);
+        }
+      });
+    }
+
     function setImageBySevenLokoId(id, imagePath) {
       setImageByAttribute("data-seven-loko-id", id, imagePath);
     }
@@ -4972,6 +5007,7 @@
       Object.entries(assignment).forEach(([id, imagePath]) => {
         setImageByPiramideId(id, imagePath);
       });
+      applyPiramidePrimaryFrames();
     }
 
     function createModel12TriplesTableAssignment() {
@@ -5572,6 +5608,7 @@
           box.textContent = id;
         }
       });
+      applyPiramidePrimaryFrames(layoutClone);
     }
 
     function renderGameOf6(assignments, layoutType) {
@@ -5823,25 +5860,17 @@
     }
 
     function preparePiramideForExport(root) {
-      // 1. Ocultar el grid overlay (clip-path no funciona en html2canvas)
       root.querySelectorAll(".piramide-grid").forEach(grid => {
         grid.style.display = "none";
       });
 
-      // 2. Poner borde directamente en cada carta
-      const lineColor = getComputedStyle(document.documentElement)
-        .getPropertyValue("--line-color").trim() || "#d62828";
-      const frameColor = getComputedStyle(document.documentElement)
-        .getPropertyValue("--line-frame-color").trim() || "#000000";
-      const borderSize = 2; // px, ajusta si quieres más grueso
-      const frameSize = 1; // px
+      applyPiramidePrimaryFrames(root);
 
       root.querySelectorAll(".piramide-box").forEach(box => {
-        box.style.border = `${frameSize}px solid ${frameColor}`;
-        box.style.outline = `${borderSize}px solid ${lineColor}`;
-        box.style.outlineOffset = `-${frameSize + borderSize}px`;
+        box.style.border = "none";
+        box.style.outline = "none";
         box.style.boxSizing = "border-box";
-        // Las imágenes deben seguir llenando el box
+
         const img = box.querySelector("img");
         if (img) {
           img.style.width = "100%";
@@ -5850,13 +5879,11 @@
         }
       });
 
-      // 3. Recortar el contenedor de la pirámide al tamaño real de las cartas
       root.querySelectorAll(".piramide-layout").forEach(layout => {
         layout.style.overflow = "hidden";
         layout.style.background = "transparent";
       });
 
-      // 4. Hacer transparente el fondo de las columnas para que no haya blancos
       root.querySelectorAll(".piramide-column").forEach(col => {
         col.style.background = "transparent";
       });
@@ -5881,6 +5908,12 @@
       }
 
       updateTableScale();
+    }
+
+    function applyLayoutControlDefaults(layoutType) {
+      if (layoutType === "piramide") {
+        applyOuterBorderScale(70);
+      }
     }
 
     function applyInnerLineScale(value) {
@@ -6600,6 +6633,7 @@
       downloadImageButton.addEventListener("click", downloadTableAsImage);
       layoutSelect.addEventListener("change", (event) => {
         setActiveLayout(event.target.value);
+        applyLayoutControlDefaults(event.target.value);
         generateNewTable();
       });
       cardShapeSelect.addEventListener("change", (event) => applyCardShape(event.target.value));
@@ -6634,6 +6668,7 @@
       initializeMatrixLayouts();
 
       setActiveLayout(layoutSelect.value);
+      applyLayoutControlDefaults(layoutSelect.value);
       applyCardShape(cardShapeSelect.value);
       applyLineColor(lineColorPicker.value);
       applyLineFrameColor(lineFrameColorPicker.value);
