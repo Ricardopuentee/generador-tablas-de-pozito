@@ -4541,11 +4541,6 @@
     }
 
     function applySelectedDeckBackground() {
-      if (selectedDeckUsesTransparentCards()) {
-        document.documentElement.style.setProperty("--card-bg", "transparent");
-        return;
-      }
-
       const cardBgColorPicker = document.getElementById("card-bg-color-picker");
       applyCardBackgroundColor(cardBgColorPicker ? cardBgColorPicker.value : "#ffffff");
     }
@@ -6647,14 +6642,7 @@
       customDeckFolderInput.addEventListener("change", handleCustomDeckBrowserFiles);
       lineColorPicker.addEventListener("input", (event) => applyLineColor(event.target.value));
       lineFrameColorPicker.addEventListener("input", (event) => applyLineFrameColor(event.target.value));
-      cardBgColorPicker.addEventListener("input", (event) => {
-        if (selectedDeckUsesTransparentCards()) {
-          document.documentElement.style.setProperty("--card-bg", "transparent");
-          return;
-        }
-
-        applyCardBackgroundColor(event.target.value);
-      });
+      cardBgColorPicker.addEventListener("input", (event) => applyCardBackgroundColor(event.target.value));
       outerBorderSizeSlider.addEventListener("input", (event) => applyOuterBorderScale(event.target.value));
       innerLineSizeSlider.addEventListener("input", (event) => applyInnerLineScale(event.target.value));
       game6Button.addEventListener("click", generateGameOf6);
