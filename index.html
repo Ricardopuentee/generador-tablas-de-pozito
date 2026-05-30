@@ -4545,6 +4545,58 @@
       applyCardBackgroundColor(cardBgColorPicker ? cardBgColorPicker.value : "#ffffff");
     }
 
+    const transparentCardImageCache = new Map();
+
+    function removeWhiteBackgroundFromImage(imagePath) {
+      if (transparentCardImageCache.has(imagePath)) {
+        return transparentCardImageCache.get(imagePath);
+      }
+
+      const processedImagePromise = new Promise((resolve, reject) => {
+        const image = new Image();
+
+        image.onload = () => {
+          try {
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d", { willReadFrequently: true });
+
+            canvas.width = image.naturalWidth || image.width;
+            canvas.height = image.naturalHeight || image.height;
+            context.drawImage(image, 0, 0);
+
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            for (let index = 0; index < data.length; index += 4) {
+              const red = data[index];
+              const green = data[index + 1];
+              const blue = data[index + 2];
+              const maxChannel = Math.max(red, green, blue);
+              const minChannel = Math.min(red, green, blue);
+              const channelSpread = maxChannel - minChannel;
+
+              if (minChannel >= 246 && channelSpread <= 18) {
+                data[index + 3] = 0;
+              } else if (minChannel >= 226 && channelSpread <= 18) {
+                data[index + 3] = Math.min(data[index + 3], Math.round((246 - minChannel) / 20 * 255));
+              }
+            }
+
+            context.putImageData(imageData, 0, 0);
+            resolve(canvas.toDataURL("image/png"));
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+        image.onerror = reject;
+        image.src = imagePath;
+      });
+
+      transparentCardImageCache.set(imagePath, processedImagePromise);
+      return processedImagePromise;
+    }
+
     function escapeHtmlAttribute(value) {
       return String(value)
         .replace(/&/g, "&amp;")
@@ -4559,9 +4611,22 @@
       image.alt = altText;
       image.loading = "eager";
       image.decoding = "async";
+      image.dataset.originalSrc = imagePath;
 
       if (className) {
         image.className = className;
+      }
+
+      if (selectedDeckUsesTransparentCards()) {
+        removeWhiteBackgroundFromImage(imagePath)
+          .then((processedImagePath) => {
+            if (image.dataset.originalSrc === imagePath && selectedDeckUsesTransparentCards()) {
+              image.src = processedImagePath;
+            }
+          })
+          .catch((error) => {
+            console.warn("No se pudo limpiar el fondo blanco de la carta:", error);
+          });
       }
 
       return image;
