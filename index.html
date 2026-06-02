@@ -9,7 +9,7 @@
 
     /* Base */
     :root {
-      --line-color: #d62828;
+      --line-color: #ffffff;
       --line-frame-color: #000000;
       --card-bg: #ffffff;
       --line-size: 8px;
@@ -1946,8 +1946,91 @@
     body[data-card-shape="oval"] .piramide-small,
     body[data-card-shape="oval"] .modelo10-small,
     body[data-card-shape="oval"] .seven-loko-small {
+      position: relative;
+    }
+
+    body[data-card-shape="oval"] .tall,
+    body[data-card-shape="oval"] .horizontal-box,
+    body[data-card-shape="oval"] .six-by-five-box,
+    body[data-card-shape="oval"] .tercias-abajo-box,
+    body[data-card-shape="oval"] .tercias-cruzadas-box,
+    body[data-card-shape="oval"] .larguitas-crossed-box,
+    body[data-card-shape="oval"] .model16-box,
+    body[data-card-shape="oval"] .model17-box,
+    body[data-card-shape="oval"] .model12-triples-box,
+    body[data-card-shape="oval"] .vertical-con-grande-small,
+    body[data-card-shape="oval"] .vertical-con-grande-half,
+    body[data-card-shape="oval"] .piramide-tall,
+    body[data-card-shape="oval"] .modelo10-box,
+    body[data-card-shape="oval"] .seven-loko-box,
+    body[data-card-shape="oval"] .matrix-cell,
+    body[data-card-shape="oval"] .small,
+    body[data-card-shape="oval"] .horizontal-small-box,
+    body[data-card-shape="oval"] .six-by-five-small,
+    body[data-card-shape="oval"] .tercias-abajo-small,
+    body[data-card-shape="oval"] .tercias-cruzadas-small,
+    body[data-card-shape="oval"] .larguitas-crossed-small,
+    body[data-card-shape="oval"] .model16-small,
+    body[data-card-shape="oval"] .model17-small,
+    body[data-card-shape="oval"] .model12-triples-small,
+    body[data-card-shape="oval"] .vertical-con-grande-wide,
+    body[data-card-shape="oval"] .piramide-small,
+    body[data-card-shape="oval"] .modelo10-small,
+    body[data-card-shape="oval"] .seven-loko-small {
       border-radius: 0 !important;
       clip-path: none;
+    }
+
+    body[data-card-shape="oval"] .tall::after,
+    body[data-card-shape="oval"] .horizontal-box::after,
+    body[data-card-shape="oval"] .six-by-five-box::after,
+    body[data-card-shape="oval"] .tercias-abajo-box::after,
+    body[data-card-shape="oval"] .tercias-cruzadas-box::after,
+    body[data-card-shape="oval"] .larguitas-crossed-box::after,
+    body[data-card-shape="oval"] .model16-box::after,
+    body[data-card-shape="oval"] .model17-box::after,
+    body[data-card-shape="oval"] .model12-triples-box::after,
+    body[data-card-shape="oval"] .vertical-con-grande-small::after,
+    body[data-card-shape="oval"] .vertical-con-grande-half::after,
+    body[data-card-shape="oval"] .piramide-tall::after,
+    body[data-card-shape="oval"] .modelo10-box::after,
+    body[data-card-shape="oval"] .seven-loko-box::after,
+    body[data-card-shape="oval"] .matrix-cell::after {
+      content: "";
+      position: absolute;
+      inset: 0.5px;
+      z-index: 3;
+      pointer-events: none;
+      border: 1px solid #000;
+      border-radius: 50%;
+      clip-path: ellipse(50% 50% at 50% 50%);
+      box-shadow: none;
+      box-sizing: border-box;
+    }
+
+    body[data-card-shape="oval"] .small::after,
+    body[data-card-shape="oval"] .horizontal-small-box::after,
+    body[data-card-shape="oval"] .six-by-five-small::after,
+    body[data-card-shape="oval"] .tercias-abajo-small::after,
+    body[data-card-shape="oval"] .tercias-cruzadas-small::after,
+    body[data-card-shape="oval"] .larguitas-crossed-small::after,
+    body[data-card-shape="oval"] .model16-small::after,
+    body[data-card-shape="oval"] .model17-small::after,
+    body[data-card-shape="oval"] .model12-triples-small::after,
+    body[data-card-shape="oval"] .vertical-con-grande-wide::after,
+    body[data-card-shape="oval"] .piramide-small::after,
+    body[data-card-shape="oval"] .modelo10-small::after,
+    body[data-card-shape="oval"] .seven-loko-small::after {
+      content: "";
+      position: absolute;
+      inset: 0.5px;
+      z-index: 3;
+      pointer-events: none;
+      border: 1px solid #000;
+      border-radius: 50%;
+      clip-path: circle(50% at 50% 50%);
+      box-shadow: none;
+      box-sizing: border-box;
     }
 
     .vertical-con-grande-wide img {
@@ -2701,7 +2784,7 @@
         </select>
         <label class="color-control" for="line-color-picker">
           <span class="color-control-label">Color de lineas</span>
-          <input id="line-color-picker" class="color-picker-input" type="color" value="#d62828" aria-label="Elegir color personalizado para las lineas">
+          <input id="line-color-picker" class="color-picker-input" type="color" value="#ffffff" aria-label="Elegir color personalizado para las lineas">
         </label>
         <label class="color-control" for="line-frame-color-picker">
           <span class="color-control-label">Color del marquito</span>
@@ -5266,7 +5349,7 @@
     }
 
     function applyLineColor(color) {
-      const nextColor = normalizeHexColor(color) || "#d62828";
+      const nextColor = normalizeHexColor(color) || "#ffffff";
       document.documentElement.style.setProperty("--line-color", nextColor);
       const lineColorPicker = document.getElementById("line-color-picker");
       if (lineColorPicker && normalizeHexColor(lineColorPicker.value) !== nextColor) {
