@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎴 Tabla de loteria</title>
+  <title>Generador de Tablas de Loteria</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -1297,13 +1297,7 @@
     .model17-grid-v-line-2 { left: 33.333%; }
     .model17-grid-v-line-3 {
       left: 50%;
-      transform: translateX(-50%);
       width: var(--line-size-double);
-    }
-
-    .model17-grid-v-line-3::after {
-      left: 1px;
-      right: 1px;
     }
     .model17-grid-v-line-4 { left: 66.666%; }
     .model17-grid-v-line-5 { left: 83.333%; }
@@ -1413,6 +1407,120 @@
       background: var(--card-bg);
     }
 
+    .vertical-con-grande-frame-line {
+      position: absolute;
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .vertical-con-grande-frame-line::after {
+      content: "";
+      position: absolute;
+      background: var(--line-color);
+    }
+
+    .vertical-con-grande-frame-h {
+      left: 0;
+      right: 0;
+      height: var(--line-size);
+    }
+
+    .vertical-con-grande-frame-h::after {
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+    }
+
+    .vertical-con-grande-frame-v {
+      top: 0;
+      bottom: 0;
+      width: var(--line-size);
+    }
+
+    .vertical-con-grande-frame-v::after {
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+    }
+
+    .vertical-con-grande-frame-top {
+      top: 0;
+    }
+
+    .vertical-con-grande-frame-bottom { bottom: 0; }
+    .vertical-con-grande-frame-left { left: 0; }
+    .vertical-con-grande-frame-right { right: 0; }
+
+    .vertical-con-grande-mid-v-line {
+      position: absolute;
+      top: 2cm;
+      bottom: 2cm;
+      width: var(--line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .vertical-con-grande-mid-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--line-frame-size);
+      right: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
+    .vertical-con-grande-mid-v-line-1 { left: 6.666%; }
+    .vertical-con-grande-mid-v-line-2 { left: 13.333%; }
+    .vertical-con-grande-mid-v-line-3 { left: 20%; }
+    .vertical-con-grande-mid-v-line-4 { left: 26.666%; }
+    .vertical-con-grande-mid-v-line-5 { left: 33.333%; }
+    .vertical-con-grande-mid-v-line-6 { left: 40%; }
+    .vertical-con-grande-mid-v-line-7 { left: 46.666%; }
+    .vertical-con-grande-mid-v-line-8 { left: 53.333%; }
+    .vertical-con-grande-mid-v-line-9 { left: 60%; }
+    .vertical-con-grande-mid-v-line-10 { left: 66.666%; }
+    .vertical-con-grande-mid-v-line-11 { left: 73.333%; }
+    .vertical-con-grande-mid-v-line-12 { left: 80%; }
+    .vertical-con-grande-mid-v-line-13 { left: 86.666%; }
+    .vertical-con-grande-mid-v-line-14 { left: 93.333%; }
+
+    .vertical-con-grande-mid-v-line-3,
+    .vertical-con-grande-mid-v-line-6,
+    .vertical-con-grande-mid-v-line-9,
+    .vertical-con-grande-mid-v-line-12 {
+      top: 0;
+      bottom: 0;
+    }
+
+    .vertical-con-grande-center-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(50% - 0.185cm);
+      height: var(--line-size-double);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .vertical-con-grande-center-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--line-frame-size);
+      bottom: var(--line-frame-size);
+      background: var(--line-color);
+    }
+
     .vertical-con-grande-row {
       display: flex;
       position: relative;
@@ -1462,103 +1570,159 @@
       border: none;
     }
 
-    .vertical-con-grande-h-line,
-    .vertical-con-grande-center-h-line,
-    .vertical-con-grande-wide-v-line,
-    .vertical-con-grande-mid-v-line {
+    .figuras54-layout {
+      display: grid;
+      grid-template-columns: repeat(3, 4.18cm);
+      gap: 0.34cm 0.22cm;
+      width: max-content;
+      background: var(--card-bg);
+      padding: 0.08cm;
+    }
+
+    .figuras54-block {
+      position: relative;
+      width: 4.18cm;
+      height: 3.16cm;
+      background: url('./template.png') center/contain no-repeat;
+      background-size: cover;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .figuras54-cell {
       position: absolute;
-      background: var(--line-frame-color);
+      z-index: 2;
+      border: none;
+      background: transparent;
       overflow: hidden;
-      z-index: 20;
+      color: var(--text-primary);
+      font-size: 0;
+      font-weight: 700;
+      line-height: 1;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .figuras54-cell:empty {
+      font-size: 10px;
+    }
+
+    .figuras54-square {
+      width: 1.08cm;
+      height: 0.82cm;
+      border-radius: 0.12cm;
+    }
+
+    .figuras54-circle {
+      width: 1.08cm;
+      height: 1.08cm;
+      border-radius: 50%;
+    }
+
+    .figuras54-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .figuras54-pos-tl { top: 10%; left: 8%; }
+    .figuras54-pos-tc {
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .figuras54-pos-tr { top: 10%; right: 8%; }
+    .figuras54-pos-ml {
+      top: 50%;
+      left: 5%;
+      transform: translateY(-50%);
+    }
+    .figuras54-pos-mc {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .figuras54-pos-mr {
+      top: 50%;
+      right: 5%;
+      transform: translateY(-50%);
+    }
+    .figuras54-pos-bl { bottom: 10%; left: 8%; }
+    .figuras54-pos-bc {
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .figuras54-pos-br { right: 8%; bottom: 10%; }
+
+    .figuras54-connector {
+      position: absolute;
+      z-index: 0;
+      background: transparent;
+      overflow: hidden;
       pointer-events: none;
+      display: none;
     }
 
-    .vertical-con-grande-center-h-line,
-    .vertical-con-grande-h-line {
-      left: 0;
-      right: 0;
-      height: var(--line-size);
-    }
-
-    .vertical-con-grande-center-h-line {
-      top: 5.28cm;
-    }
-
-    .vertical-con-grande-center-h-line::after,
-    .vertical-con-grande-h-line::after {
+    .figuras54-connector::after {
       content: "";
       position: absolute;
+      background: transparent;
+    }
+
+    .figuras54-connector-h {
+      height: var(--inner-line-size);
+    }
+
+    .figuras54-connector-h::after {
       left: 0;
       right: 0;
-      top: var(--line-frame-size);
-      bottom: var(--line-frame-size);
-      background: var(--line-color);
+      top: var(--inner-line-frame-size);
+      bottom: var(--inner-line-frame-size);
     }
 
-    .vertical-con-grande-wide-v-line,
-    .vertical-con-grande-mid-v-line {
-      width: var(--line-size);
+    .figuras54-connector-v {
+      width: var(--inner-line-size);
     }
 
-    .vertical-con-grande-wide-v-line::after,
-    .vertical-con-grande-mid-v-line::after {
-      content: "";
-      position: absolute;
+    .figuras54-connector-v::after {
       top: 0;
       bottom: 0;
-      left: var(--line-frame-size);
-      right: var(--line-frame-size);
-      background: var(--line-color);
+      left: var(--inner-line-frame-size);
+      right: var(--inner-line-frame-size);
     }
 
-    .vertical-con-grande-h-line-0 {
-      top: 0;
-      transform: translateY(-100%);
-    }
-    .vertical-con-grande-h-line-1 { top: 2cm; }
-    .vertical-con-grande-h-line-2 { top: 4.26cm; }
-    .vertical-con-grande-h-line-3 { top: 6.52cm; }
-    .vertical-con-grande-h-line-4 { top: 8.78cm; }
-    .vertical-con-grande-h-line-5 { bottom: 0; }
-
-    .vertical-con-grande-wide-v-line-top {
-      top: 0;
-      height: 2cm;
+    .figuras54-connector-d {
+      height: var(--inner-line-size);
+      transform-origin: left center;
+      transform: rotate(45deg);
     }
 
-    .vertical-con-grande-wide-v-line-bottom {
-      bottom: 0;
-      height: 2cm;
+    .figuras54-connector-d::after {
+      left: 0;
+      right: 0;
+      top: var(--inner-line-frame-size);
+      bottom: var(--inner-line-frame-size);
     }
 
-    .vertical-con-grande-wide-v-line-0 { left: 0; }
-    .vertical-con-grande-wide-v-line-1 { left: 20%; }
-    .vertical-con-grande-wide-v-line-2 { left: 40%; }
-    .vertical-con-grande-wide-v-line-3 { left: 60%; }
-    .vertical-con-grande-wide-v-line-4 { left: 80%; }
-    .vertical-con-grande-wide-v-line-5 { right: 0; left: auto; }
-
-    .vertical-con-grande-mid-v-line {
-      top: 2cm;
-      height: 6.78cm;
-    }
-
-    .vertical-con-grande-mid-v-line-0 { left: 0; }
-    .vertical-con-grande-mid-v-line-1 { left: 6.666%; }
-    .vertical-con-grande-mid-v-line-2 { left: 13.333%; }
-    .vertical-con-grande-mid-v-line-3 { left: 20%; }
-    .vertical-con-grande-mid-v-line-4 { left: 26.666%; }
-    .vertical-con-grande-mid-v-line-5 { left: 33.333%; }
-    .vertical-con-grande-mid-v-line-6 { left: 40%; }
-    .vertical-con-grande-mid-v-line-7 { left: 46.666%; }
-    .vertical-con-grande-mid-v-line-8 { left: 53.333%; }
-    .vertical-con-grande-mid-v-line-9 { left: 60%; }
-    .vertical-con-grande-mid-v-line-10 { left: 66.666%; }
-    .vertical-con-grande-mid-v-line-11 { left: 73.333%; }
-    .vertical-con-grande-mid-v-line-12 { left: 80%; }
-    .vertical-con-grande-mid-v-line-13 { left: 86.666%; }
-    .vertical-con-grande-mid-v-line-14 { left: 93.333%; }
-    .vertical-con-grande-mid-v-line-15 { right: 0; left: auto; }
+    .figuras54-h-tl-tc { left: 0.95cm; top: 0.41cm; width: 0.78cm; }
+    .figuras54-h-tc-tr { left: 2.44cm; top: 0.41cm; width: 0.78cm; }
+    .figuras54-h-bl-bc { left: 0.95cm; bottom: 0.41cm; width: 0.78cm; }
+    .figuras54-h-bc-br { left: 2.44cm; bottom: 0.41cm; width: 0.78cm; }
+    .figuras54-v-tl-ml { left: 0.54cm; top: 0.66cm; height: 0.64cm; }
+    .figuras54-v-ml-bl { left: 0.54cm; bottom: 0.66cm; height: 0.64cm; }
+    .figuras54-v-tr-mr { right: 0.54cm; top: 0.66cm; height: 0.64cm; }
+    .figuras54-v-mr-br { right: 0.54cm; bottom: 0.66cm; height: 0.64cm; }
+    .figuras54-d-tl-mc { left: 1.12cm; top: 0.86cm; width: 1.1cm; }
+    .figuras54-d-mc-br { left: 2.1cm; top: 1.76cm; width: 1.1cm; }
 
     .piramide-layout {
       --piramide-cell-width: 1cm;
@@ -2226,9 +2390,9 @@
     .model16-h-line,
     .model17-grid-h-line,
     .model12-triples-h-line,
-    .piramide-h-line,
+    .vertical-con-grande-frame-h,
     .vertical-con-grande-center-h-line,
-    .vertical-con-grande-h-line,
+    .piramide-h-line,
     .modelo10-global-h-line,
     .seven-loko-h-line {
       height: var(--inner-line-size) !important;
@@ -2243,9 +2407,9 @@
     .model16-v-line,
     .model17-grid-v-line,
     .model12-triples-v-line,
-    .piramide-v-line,
-    .vertical-con-grande-wide-v-line,
+    .vertical-con-grande-frame-v,
     .vertical-con-grande-mid-v-line,
+    .piramide-v-line,
     .modelo10-v-line,
     .seven-loko-v-line {
       width: var(--inner-line-size) !important;
@@ -2262,9 +2426,9 @@
     .model16-h-line::after,
     .model17-grid-h-line::after,
     .model12-triples-h-line::after,
-    .piramide-h-line::after,
+    .vertical-con-grande-frame-h::after,
     .vertical-con-grande-center-h-line::after,
-    .vertical-con-grande-h-line::after,
+    .piramide-h-line::after,
     .modelo10-global-h-line::after,
     .seven-loko-h-line::after {
       top: var(--inner-line-frame-size) !important;
@@ -2280,9 +2444,9 @@
     .model16-v-line::after,
     .model17-grid-v-line::after,
     .model12-triples-v-line::after,
-    .piramide-v-line::after,
-    .vertical-con-grande-wide-v-line::after,
+    .vertical-con-grande-frame-v::after,
     .vertical-con-grande-mid-v-line::after,
+    .piramide-v-line::after,
     .modelo10-v-line::after,
     .seven-loko-v-line::after {
       left: var(--inner-line-frame-size) !important;
@@ -2294,6 +2458,7 @@
     .tercias-cruzadas-h-line-3,
     .model16-h-line-4,
     .model12-triples-h-line-3,
+    .vertical-con-grande-center-h-line,
     .seven-loko-h-line-4 {
       height: var(--inner-line-size-double) !important;
     }
@@ -2324,8 +2489,8 @@
     .model17-grid-h-line-5,
     .model12-triples-h-line-0,
     .model12-triples-h-line-6,
-    .vertical-con-grande-h-line-0,
-    .vertical-con-grande-h-line-5,
+    .vertical-con-grande-frame-top,
+    .vertical-con-grande-frame-bottom,
     .modelo10-global-h-line-top,
     .modelo10-global-h-line-bottom,
     .seven-loko-h-line-1,
@@ -2351,10 +2516,8 @@
     .model17-grid-v-line-6,
     .model12-triples-v-line-0,
     .model12-triples-v-line-5,
-    .vertical-con-grande-wide-v-line-0,
-    .vertical-con-grande-wide-v-line-5,
-    .vertical-con-grande-mid-v-line-0,
-    .vertical-con-grande-mid-v-line-15,
+    .vertical-con-grande-frame-left,
+    .vertical-con-grande-frame-right,
     .modelo10-v-line-0,
     .modelo10-v-line-10,
     .seven-loko-v-line-1,
@@ -2380,8 +2543,8 @@
     .model17-grid-h-line-5::after,
     .model12-triples-h-line-0::after,
     .model12-triples-h-line-6::after,
-    .vertical-con-grande-h-line-0::after,
-    .vertical-con-grande-h-line-5::after,
+    .vertical-con-grande-frame-top::after,
+    .vertical-con-grande-frame-bottom::after,
     .modelo10-global-h-line-top::after,
     .modelo10-global-h-line-bottom::after,
     .seven-loko-h-line-1::after,
@@ -2408,10 +2571,8 @@
     .model17-grid-v-line-6::after,
     .model12-triples-v-line-0::after,
     .model12-triples-v-line-5::after,
-    .vertical-con-grande-wide-v-line-0::after,
-    .vertical-con-grande-wide-v-line-5::after,
-    .vertical-con-grande-mid-v-line-0::after,
-    .vertical-con-grande-mid-v-line-15::after,
+    .vertical-con-grande-frame-left::after,
+    .vertical-con-grande-frame-right::after,
     .modelo10-v-line-0::after,
     .modelo10-v-line-10::after,
     .seven-loko-v-line-1::after,
@@ -2770,6 +2931,7 @@
           <option value="tercias-crossed">Tercias cruzadas</option>
           <option value="larguitas-crossed">Larguitas cruzadas</option>
           <option value="vertical-con-grande">Vertical con grande</option>
+          <option value="figuras-54">54 figuras</option>
           <option value="piramide">Piramide</option>
           <option value="modelo-10">Modelo 10</option>
           <option value="modelo-12-triples">Modelo 12 triples</option>
@@ -3822,26 +3984,10 @@
       </div>
 
       <div class="layout vertical-con-grande-layout" aria-label="Tabla vertical con grande" id="vertical-con-grande-layout" hidden>
-        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-0"></div>
-        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-1"></div>
-        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-2"></div>
-        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-3"></div>
-        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-4"></div>
-        <div class="vertical-con-grande-h-line vertical-con-grande-h-line-5"></div>
-        <div class="vertical-con-grande-center-h-line"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-0"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-1"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-2"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-3"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-4"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-top vertical-con-grande-wide-v-line-5"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-0"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-1"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-2"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-3"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-4"></div>
-        <div class="vertical-con-grande-wide-v-line vertical-con-grande-wide-v-line-bottom vertical-con-grande-wide-v-line-5"></div>
-        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-0"></div>
+        <div class="vertical-con-grande-frame-line vertical-con-grande-frame-h vertical-con-grande-frame-top"></div>
+        <div class="vertical-con-grande-frame-line vertical-con-grande-frame-h vertical-con-grande-frame-bottom"></div>
+        <div class="vertical-con-grande-frame-line vertical-con-grande-frame-v vertical-con-grande-frame-left"></div>
+        <div class="vertical-con-grande-frame-line vertical-con-grande-frame-v vertical-con-grande-frame-right"></div>
         <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-1"></div>
         <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-2"></div>
         <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-3"></div>
@@ -3856,8 +4002,7 @@
         <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-12"></div>
         <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-13"></div>
         <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-14"></div>
-        <div class="vertical-con-grande-mid-v-line vertical-con-grande-mid-v-line-15"></div>
-
+        <div class="vertical-con-grande-center-h-line"></div>
         <div class="vertical-con-grande-row vertical-con-grande-wide-row">
           <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="31">31</div>
           <div class="box vertical-con-grande-wide" data-vertical-con-grande-id="32">32</div>
@@ -4441,6 +4586,8 @@
       <div class="layout matrix-layout" aria-label="Tabla Modelo 18" id="modelo18-layout" data-matrix-layout="modelo-18" hidden></div>
 
       <div class="layout matrix-layout" aria-label="Tabla Modelo 19" id="modelo19-layout" data-matrix-layout="modelo-19" hidden></div>
+
+      <div class="layout figuras54-layout" aria-label="Tabla 54 figuras" id="figuras54-layout" hidden></div>
     </div>
       </div>
     </section>
@@ -4465,7 +4612,7 @@
     <div class="print-sheet" id="game6-print-sheet"></div>
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="./node_modules/html2canvas/dist/html2canvas.min.js"></script>
   <script>
     const deckImagePathsByDeck = {
       traditional: Array.from({ length: 54 }, (_, index) => {
@@ -4603,6 +4750,37 @@
         [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
       ]
     };
+    const figuras54BlockPatterns = [
+      { tl: 31, tc: 2, tr: 43, ml: 1, mc: 3, mr: 4, bl: 44, bc: 5, br: 32 },
+      { tl: 33, tc: 7, tr: 45, ml: 6, mc: 8, mr: 9, bl: 46, bc: 10, br: 34 },
+      { tl: 35, tc: 11, tr: 47, ml: 12, mc: 14, mr: 13, bl: 48, bc: 29, br: 36 },
+      { tl: 41, tc: 20, tr: 53, ml: 21, mc: 22, mr: 23, bl: 54, bc: 24, br: 42 },
+      { tl: 39, tc: 19, tr: 51, ml: 18, mc: 16, mr: 17, bl: 52, bc: 28, br: 40 },
+      { tl: 38, tc: 27, tr: 49, ml: 15, mc: 30, mr: 26, bl: 50, bc: 25, br: 37 }
+    ];
+    const figuras54CellPositions = [
+      ["tl", "square"],
+      ["tc", "circle"],
+      ["tr", "square"],
+      ["ml", "circle"],
+      ["mc", "circle"],
+      ["mr", "circle"],
+      ["bl", "square"],
+      ["bc", "circle"],
+      ["br", "square"]
+    ];
+    const figuras54ConnectorClasses = [
+      "figuras54-connector-h figuras54-h-tl-tc",
+      "figuras54-connector-h figuras54-h-tc-tr",
+      "figuras54-connector-h figuras54-h-bl-bc",
+      "figuras54-connector-h figuras54-h-bc-br",
+      "figuras54-connector-v figuras54-v-tl-ml",
+      "figuras54-connector-v figuras54-v-ml-bl",
+      "figuras54-connector-v figuras54-v-tr-mr",
+      "figuras54-connector-v figuras54-v-mr-br",
+      "figuras54-connector-d figuras54-d-tl-mc",
+      "figuras54-connector-d figuras54-d-mc-br"
+    ];
     const TERCIA_FILTER_MAX = 12;
     const forcedTerciaCardIds = new Set();
 
@@ -4799,6 +4977,10 @@
 
     function setImageByModel17Id(id, imagePath) {
       setImageByAttribute("data-model17-id", id, imagePath);
+    }
+
+    function setImageByFiguras54Id(id, imagePath) {
+      setImageByAttribute("data-id", id, imagePath);
     }
 
     function getForcedTerciaCardIdList() {
@@ -5218,6 +5400,39 @@
       });
     }
 
+    function createFiguras54TableAssignment() {
+      const imagePaths = getSelectedDeckImagePaths();
+      const { forcedImages, optionalImages } = splitForcedAndOptionalImages(imagePaths);
+      const assignment = {};
+
+      // Figuras sencillas: 1-30
+      const primaryIds = Array.from({ length: 30 }, (_, i) => i + 1);
+      primaryIds.forEach((id, index) => {
+        assignment[id] = optionalImages[index];
+      });
+
+      let remaining = optionalImages.slice(30);
+
+      // Tercias: 31-42 (12 figuras)
+      const terciaIds = Array.from({ length: 12 }, (_, i) => i + 31);
+      assignSecondaryIdsWithForced(assignment, terciaIds, remaining, forcedImages);
+
+      // Dobles: 43-54 (12 figuras)
+      const doubleIds = Array.from({ length: 12 }, (_, i) => i + 43);
+      const doubleImages = shuffle(remaining);
+      doubleIds.forEach((id, index) => {
+        assignment[id] = doubleImages[index];
+      });
+
+      return assignment;
+    }
+
+    function applyFiguras54AssignmentToDocument(assignment) {
+      Object.entries(assignment).forEach(([id, imagePath]) => {
+        setImageByFiguras54Id(id, imagePath);
+      });
+    }
+
     function appendModelo18VerticalLines(layout) {
       for (let index = 0; index <= 10; index += 1) {
         const line = document.createElement("div");
@@ -5248,6 +5463,36 @@
         line.className = `modelo18-h-line modelo18-h-line-${index}`;
         layout.appendChild(line);
       }
+    }
+
+    function initializeFiguras54Layout() {
+      const layout = document.getElementById("figuras54-layout");
+      if (!layout || layout.dataset.figuras54Initialized === "true") {
+        return;
+      }
+
+      figuras54BlockPatterns.forEach((pattern) => {
+        const block = document.createElement("div");
+        block.className = "figuras54-block";
+
+        figuras54ConnectorClasses.forEach((connectorClass) => {
+          const connector = document.createElement("div");
+          connector.className = `figuras54-connector ${connectorClass}`;
+          block.appendChild(connector);
+        });
+
+        figuras54CellPositions.forEach(([position, shape]) => {
+          const id = pattern[position];
+          const cell = document.createElement("div");
+          cell.className = `box figuras54-cell figuras54-${shape} figuras54-pos-${position}`;
+          cell.dataset.id = String(id);
+          block.appendChild(cell);
+        });
+
+        layout.appendChild(block);
+      });
+
+      layout.dataset.figuras54Initialized = "true";
     }
 
     function initializeMatrixLayouts() {
@@ -5345,6 +5590,12 @@
 
       if (selectedLayout === "seven-loko") {
         applySevenLokoAssignmentToDocument(createSevenLokoTableAssignment());
+        updateTableScale();
+        return;
+      }
+
+      if (selectedLayout === "figuras-54") {
+        applyFiguras54AssignmentToDocument(createFiguras54TableAssignment());
         updateTableScale();
         return;
       }
@@ -5541,6 +5792,7 @@
       const terciasCrossedLayout = document.getElementById("tercias-crossed-layout");
       const larguitasCrossedLayout = document.getElementById("larguitas-crossed-layout");
       const verticalConGrandeLayout = document.getElementById("vertical-con-grande-layout");
+      const figuras54Layout = document.getElementById("figuras54-layout");
       const piramideLayout = document.getElementById("piramide-layout");
       const modelo16Layout = document.getElementById("modelo16-layout");
       const modelo10Layout = document.getElementById("modelo10-layout");
@@ -5558,6 +5810,7 @@
       const isTerciasCrossed = layoutType === "tercias-crossed";
       const isLarguitasCrossed = layoutType === "larguitas-crossed";
       const isVerticalConGrande = layoutType === "vertical-con-grande";
+      const isFiguras54 = layoutType === "figuras-54";
       const isPiramide = layoutType === "piramide";
       const isModelo16 = layoutType === "modelo-16";
       const isModelo10 = layoutType === "modelo-10";
@@ -5574,6 +5827,7 @@
       terciasCrossedLayout.hidden = !isTerciasCrossed;
       larguitasCrossedLayout.hidden = !isLarguitasCrossed;
       verticalConGrandeLayout.hidden = !isVerticalConGrande;
+      figuras54Layout.hidden = !isFiguras54;
       piramideLayout.hidden = !isPiramide;
       modelo16Layout.hidden = !isModelo16;
       modelo10Layout.hidden = !isModelo10;
@@ -5782,6 +6036,7 @@
         "tercias-crossed": document.getElementById("tercias-crossed-layout"),
         "larguitas-crossed": document.getElementById("larguitas-crossed-layout"),
         "vertical-con-grande": document.getElementById("vertical-con-grande-layout"),
+        "figuras-54": document.getElementById("figuras54-layout"),
         piramide: document.getElementById("piramide-layout"),
         "modelo-16": document.getElementById("modelo16-layout"),
         "modelo-10": document.getElementById("modelo10-layout"),
@@ -5863,6 +6118,8 @@
         ? Array.from({ length: 6 }, () => createVerticalConGrandeTableAssignment())
         : selectedLayout === "piramide"
         ? Array.from({ length: 6 }, () => createPiramideTableAssignment())
+        : selectedLayout === "figuras-54"
+        ? Array.from({ length: 6 }, () => createFiguras54TableAssignment())
         : selectedLayout === "modelo-12-triples"
         ? Array.from({ length: 6 }, () => createModel12TriplesTableAssignment())
         : selectedLayout === "modelo-17"
@@ -5999,7 +6256,7 @@
         ".tercias-below-h-line-0",
         ".tercias-cruzadas-h-line-0",
         ".larguitas-crossed-h-line-0",
-        ".vertical-con-grande-h-line-0",
+        ".model16-h-line-1",
         ".model17-grid-h-line-0",
         ".model12-triples-h-line-0",
         ".modelo10-global-h-line-top",
@@ -6048,6 +6305,16 @@
 
       root.querySelectorAll(".piramide-column").forEach(col => {
         col.style.background = "transparent";
+      });
+    }
+
+    function prepareFiguras54ForExport(root) {
+      root.querySelectorAll(".figuras54-square").forEach((cell) => {
+        cell.style.borderRadius = "0.12cm";
+      });
+
+      root.querySelectorAll(".figuras54-circle").forEach((cell) => {
+        cell.style.borderRadius = "50%";
       });
     }
 
@@ -6262,6 +6529,7 @@
       layoutClone.hidden = false;
       prepareTopLinesForExport(layoutClone);
       preparePiramideForExport(layoutClone);
+      prepareFiguras54ForExport(layoutClone);
       applyRoundedCardsToExport(layoutClone);
 
       exportWrapper.style.position = "fixed";
@@ -6573,6 +6841,7 @@
         applyCompactStylesToGame6Clone(game6Clone);
         prepareTopLinesForExport(game6Clone);
         preparePiramideForExport(game6Clone);
+        prepareFiguras54ForExport(game6Clone);
         applyRoundedCardsToExport(game6Clone);
         await waitForImagesInElement(game6Clone);
 
@@ -6724,6 +6993,7 @@
 
           prepareTopLinesForExport(tableClone);
           preparePiramideForExport(tableClone);
+          prepareFiguras54ForExport(tableClone);
           applyRoundedCardsToExport(tableClone);
           await waitForImagesInElement(tableClone);
 
@@ -6854,6 +7124,7 @@
       downloadGame6IndividualImagesButton.addEventListener("click", downloadGame6AsIndividualImages);
       backFromGame6Button.addEventListener("click", showMainTableView);
       initializeTerciaFilterControls();
+      initializeFiguras54Layout();
       initializeMatrixLayouts();
 
       setActiveLayout(layoutSelect.value);

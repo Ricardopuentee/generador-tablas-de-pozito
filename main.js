@@ -1,8 +1,9 @@
 const path = require('path')
-const { app, BrowserWindow, dialog, ipcMain } = require('electron')
+const { app, BrowserWindow, dialog, ipcMain, shell } = require('electron')
 const { pathToFileURL } = require('url')
 
 const imageExtensions = new Set(['.apng', '.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
+const appDisplayName = 'Generador de Tablas de Loteria'
 
 function getNaturalSortKey(fileName) {
   const numberMatch = fileName.match(/\d+/)
@@ -62,10 +63,15 @@ ipcMain.handle('custom-deck:select-folder', async () => {
 })
 
 function createWindow() {
+  app.setName(appDisplayName)
+
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
-    title: 'Lotería',
+    minWidth: 1000,
+    minHeight: 700,
+    title: appDisplayName,
+    backgroundColor: '#f4f4f6',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -75,10 +81,30 @@ function createWindow() {
 
   win.loadFile('index.html')
   win.setMenuBarVisibility(false)
+
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url)
+    return { action: 'deny' }
+  })
+
+  win.webContents.on('will-navigate', (event, url) => {
+    if (url !== win.webContents.getURL()) {
+      event.preventDefault()
+      shell.openExternal(url)
+    }
+  })
 }
 
 app.whenReady().then(createWindow)
 
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow()
+  }
+})
+
 app.on('window-all-closed', () => {
-  app.quit()
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
