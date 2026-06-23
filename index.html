@@ -16,7 +16,7 @@
       --line-size: 8px;
       --line-size-double: 14px;
       --line-frame-size: 2px;
-      --inner-line-scale: 100;
+      --inner-line-scale: 70;
       --inner-line-size: calc(var(--line-size) * var(--inner-line-scale) / 100);
       --inner-line-size-double: calc(var(--line-size-double) * var(--inner-line-scale) / 100);
       --inner-line-frame-size: calc(var(--line-frame-size) * var(--inner-line-scale) / 100);
@@ -755,6 +755,13 @@
       border-radius: 0;
     }
 
+    #modelo21-layout {
+      grid-template-columns: repeat(15, 1cm);
+      grid-auto-rows: 1.65cm;
+      --inner-line-scale: 100;
+      --outer-border-scale: 100;
+    }
+
     .modelo18-v-line {
       position: absolute;
       top: 0;
@@ -879,6 +886,166 @@
     .modelo19-h-line-1 { top: 34.2%; }
     .modelo19-h-line-2 { top: 63%; }
     .modelo19-h-line-3 { bottom: 0; }
+
+    .modelo20-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo20-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--inner-line-frame-size);
+      right: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo20-v-line-0,
+    .modelo20-v-line-10 {
+      width: var(--outer-line-size);
+    }
+
+    .modelo20-v-line-0::after,
+    .modelo20-v-line-10::after {
+      left: var(--outer-line-frame-size);
+      right: var(--outer-line-frame-size);
+    }
+
+    .modelo20-v-line-0 { left: 0; }
+    .modelo20-v-line-1 { left: 10%; }
+    .modelo20-v-line-2 { left: 20%; }
+    .modelo20-v-line-3 { left: 30%; }
+    .modelo20-v-line-4 { left: 40%; }
+    .modelo20-v-line-5 { left: 50%; }
+    .modelo20-v-line-6 { left: 60%; }
+    .modelo20-v-line-7 { left: 70%; }
+    .modelo20-v-line-8 { left: 80%; }
+    .modelo20-v-line-9 { left: 90%; }
+    .modelo20-v-line-10 { right: 0; left: auto; }
+
+    .modelo20-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo20-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--inner-line-frame-size);
+      bottom: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo20-h-line-0,
+    .modelo20-h-line-3 {
+      height: var(--outer-line-size);
+    }
+
+    .modelo20-h-line-0::after,
+    .modelo20-h-line-3::after {
+      top: var(--outer-line-frame-size);
+      bottom: var(--outer-line-frame-size);
+    }
+
+    .modelo20-h-line-0 { top: 0; }
+    .modelo20-h-line-1 { top: 34.2%; }
+    .modelo20-h-line-2 { top: 63%; }
+    .modelo20-h-line-3 { bottom: 0; }
+
+    .modelo21-v-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo21-v-line::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--inner-line-frame-size);
+      right: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo21-v-line-0,
+    .modelo21-v-line-5 {
+      width: var(--outer-line-size);
+    }
+
+    .modelo21-v-line-0::after,
+    .modelo21-v-line-5::after {
+      left: var(--outer-line-frame-size);
+      right: var(--outer-line-frame-size);
+    }
+
+    .modelo21-v-line-0 { left: 0; }
+    .modelo21-v-line-1 { left: 20%; }
+    .modelo21-v-line-2 { left: 40%; }
+    .modelo21-v-line-3 { left: 60%; }
+    .modelo21-v-line-4 { left: 80%; }
+    .modelo21-v-line-5 { right: 0; left: auto; }
+
+    .modelo21-h-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: var(--inner-line-size);
+      background: var(--line-frame-color);
+      overflow: hidden;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .modelo21-h-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--inner-line-frame-size);
+      bottom: var(--inner-line-frame-size);
+      background: var(--line-color);
+    }
+
+    .modelo21-h-line-0,
+    .modelo21-h-line-6 {
+      height: var(--outer-line-size);
+    }
+
+    .modelo21-h-line-0::after,
+    .modelo21-h-line-6::after {
+      top: var(--outer-line-frame-size);
+      bottom: var(--outer-line-frame-size);
+    }
+
+    .modelo21-h-line-0 { top: 0; }
+    .modelo21-h-line-1 { top: 16.67%; }
+    .modelo21-h-line-2 { top: 33.33%; }
+    .modelo21-h-line-3 { top: 50%; }
+    .modelo21-h-line-4 { top: 66.67%; }
+    .modelo21-h-line-5 { top: 83.33%; }
+    .modelo21-h-line-6 { bottom: 0; }
 
     .modelo18-h-line {
       position: absolute;
@@ -1296,7 +1463,7 @@
     .model17-grid-v-line-1 { left: 16.666%; }
     .model17-grid-v-line-2 { left: 33.333%; }
     .model17-grid-v-line-3 {
-      left: 50%;
+      left: 46%;
       width: var(--line-size-double);
     }
     .model17-grid-v-line-4 { left: 66.666%; }
@@ -2913,7 +3080,25 @@
   </style>
 </head>
 <body>
-  <div class="app-shell" id="app-shell">
+  <div id="login-container" class="login-container">
+    <div class="login-modal">
+      <h1>Iniciar sesión</h1>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username">Usuario:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div id="login-error" class="login-error"></div>
+        <button type="submit" class="login-button">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-shell" id="app-shell" hidden>
     <section class="toolbar-shell" aria-label="Controles principales">
       <div class="controls">
         <select id="deck-select" class="layout-select" aria-label="Seleccionar tipo de baraja">
@@ -2940,6 +3125,8 @@
           <option value="seven-loko">7 LOKO</option>
           <option value="modelo-18" hidden>Modelo 18</option>
           <option value="modelo-19">Modelo 19</option>
+          <option value="modelo-20">Modelo 20</option>
+          <option value="modelo-21">Modelo 21</option>
         </select>
         <select id="card-shape-select" class="layout-select" aria-label="Seleccionar forma de las cartas">
           <option value="square">Cartas cuadradas</option>
@@ -2964,8 +3151,8 @@
         </label>
         <label class="range-control" for="inner-line-size-slider">
           <span class="color-control-label">Lineas internas</span>
-          <input id="inner-line-size-slider" class="range-control-input" type="range" min="0" max="150" step="1" value="100" aria-label="Ajustar tamano de lineas internas">
-          <span class="range-control-value" id="inner-line-size-value">100</span>
+          <input id="inner-line-size-slider" class="range-control-input" type="range" min="0" max="150" step="1" value="70" aria-label="Ajustar tamano de lineas internas">
+          <span class="range-control-value" id="inner-line-size-value">70</span>
         </label>
         <label class="range-control" for="oval-outline-size-slider">
           <span class="color-control-label">Contorno cartas</span>
@@ -4587,6 +4774,10 @@
 
       <div class="layout matrix-layout" aria-label="Tabla Modelo 19" id="modelo19-layout" data-matrix-layout="modelo-19" hidden></div>
 
+      <div class="layout matrix-layout" aria-label="Tabla Modelo 20" id="modelo20-layout" data-matrix-layout="modelo-20" hidden></div>
+
+      <div class="layout matrix-layout" aria-label="Tabla Modelo 21" id="modelo21-layout" data-matrix-layout="modelo-21" hidden></div>
+
       <div class="layout figuras54-layout" aria-label="Tabla 54 figuras" id="figuras54-layout" hidden></div>
     </div>
       </div>
@@ -4746,6 +4937,23 @@
         [49, 37, 38, 39, 50, 51, 41, 40, 42, 52],
         [21, 38, 39, 37, 25, 26, 40, 42, 41, 30],
         [53, 22, 23, 24, 53, 54, 27, 28, 29, 54]
+      ],
+      "modelo-20": [
+        [43, 45, 42, 32, 40, 31, 34, 33, 46, 44],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        [47, 48, 32, 38, 31, 39, 33, 41, 49, 50],
+        [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        [51, 52, 37, 42, 36, 40, 35, 34, 53, 54],
+        [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+        [43, 45, 38, 37, 39, 36, 41, 35, 46, 44]
+      ],
+      "modelo-21": [
+        [1, 31, 37, 7, 32, 41, 13, 33, 34, 19, 43, 44, 25, 49, 50],
+        [2, 31, 38, 8, 32, 40, 14, 33, 42, 20, 43, 45, 26, 49, 51],
+        [3, 31, 36, 9, 32, 39, 15, 33, 35, 21, 44, 45, 27, 50, 51],
+        [4, 37, 36, 10, 41, 39, 16, 34, 35, 22, 46, 47, 28, 53, 52],
+        [5, 37, 38, 11, 41, 40, 17, 34, 42, 23, 46, 48, 29, 53, 54],
+        [6, 36, 38, 12, 39, 40, 18, 35, 42, 24, 47, 48, 30, 52, 54]
       ]
     };
     const figuras54BlockPatterns = [
@@ -5494,6 +5702,40 @@
       }
     }
 
+    function appendModelo20VerticalLines(layout) {
+      for (let index = 0; index <= 10; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo20-v-line modelo20-v-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function appendModelo20HorizontalLines(layout) {
+      for (let index = 0; index <= 3; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo20-h-line modelo20-h-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function appendModelo21VerticalLines(layout) {
+      // Líneas exteriores (0, 5) + 4 líneas internas (1-4)
+      for (let index = 0; index <= 5; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo21-v-line modelo21-v-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
+    function appendModelo21HorizontalLines(layout) {
+      // Líneas exteriores (0, 6) + 5 líneas internas (1-5)
+      for (let index = 0; index <= 6; index += 1) {
+        const line = document.createElement("div");
+        line.className = `modelo21-h-line modelo21-h-line-${index}`;
+        layout.appendChild(line);
+      }
+    }
+
     function appendModelo18HorizontalLines(layout) {
       for (let index = 0; index <= 3; index += 1) {
         const line = document.createElement("div");
@@ -5555,6 +5797,16 @@
         if (layoutType === "modelo-19") {
           appendModelo19VerticalLines(layout);
           appendModelo19HorizontalLines(layout);
+        }
+
+        if (layoutType === "modelo-20") {
+          appendModelo20VerticalLines(layout);
+          appendModelo20HorizontalLines(layout);
+        }
+
+        if (layoutType === "modelo-21") {
+          appendModelo21VerticalLines(layout);
+          appendModelo21HorizontalLines(layout);
         }
 
         layout.dataset.matrixInitialized = "true";
@@ -5637,8 +5889,8 @@
         return;
       }
 
-      if (selectedLayout === "modelo-18" || selectedLayout === "modelo-19") {
-        if (selectedLayout === "modelo-19") {
+      if (selectedLayout === "modelo-18" || selectedLayout === "modelo-19" || selectedLayout === "modelo-20" || selectedLayout === "modelo-21") {
+        if (selectedLayout === "modelo-19" || selectedLayout === "modelo-20" || selectedLayout === "modelo-21") {
           applyAssignmentToDocument(createModelo19TableAssignment());
         } else {
           applyAssignmentToDocument(createTableAssignment());
@@ -5842,6 +6094,8 @@
       const sevenLokoLayout = document.getElementById("seven-loko-layout");
       const modelo18Layout = document.getElementById("modelo18-layout");
       const modelo19Layout = document.getElementById("modelo19-layout");
+      const modelo20Layout = document.getElementById("modelo20-layout");
+      const modelo21Layout = document.getElementById("modelo21-layout");
       const generateButton = document.getElementById("generate-table-button");
 
       const isSquare = layoutType === "square";
@@ -5860,6 +6114,8 @@
       const isSevenLoko = layoutType === "seven-loko";
       const isModelo18 = layoutType === "modelo-18";
       const isModelo19 = layoutType === "modelo-19";
+      const isModelo20 = layoutType === "modelo-20";
+      const isModelo21 = layoutType === "modelo-21";
 
       tableLayout.hidden = !isSquare;
       horizontalLayout.hidden = !isHorizontal;
@@ -5877,6 +6133,8 @@
       sevenLokoLayout.hidden = !isSevenLoko;
       modelo18Layout.hidden = !isModelo18;
       modelo19Layout.hidden = !isModelo19;
+      modelo20Layout.hidden = !isModelo20;
+      modelo21Layout.hidden = !isModelo21;
       generateButton.disabled = false;
       generateButton.style.opacity = "1";
       generateButton.style.cursor = "pointer";
@@ -6085,7 +6343,9 @@
         "modelo-17": document.getElementById("modelo17-layout"),
         "seven-loko": document.getElementById("seven-loko-layout"),
         "modelo-18": document.getElementById("modelo18-layout"),
-        "modelo-19": document.getElementById("modelo19-layout")
+        "modelo-19": document.getElementById("modelo19-layout"),
+        "modelo-20": document.getElementById("modelo20-layout"),
+        "modelo-21": document.getElementById("modelo21-layout")
       };
       const sourceLayout = layoutMap[layoutType] || layoutMap.square;
       const game6View = document.getElementById("game6-view");
@@ -6391,7 +6651,7 @@
       const normalizedValue = Number.parseInt(value, 10);
       const nextValue = Number.isFinite(normalizedValue)
         ? Math.min(150, Math.max(0, normalizedValue))
-        : 100;
+        : 70;
       const valueLabel = document.getElementById("inner-line-size-value");
       const slider = document.getElementById("inner-line-size-slider");
 
